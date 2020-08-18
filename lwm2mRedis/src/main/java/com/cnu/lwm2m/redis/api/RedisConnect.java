@@ -1,4 +1,4 @@
-package com.red.api;
+package com.cnu.lwm2m.redis.api;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

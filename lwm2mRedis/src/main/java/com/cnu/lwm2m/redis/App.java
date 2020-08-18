@@ -1,15 +1,12 @@
-package com.red;
-
-import java.util.Set;
+package com.cnu.lwm2m.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.red.api.RedisConnect;
+import com.cnu.lwm2m.redis.api.RedisConnect;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ScanResult;
 
 /**
  * @author skchae@cnuglobal.com

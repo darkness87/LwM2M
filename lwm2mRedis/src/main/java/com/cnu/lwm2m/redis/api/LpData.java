@@ -1,10 +1,10 @@
-package com.red.api;
+package com.cnu.lwm2m.redis.api;
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
 
-import com.red.vo.LpDataVo;
+import com.cnu.lwm2m.redis.vo.LpDataVo;
 
 /**
  * @author skchae@cnuglobal.com

@@ -1,4 +1,4 @@
-package com.red.vo;
+package com.cnu.lwm2m.redis.vo;
 
 public class LpMeteringNormal {
 
