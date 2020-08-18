@@ -181,6 +181,7 @@ public class InfoData {
 			return null;
 		}
 		
+		// TODO String 타입 정보를 어떻게 표출해서 가져갈지
 		String redisInfo = jedis.info();
 		
 		redisConnect.close();

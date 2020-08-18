@@ -28,7 +28,7 @@ public class App {
 		ObjectMapper mapper = new ObjectMapper();
 		Jedis jedis = redisConnect.connect();
 
-		
+
 		
 		redisConnect.close();
 		

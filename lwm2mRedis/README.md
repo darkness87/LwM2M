@@ -38,7 +38,7 @@ jackson-core-2.11.0.jar
   => Metering Data 정보를 조회 (미사용 예정 - ObjectData로 통일)
   
 - InfoData
-  => 전체 KEY 조회, KEY 검색, KEY값 유무, KEY데이터 보관일 설정, 상태 등을 확인할 수 있다.
+  => 전체 KEY 조회, KEY 검색, KEY값 유무, KEY데이터 보관일(초) 설정, KEY 삭제, 접속 Client확인, 상태 등을 확인할 수 있다.
   
   getAllKey()
   getSearchKey(String)
