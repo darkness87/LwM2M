@@ -27,29 +27,7 @@ public class App {
 		RedisConnect redisConnect = new RedisConnect();
 		ObjectMapper mapper = new ObjectMapper();
 		Jedis jedis = redisConnect.connect();
-		
-		
-		Set<String> keys = jedis.keys("*");
-		System.out.println("keys * -> size: "+keys.size()+", "+keys.toString());
-		Set<String> keys2 = jedis.keys("key*");
-		System.out.println("keys key* -> size: "+keys2.size()+", "+keys2.toString());
-		Set<String> keys3 = jedis.keys("*02190000003*");
-		System.out.println("keys key?* -> size: "+keys3.size()+", "+keys3.toString());
-		
-		
-		Boolean ex = jedis.exists("key_02190000003");
-		System.out.println("exists key -> "+ex);
-		Long count = jedis.exists("key", "key_02190000003");
-		System.out.println("exists key xxx -> "+count);
-		String keys4[] = "key xxx".split(" ");
-		Long count2 = jedis.exists(keys4);
-		System.out.println("exists key xxx -> "+count2+" (Array)");
-		
-		
-		ScanResult<String> set = jedis.scan("0");
-		set = jedis.scan(set.getCursor());
-		System.out.println(set.getResult()+" "+set.getCursor());
-	
+
 		
 		
 		redisConnect.close();

@@ -77,6 +77,8 @@ public class InfoData {
 		Boolean ex = jedis.exists(key);
 //		System.out.println("exists key -> "+ex);
 		
+		redisConnect.close();
+		
 		return ex;
 	}
 	
@@ -98,6 +100,8 @@ public class InfoData {
 		
 		jedis.expire(key, sec);
 		
+		redisConnect.close();
+		
 		return 0;
 	}
 	
@@ -116,6 +120,8 @@ public class InfoData {
 		}
 		
 		jedis.persist(key);
+		
+		redisConnect.close();
 		
 		return 0;
 	}
@@ -137,7 +143,49 @@ public class InfoData {
 		
 		jedis.del(key);
 		
+		redisConnect.close();
+		
 		return 0;
+	}
+	
+	/**
+	 * Redis에 접속된 Client 정보 확인
+	 * @return
+	 * @throws Exception
+	 */
+	public String getClientList() throws Exception{
+		
+		Jedis jedis = redisConnect.connect();
+		
+		if(jedis==null) {
+			return null;
+		}
+		
+		String clientList = jedis.clientList();
+		
+		redisConnect.close();
+		
+		return clientList;
+	}
+	
+	/**
+	 * Redis 기본정보 확인
+	 * @return
+	 * @throws Exception
+	 */
+	public String getRedisInfo() throws Exception{
+		
+		Jedis jedis = redisConnect.connect();
+		
+		if(jedis==null) {
+			return null;
+		}
+		
+		String redisInfo = jedis.info();
+		
+		redisConnect.close();
+		
+		return redisInfo;
 	}
 	
 }

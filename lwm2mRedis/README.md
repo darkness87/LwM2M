@@ -44,6 +44,9 @@ jackson-core-2.11.0.jar
   getSearchKey(String)
   getBooleanKey(String)
   setExpireKey(String, int)
+  setPersistKey(String)
   setDelKey(String)
+  getClientList()
+  getRedisInfo()
   
   
