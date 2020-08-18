@@ -5,7 +5,7 @@
 @since 2020.08.10
 
 * 해당 라이브러리는 Redis을 연동하기 위하여 Jedis 라이브러리 기반으로 제작되었다.
-* 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 추가되어 변경될 수 있다.)
+* 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 추가 및 변경될 수 있다.)
 
   |라이브러리              |비고      |
   |----------------|-----------|
@@ -62,13 +62,28 @@
   ```java
   InfoData infoData = new InfoData();
   
+  // 전체 KEY 조회 , return Set<String>
   infoData.getAllKey();
+
+  // 검색 KEY 조회, return Set<String>
   infoData.getSearchKey(String key);
+
+  // KEY 값 유무, return true or false
   infoData.getBooleanKey(String key);
+  
+  // KEY Expire 초 세팅 (해당 초 만큼 데이터 유지)
   infoData.setExpireKey(String key, int sec);
+  
+  // KEY Expire 해제
   infoData.setPersistKey(String key);
+  
+  // KEY 삭제
   infoData.setDelKey(String key);
+  
+  // 현재 접속 Client 리스트
   infoData.getClientList();
+  
+  // Radis 정보 출력
   infoData.getRedisInfo();
   
   ```  
@@ -76,7 +91,7 @@
 - LpData
   => Metering Data 정보를 조회 (미사용 예정 - ObjectData로 통일)
   ```java
-
+  LpData lpData = new LpData();
   
   ```  
   
