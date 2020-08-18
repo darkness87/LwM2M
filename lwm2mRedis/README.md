@@ -4,20 +4,28 @@
 @version 0.1_20200818
 @since 2020.08.10
 
-* 해당 라이브러리는 Redis을 연동하기 위하여 Jedis 라이브러리 기반으로 제작되었다.
+=========================
 
+* 해당 라이브러리는 Redis을 연동하기 위하여 Jedis 라이브러리 기반으로 제작되었다.
 * 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 추가되어 변경될 수 있다.)
 
-junit-3.8.1.jar
-jedis-3.3.0.jar
-commons-pool2-2.6.2.jar
-slf4j-api-1.7.30.jar
-slf4j-simple-1.7.30.jar
-jackson-databind-2.11.0.jar
-jackson-annotations-2.11.0.jar
-jackson-core-2.11.0.jar
+  junit-3.8.1.jar
+  jedis-3.3.0.jar
+  commons-pool2-2.6.2.jar
+  slf4j-api-1.7.30.jar
+  slf4j-simple-1.7.30.jar
+  jackson-databind-2.11.0.jar
+  jackson-annotations-2.11.0.jar
+  jackson-core-2.11.0.jar
 
-=========================
+> **공지:**
+
+> - 해당 라이브러리는 Redis을 연동하기 위하여 Jedis 라이브러리 기반으로 제작되었다.
+> - 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 추가 변경될 수 있다.)
+---
+
+## Code Rule (Common)
+
 
 * API 클래스
 
