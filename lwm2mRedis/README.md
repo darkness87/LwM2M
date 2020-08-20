@@ -167,3 +167,18 @@
 		System.out.println("sample ===== "+fdate);
   
   ```  
+
+
+## Config
+
+- Config.properties 파일 초기 세팅 정보
+
+  ```java
+
+  ## Redis Connect Config
+  redis.ipAddr=127.0.0.1
+  redis.port=6379
+  redis.timeout=1000
+  redis.passWord=
+
+  ```
