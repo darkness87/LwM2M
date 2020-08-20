@@ -171,7 +171,9 @@
 
 ## Config
 
-- Config.properties 파일 초기 세팅 정보
+- config.properties 파일 초기 세팅 정보
+  => 단, config.properties 파일이 없을 경우 Exception 처리 후 파일 생성
+  => 파일이 생성되면 아래 초기 정보가 들어가야 함
 
   ```java
 
