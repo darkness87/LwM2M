@@ -19,6 +19,7 @@ public class Config{
 		try {
 			file = new FileInputStream("config.properties"); //파일 위치
 			properties.load(file);
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			
@@ -27,6 +28,19 @@ public class Config{
 			FileOutputStream upfile = null;
 			try {
 				upfile = new FileOutputStream(profile);
+				
+				properties.setProperty("redis.ipAddr", "127.0.0.1");
+				properties.setProperty("redis.port", "6379");
+				properties.setProperty("redis.timeout", "1000");
+				properties.setProperty("redis.passWord", "");
+				
+				try {
+					properties.store(upfile,null);
+					upfile.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				System.out.println("지정된 파일을 새로 생성하였습니다. 재실행하여 주시기 바랍니다.");
 				
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
