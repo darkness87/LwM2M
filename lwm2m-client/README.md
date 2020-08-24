@@ -12,23 +12,25 @@
 ---
 
 ## 개발환경 구축
-1. 기본 환경
+### 기본 환경
 >- 이클립스 : STS4-4.7.1.RELEASE (이상)
 >- JAVA : 1.8 이상 (Version 8 Update 261)
 >- LOMBOK : 1.18.12 이상
 >- MAVEN : 2.x 이상 (이클립스 내장탑재)
 >- 필수 LIB : Spring boot Starter, leshan-client-cf, gson, lombok (MAVEN으로 대체)
-2. 설치 방법
+### 설치 방법
 >- **JAVA** : [JAVA8 다운로드](https://www.java.com/ko/download/win10.jsp)
->- JAVA Dev 환경은 무료배포이므로 유무료 여부를 따지지 않고 개발해도 무방하다.
-![JAVA다운로드 사이트](./docs/image/JAVA8.png)
+>>- JAVA Dev 환경은 무료배포이므로 유무료 여부를 따지지 않고 개발해도 무방하다.
+>>![JAVA다운로드 사이트](./docs/image/JAVA8.png)
+>
 >- **이클립스** : [이클립스 다운로드](https://spring.io/tools#main) 사이트에서 개발환경에 맞게 다운로드
-![STS다운로드 사이트](./docs/image/STS4.png)
->- jar파일이 배포되는데 이를 명령창에서 **java -jar [파일명]** 을 통해서 실행하면 자동 압축 해제를 진행한다.
-![STS압축 해제](./docs/image/STS4_UNPACK.png)
+>>![STS다운로드 사이트](./docs/image/STS4.png)
+>>- jar파일이 배포되는데 이를 명령창에서 **java -jar [파일명]** 을 통해서 실행하면 자동 압축 해제를 진행한다.
+>>![STS압축 해제](./docs/image/STS4_UNPACK.png)
+>
 >- **lombok** : [LOMBOK 다운로드](https://projectlombok.org/download) 명령창에서 **java -jar [파일명]** 을 사용하면된다.
->- lombok은 VO Object에 대한 개발 편리성을 높인 코드이다.
-![LOMBOK설치 화면](./docs/image/LOMBOK.png)
+>>- lombok은 VO Object에 대한 개발 편리성을 높인 코드이다.
+>>![LOMBOK설치 화면](./docs/image/LOMBOK.png)
 
 ---
 
