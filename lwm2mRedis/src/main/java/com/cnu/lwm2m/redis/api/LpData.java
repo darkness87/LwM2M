@@ -25,9 +25,7 @@ public class LpData {
 	 */
 	public String getLpDataString(Jedis jedis,String key) throws Exception{
 		
-		jedis.set("connect", "jarConnect"); // 테스트를 위한 강제 데이터 set // 추후 삭제
-		
-		String valueString = jedis.get("connect");
+		String valueString = jedis.get(key);
 		
 		return valueString; // 오류시 리턴값 변경 전달
 	}
@@ -57,7 +55,7 @@ public class LpData {
 		
 		Jedis jedis = redisConnect.connect();
 		
-		String valueString = jedis.get("connect");
+		String valueString = jedis.get(key);
 		
 		return valueString;
 	}
@@ -83,6 +81,12 @@ public class LpData {
 		
 	}
 	
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
 	public LpDataVo getLPHash(String key) throws Exception {
 		
 		Jedis jedis = redisConnect.connect();

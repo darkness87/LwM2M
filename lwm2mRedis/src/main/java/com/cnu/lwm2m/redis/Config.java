@@ -5,9 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Properties;
 
+/**
+ * @author skchae@cnuglobal.com
+ * @version 0.1
+ * @since 2020.08.21
+ */
 public class Config{
 
 	private Properties properties = null;
@@ -23,7 +27,7 @@ public class Config{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			
-			// 파일이 없을 경우 config.properties 파일을 생성해야한다..
+			// 파일이 없을 경우 config.properties 파일을 생성
 			File profile = new File("config.properties");
 			FileOutputStream upfile = null;
 			try {
@@ -73,6 +77,10 @@ public class Config{
 	 * System.out.println(e.nextElement()); } }
 	 */
 	
+	/**
+	 * IP주소
+	 * @return
+	 */
 	public String getIpAddr() {
 		Config config = new Config();
 		String val = config.getProperties().getProperty("redis.ipAddr");
@@ -82,6 +90,11 @@ public class Config{
 		}
 		return val;
 	}
+	
+	/**
+	 * 연결 포트 번호
+	 * @return
+	 */
 	public int getPort() {
 		Config config = new Config();
 		String val = config.getProperties().getProperty("redis.port");
@@ -91,6 +104,11 @@ public class Config{
 		}
 		return Integer.parseInt(val);
 	}
+	
+	/**
+	 * Timeout 설정값
+	 * @return
+	 */
 	public int getTimeout() {
 		Config config = new Config();
 		String val = config.getProperties().getProperty("redis.timeout");
@@ -100,6 +118,11 @@ public class Config{
 		}
 		return Integer.parseInt(val);
 	}
+	
+	/**
+	 * 패스워드
+	 * @return
+	 */
 	public String getPassWord() {
 		Config config = new Config();
 		String val = config.getProperties().getProperty("redis.passWord");

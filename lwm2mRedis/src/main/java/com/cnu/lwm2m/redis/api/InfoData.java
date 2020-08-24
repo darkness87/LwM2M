@@ -6,6 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import redis.clients.jedis.Jedis;
 
+/**
+ * @author skchae@cnuglobal.com
+ * @version 0.1
+ * @since 2020.08.18
+ */
 public class InfoData {
 
 	/*
@@ -31,8 +36,6 @@ public class InfoData {
 		}
 		
 		Set<String> keys = jedis.keys("*");
-//		System.out.println("keys * -> size: "+keys.size()+", "+keys.toString());
-		
 		redisConnect.close();
 		
 		return keys; // return 처리 오류에 따른 변경 필요
@@ -53,8 +56,6 @@ public class InfoData {
 		}
 		
 		Set<String> keys = jedis.keys("*"+key+"*");
-//		System.out.println("keys * -> size: "+keys.size()+", "+keys.toString());
-		
 		redisConnect.close();
 		
 		return keys; // return 처리 오류에 따른 변경 필요
@@ -75,8 +76,6 @@ public class InfoData {
 		}
 		
 		Boolean ex = jedis.exists(key);
-//		System.out.println("exists key -> "+ex);
-		
 		redisConnect.close();
 		
 		return ex;
@@ -99,7 +98,6 @@ public class InfoData {
 		}
 		
 		jedis.expire(key, sec);
-		
 		redisConnect.close();
 		
 		return 0;
@@ -120,7 +118,6 @@ public class InfoData {
 		}
 		
 		jedis.persist(key);
-		
 		redisConnect.close();
 		
 		return 0;
@@ -142,7 +139,6 @@ public class InfoData {
 		}
 		
 		jedis.del(key);
-		
 		redisConnect.close();
 		
 		return 0;
@@ -162,7 +158,6 @@ public class InfoData {
 		}
 		
 		String clientList = jedis.clientList();
-		
 		redisConnect.close();
 		
 		return clientList;
@@ -181,9 +176,7 @@ public class InfoData {
 			return null;
 		}
 		
-		// TODO String 타입 정보를 어떻게 표출해서 가져갈지
 		String redisInfo = jedis.info();
-		
 		redisConnect.close();
 		
 		return redisInfo;
