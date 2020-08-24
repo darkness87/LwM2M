@@ -15,11 +15,21 @@
 1. 기본 환경
 >- 이클립스 : STS4-4.7.1.RELEASE (이상)
 >- JAVA : 1.8 이상 (Version 8 Update 261)
+>- LOMBOK : 1.18.12 이상
 >- MAVEN : 2.x 이상 (이클립스 내장탑재)
->- 필수 LIB : Spring boot Starter, leshan-client-cf, gson, lombok
+>- 필수 LIB : Spring boot Starter, leshan-client-cf, gson, lombok (MAVEN으로 대체)
 2. 설치 방법
->- 이클립스 : https://spring.io/tools#main
->- JAVA : https://www.java.com/ko/download/win10.jsp
+>- **JAVA** : [JAVA8 다운로드](https://www.java.com/ko/download/win10.jsp)
+>- JAVA Dev 환경은 무료배포이므로 유무료 여부를 따지지 않고 개발해도 무방하다.
+![JAVA다운로드 사이트](./docs/image/JAVA8.png)
+>- **이클립스** : [이클립스 다운로드](https://spring.io/tools#main) 사이트에서 개발환경에 맞게 다운로드
+![STS다운로드 사이트](./docs/image/STS4.png)
+>- jar파일이 배포되는데 이를 __java -jar [파일명]__ 을 통해서 실행하면 자동 압축 해제를 진행한다.
+![STS압축 해제](./docs/image/STS4_UNPACK.png)
+![STS다운로드 사이트](./docs/image/STS4.png)
+>- **lombok** : [LOMBOK 다운로드](https://projectlombok.org/download) 명령창에서 java -jar [파일명] 을 사용하면된다.
+>- lombok은 VO Object에 대한 개발 편리성을 높인 코드이다.
+![LOMBOK설치 화면](./docs/image/LOMBOK.png)
 
 ---
 
@@ -38,6 +48,7 @@
 - 한줄 코드는 가독성을 낮추므로 자제해야한다. (단 라이브러리 성향을 지닌 고정적인 코드들은 상관없다)
   ```javascript
   if (n > 0) break; (x)
+  if (n > 0) {break;} (x)
   if (n > 0) {      (o)
       break;	  
   }
