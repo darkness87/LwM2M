@@ -5,9 +5,10 @@
 @since 2020.08.10
 
 * 해당 라이브러리는 Redis을 연동하기 위하여 Jedis 라이브러리 기반으로 제작되었다.
-* Redis 연동을 위한 라이브러리는 Jedis, Lettuce가 있으며 샘플링 코드와 사용시 가독성 등으로 우선적으로 Jedis를 활용하여 개발하였다.
-* Lettuce는 Jedis 보다 네트워크 측면에서 조금 더 빠른 향상을 가지고 있으나 레퍼런스가 적다.
-* 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 추가 및 변경될 수 있다.)
+* Redis 연동을 위한 라이브러리는 Jedis, Lettuce가 있으며 빠른 개발을 위해 샘플링 코드가 많고 사용시 가독성 등으로 우선적으로 Jedis를 활용하여 개발하였다.
+* jedis 동기식 - 단일성 구축시 장점 , 빠르게 구축 (레퍼런스 많음)
+* lettuce 비동기식 - 확장성 , 코드 복잡성 (레퍼런스 적음), 통신속도 측면 조금 더 빠른 향상을 가지고 있음
+* 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 변경될 수 있다.)
 
   |라이브러리              |비고      |
   |----------------|-----------|
@@ -58,6 +59,29 @@
 
   ```  
   
+  ```java
+
+	// 사용 예시
+	List<Object> list = new ArrayList<Object>();
+		
+	LpLoadProfileVo LoadProfileVo = new LpLoadProfileVo();
+	
+	for(int i=0;i<96;i++) {
+		
+		LoadProfileVo.setAid("1234567890");
+		.
+		.
+		.
+		.
+		.
+			
+		list.add(LoadProfileVo);
+			
+		}
+		
+		objectData.setObjectListData(key, list);
+  ``` 
+
 - InfoData
   => 전체 KEY 조회, KEY 검색, KEY값 유무, KEY데이터 보관일(초) 설정, KEY 삭제, 접속 Client확인, 상태 등을 확인할 수 있다.
 
