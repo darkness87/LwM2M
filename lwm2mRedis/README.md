@@ -5,9 +5,10 @@
 @since 2020.08.10
 
 * 해당 라이브러리는 Redis을 연동하기 위하여 Jedis 라이브러리 기반으로 제작되었다.
-* Redis 연동을 위한 라이브러리는 Jedis, Lettuce가 있으며 샘플링 코드와 사용시 가독성 등으로 우선적으로 Jedis를 활용하여 개발하였다.
-* Lettuce는 Jedis 보다 네트워크 측면에서 조금 더 빠른 향상을 가지고 있으나 레퍼런스가 적다.
-* 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 추가 및 변경될 수 있다.)
+* Redis 연동을 위한 라이브러리는 Jedis, Lettuce가 있으며 빠른 개발을 위해 샘플링 코드가 많고 사용시 가독성 등으로 우선적으로 Jedis를 활용하여 개발하였다.
+* jedis 동기식 - 단일성 구축시 장점 , 빠르게 구축 (레퍼런스 많음)
+* lettuce 비동기식 - 확장성 , 코드 복잡성 (레퍼런스 적음), 통신속도 측면 조금 더 빠른 향상을 가지고 있음
+* 라이브러리의 원할한 사용을 위하여 아래와 같이 추가 라이브러리가 포함된다. (라이브러리가 변경될 수 있다.)
 
   |라이브러리              |비고      |
   |----------------|-----------|
@@ -58,6 +59,29 @@
 
   ```  
   
+  ```java
+
+	// 사용 예시
+	List<Object> list = new ArrayList<Object>();
+		
+	LpLoadProfileVo LoadProfileVo = new LpLoadProfileVo();
+	
+	for(int i=0;i<96;i++) {
+		
+		LoadProfileVo.setAid("1234567890");
+		.
+		.
+		.
+		.
+		.
+			
+		list.add(LoadProfileVo);
+			
+		}
+		
+		objectData.setObjectListData(key, list);
+  ``` 
+
 - InfoData
   => 전체 KEY 조회, KEY 검색, KEY값 유무, KEY데이터 보관일(초) 설정, KEY 삭제, 접속 Client확인, 상태 등을 확인할 수 있다.
 
@@ -139,7 +163,7 @@
 			lp = new LpLoadProfileVo();
 			
 			meterid = meterObject.get(i).getMeterId();
-			key = "LoadProfile_"+meterid+"_"+fdate;
+			key = "LoadProfile:"+meterid+":"+fdate;
 			
 			rnd = new Random();
 			
@@ -171,11 +195,29 @@
   ```  
 
 
+## KEY 규칙
+
+- KEY 하나에 하나의 데이터가 들어간다.
+- KEY 이름은 아래와 같은 규칙을 따른다. 예) Metering Data 일 경우
+ * 데이터명:계량기번호:날짜
+ * LoadProfile:11190000110:202008240930
+ * LoadProfile:11190000110:202008240945
+ * LoadProfile:11190000110:202008241000
+ * LoadProfile:11190000110:202008241015
+
+- KEY 구분시 이름 중간에 ':' 으로 구분하여 이름을 정한다. 
+- KEY는 최소 7일 데이터를 가지고 있어야 하므로 expire 설정으로 해당 KEY의 유효 시간을 설정하면 관리하기 편하다.
+
+- 초기화 진행시 flushAll 명령어로 모든 키가 삭제 될수 있어야 한다.
+- expire 설정되지 않은 키에 대한 관리가 필요하다.
+- 스케줄 관리를 위한 KEY 관리는 스케줄명:스케줄실행시간 으로 했을시 문제 없는지 확인한다. (확인 필요 - 즉시실행이 아닌 스케줄시간으로 처리시)
+
+
 ## Config
 
 - config.properties 파일 초기 세팅 정보
   => 단, config.properties 파일이 없을 경우 Exception 처리 후 파일 생성
-  => 파일이 생성되면 아래 초기 정보가 들어가야 함
+  => 파일이 생성되면 아래 초기 정보가 들어가고 변경사항이 있을 경우 변경해야 함
 
   ```java
 
@@ -192,3 +234,4 @@
 
 * Fat Jar Eclipse Plug-In 을 설치하여 배포한다.
 * 해당 플러그인을 설치하면 사용되는 라이브러리까지 모두 포함하여 jar 파일 생성이 가능한다.
+* 개발시 jar파일에 포함된 중복 라이브러리는 피한다.
