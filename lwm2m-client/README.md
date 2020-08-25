@@ -19,6 +19,7 @@
 >- MAVEN : 2.x 이상 (이클립스 내장탑재)
 >- 필수 LIB : Spring boot Starter, leshan-client-cf, gson, lombok (MAVEN으로 대체)
 ### 설치 방법
+>- **개발소스코드** : [08.25ClientSrouce Downlod](./docs/src/lwm2m-client.zip) 
 >- **JAVA** : [JAVA8 다운로드](https://www.java.com/ko/download/win10.jsp)
 >>- JAVA Dev 환경은 무료배포이므로 유무료 여부를 따지지 않고 개발해도 무방하다.
 >>![JAVA다운로드 사이트](./docs/image/JAVA8.png)
