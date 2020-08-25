@@ -9,7 +9,6 @@ import org.eclipse.leshan.server.registration.Registration;
 import com.cnu.lwm2m.server.vo.EVENT;
 import com.google.gson.Gson;
 
-import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

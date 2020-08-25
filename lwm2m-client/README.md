@@ -33,6 +33,103 @@
 >>![LOMBOK설치 화면](./docs/image/LOMBOK.png)
 
 ---
+## 서버 API
+### 1. resources
+  ```java
+	public static void main(String[] args) {
+		CoapServer server = new CoapServer();
+
+		server.add(new MyResource("hello"));
+
+		server.start(); // does all the magic
+	}
+
+	public class MyResource extends CoapResource {
+		@Override
+		public void handleGET(CoapExchange exchange) {
+			exchange.respond("hello world"); // reply with 2.05 payload (text/plain)
+		}
+
+		@Override
+		public void handlePOST(CoapExchange exchange) {
+			exchange.accept(); // make it a separate response
+
+			if (exchange.getRequestOptions()....) {
+				// do something specific to the request options
+			}
+
+			exchange.respond(CREATED); // reply with response code only (shortcut)
+		}
+	}
+  ```
+---
+## 클라이언트 API
+### 1. 필수 클래스
+>- CoapClient
+>- CoapHandler
+>- CoapResponse
+>- CoapObserveRelation
+>- 대상 URI로 CoapClient 인스턴스화
+>- 제공된 주요 메소드는 get(), post(), put(), delete(), observe(), ping() 이며 이를 이용하여 다방면 통신방신 활용구축가능하다.
+
+### 2. 동기 방식 예
+  ```java
+	public static void main(String[] args) {
+		CoapClient client1 = new CoapClient("coap://192.168.123.127:15683/cmd");
+
+		String text = client1.get().getResponseText(); // blocking call
+		String xml = client1.get(APPLICATION_XML).getResponseText();
+
+		CoapClient client2 = new CoapClient("coap://192.168.123.127:15683/cmd");
+
+		CoapResponse resp = client2.put("payload", TEXT_PLAIN); // for response details
+		System.out.println( resp.isSuccess() );
+		System.out.println( resp.getOptions() );
+
+		client2.delete();
+	}
+  ```
+### 3. 비동기 방식의 예
+  ```java
+	public static void main(String[] args) {
+
+		CoapClient client = new CoapClient("coap://192.168.123.127:15683/cmd");
+
+		client.get(new CoapHandler() { // e.g., anonymous inner class
+
+			@Override public void onLoad(CoapResponse response) { // also error resp.
+				System.out.println( response.getResponseText() );
+			}
+
+			@Override public void onError() { // I/O errors and timeouts
+				System.err.println("Failed");
+			}
+		});
+	}
+
+  ```
+### 4. Observe
+  ```java
+	public static void main(String[] args) {
+
+		CoapClient client = new CoapClient("coap://192.168.123.127:15683/obs");
+
+		CoapObserveRelation relation = client.observe(new CoapHandler() {
+
+			@Override public void onLoad(CoapResponse response) {
+				System.out.println( response.getResponseText() );
+			}
+
+			@Override public void onError() {
+				System.err.println("Failed");
+			}
+		});
+
+		relation.proactiveCancel();
+	}
+
+  ```
+---
 
 ## Code Rule (Common)
 - 과도한 칸띄움은 지양한다.
