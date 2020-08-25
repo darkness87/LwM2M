@@ -61,7 +61,20 @@
   
   ```java
 
-	// 사용 예시
+	// 사용 예시 1
+	ObjectData objectData = new ObjectData();
+
+	LpDataVo lpDataVo = new LpDataVo();
+	
+	lpDataVo.setId("1234567890");
+	.
+	.
+	.
+
+	objectData.setObjectData(key, lpDataVo);
+
+
+	// 사용 예시 2
 	List<Object> list = new ArrayList<Object>();
 		
 	LpLoadProfileVo LoadProfileVo = new LpLoadProfileVo();
@@ -77,7 +90,7 @@
 			
 		list.add(LoadProfileVo);
 			
-		}
+	}
 		
 		objectData.setObjectListData(key, list);
   ``` 
@@ -127,73 +140,111 @@
 - RedisConnect 를 이용한 sample
 
   ```java
-
-		RedisConnect redisConnect = new RedisConnect();
-		ObjectMapper mapper = new ObjectMapper();
-		Jedis jedis = redisConnect.connect();
-		
-		List<Object> list = new ArrayList<Object>();
-		meterVo meterVo = new meterVo();
-		
-		// 임의 30개 계량기 meterid 등록
-		for(int i=100;i<130;i++) {
-			meterVo = new meterVo();
-			meterVo.setMeterId("11190000"+i);
-			list.add(meterVo);
-		}
-		
-		String setString1 = mapper.writeValueAsString(list);
-		jedis.set("meterid", setString1);
-		
-		
-		// 계량기 meterid 리스트 불러오기
-		List<meterVo> meterObject = mapper.readValue(jedis.get("meterid"),new TypeReference<List<meterVo>>(){});
-		
-		
-		// 임의값 KEY 지정하여 임의 데이터 넣기
-		LpLoadProfileVo lp = new LpLoadProfileVo();
-		Date date = new Date();
-		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
-		String fdate = baseFormat.format(date);
-		String meterid = "";
-		String key = "";
-		Random rnd = new Random();
-		
-		for(int i=0;i<meterObject.size();i++) {
-			lp = new LpLoadProfileVo();
-			
-			meterid = meterObject.get(i).getMeterId();
-			key = "LoadProfile:"+meterid+":"+fdate;
-			
-			rnd = new Random();
-			
-			lp.setAid("agent_cnu_13493"); // Agent ID
-			lp.setMid(meterid); // Meter ID
-			lp.setcDv("0"); // 검침구분 (0:정규, 1:재검침, 2:자율검침)
-			lp.setbDt(baseFormat.format(date)); // Base Date 수집기준일시
-			lp.setfPa(String.valueOf(rnd.nextInt(10))); // 순방향 유효전력량
-			lp.setfGa(String.valueOf(rnd.nextInt(10))); // 순방향 지상무효전력량
-			lp.setfRa(String.valueOf(rnd.nextInt(10))); // 순방향 진상무효전력량
-			lp.setfAa(String.valueOf(rnd.nextInt(10))); // 순방향 피상전력량
-			lp.setmDt(baseFormat.format(date)); // Date // 검침일시 (계기기록시간)
-			lp.setmSt("11"); // 계기 상태정보
-			lp.setrPa(String.valueOf(rnd.nextInt(10))); // 역방향 유효전력량
-			lp.setrRa(String.valueOf(rnd.nextInt(10))); // 역방향 진상무효전력량
-			lp.setrGa(String.valueOf(rnd.nextInt(10))); // 역방향 지상무효전력량
-			lp.setrSt("2"); // 결과 (0:대기, 1:전달완료, 2:성공, 101:실패, 102:미지원)
-			lp.setcDt(baseFormat.format(date)); // Date // Master 요청에 대한 상세정보
 	
-			jedis.set(key, mapper.writeValueAsString(lp));
-			jedis.expire(key, 86400); // 1일 
-			
-		}
+	// RedisConnect 직접코드 예시
+
+	RedisConnect redisConnect = new RedisConnect();
+	ObjectMapper mapper = new ObjectMapper();
+	Jedis jedis = redisConnect.connect();
+	
+	List<Object> list = new ArrayList<Object>();
+	meterVo meterVo = new meterVo();
+	
+	// 임의 30개 계량기 meterid 등록
+	for(int i=100;i<130;i++) {
+		meterVo = new meterVo();
+		meterVo.setMeterId("11190000"+i);
+		list.add(meterVo);
+	}
+	
+	String setString1 = mapper.writeValueAsString(list);
+	jedis.set("meterid", setString1);
+	
+	
+	// 계량기 meterid 리스트 불러오기
+	List<meterVo> meterObject = mapper.readValue(jedis.get("meterid"),new TypeReference<List<meterVo>>(){});
+	
+	
+	// 임의 KEY명 지정하여 임의 데이터 값 넣기
+	LpLoadProfileVo lp = new LpLoadProfileVo();
+	Date date = new Date();
+	SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
+	String fdate = baseFormat.format(date);
+	String meterid = "";
+	String key = "";
+	Random rnd = new Random();
+	
+	for(int i=0;i<meterObject.size();i++) {
+		lp = new LpLoadProfileVo();
 		
-		redisConnect.close();
+		meterid = meterObject.get(i).getMeterId();
+		key = "LoadProfile:"+meterid+":"+fdate;
 		
-		System.out.println("sample ===== "+fdate);
+		rnd = new Random();
+		
+		lp.setAid("agent_cnu_13493"); // Agent ID
+		lp.setMid(meterid); // Meter ID
+		lp.setcDv("0"); // 검침구분 (0:정규, 1:재검침, 2:자율검침)
+		lp.setbDt(baseFormat.format(date)); // Base Date 수집기준일시
+		lp.setfPa(String.valueOf(rnd.nextInt(10))); // 순방향 유효전력량
+		lp.setfGa(String.valueOf(rnd.nextInt(10))); // 순방향 지상무효전력량
+		lp.setfRa(String.valueOf(rnd.nextInt(10))); // 순방향 진상무효전력량
+		lp.setfAa(String.valueOf(rnd.nextInt(10))); // 순방향 피상전력량
+		lp.setmDt(baseFormat.format(date)); // Date // 검침일시 (계기기록시간)
+		lp.setmSt("11"); // 계기 상태정보
+		lp.setrPa(String.valueOf(rnd.nextInt(10))); // 역방향 유효전력량
+		lp.setrRa(String.valueOf(rnd.nextInt(10))); // 역방향 진상무효전력량
+		lp.setrGa(String.valueOf(rnd.nextInt(10))); // 역방향 지상무효전력량
+		lp.setrSt("2"); // 결과 (0:대기, 1:전달완료, 2:성공, 101:실패, 102:미지원)
+		lp.setcDt(baseFormat.format(date)); // Date // Master 요청에 대한 상세정보
+	
+		jedis.set(key, mapper.writeValueAsString(lp));
+		jedis.expire(key, 86400); // 1일 
+		
+	}
+	
+	redisConnect.close();
+	
+	System.out.println("sample ===== "+fdate);
   
   ```  
 
+- ObjectData 를 이용한 sample
+
+  ```java
+
+	// ObjectData를 이용한 Metering Data 정전복전 예시 
+
+	ObjectMapper mapper = new ObjectMapper();
+		
+	ObjectData objectData = new ObjectData(); 
+	LpBlackoutVo lpBlackoutVo = new LpBlackoutVo(); // 정전복전VO
+		
+	lpBlackoutVo.setaId("1");
+	lpBlackoutVo.setcDt("2");
+	lpBlackoutVo.setmId("3");
+	lpBlackoutVo.setoCd("4");
+	lpBlackoutVo.setrSt("5");
+		
+	List<LpBlackoutRvlVo> list = new ArrayList<LpBlackoutRvlVo>();
+	LpBlackoutRvlVo lpBlackoutRvlVo = new LpBlackoutRvlVo();  // 정전복전 상세VO
+		
+	for(int i=0;i<10;i++) {
+		lpBlackoutRvlVo = new LpBlackoutRvlVo();
+		lpBlackoutRvlVo.setbCt("50");
+		lpBlackoutRvlVo.setbDt("70");
+		list.add(lpBlackoutRvlVo);
+	}
+		
+	lpBlackoutVo.setrVl(list);
+	
+	objectData.setObjectData("testkey", lpBlackoutVo); // 키 규칙에 따른 키 값 생성 해야함
+	
+	// Json 값으로 정렬해서 보여주기
+	String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectData.getObjectData("testkey"));
+        System.out.println(data);
+
+  ```  
 
 ## KEY 규칙
 
@@ -211,6 +262,11 @@
 - 초기화 진행시 flushAll 명령어로 모든 키가 삭제 될수 있어야 한다.
 - expire 설정되지 않은 키에 대한 관리가 필요하다.
 - 스케줄 관리를 위한 KEY 관리는 스케줄명:스케줄실행시간 으로 했을시 문제 없는지 확인한다. (확인 필요 - 즉시실행이 아닌 스케줄시간으로 처리시)
+
+- KEYS * 로 모든키 검색 가능
+
+- KEYS *202008240930 으로 검색하면 * 다음으로 입력한 키값 검색 (앞,뒤,중간 가능)
+- KEYS *11190000110*202008240930 으로도 검색 가능
 
 
 ## Config
