@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.cnu.lwm2m.redis.api.ObjectData;
 import com.cnu.lwm2m.redis.api.RedisConnect;
-import com.cnu.lwm2m.redis.vo.LpBlackoutRvlVo;
+import com.cnu.lwm2m.redis.vo.LpBlackoutRviVo;
 import com.cnu.lwm2m.redis.vo.LpBlackoutVo;
 
 import redis.clients.jedis.Jedis;
@@ -41,14 +41,14 @@ public class App1 {
 		lpBlackoutVo.setoCd("4");
 		lpBlackoutVo.setrSt("5");
 		
-		List<LpBlackoutRvlVo> list = new ArrayList<LpBlackoutRvlVo>();
-		LpBlackoutRvlVo lpBlackoutRvlVo = new LpBlackoutRvlVo();
+		List<LpBlackoutRviVo> list = new ArrayList<LpBlackoutRviVo>();
+		LpBlackoutRviVo lpBlackoutRviVo = new LpBlackoutRviVo();
 		
 		for(int i=0;i<10;i++) {
-			lpBlackoutRvlVo = new LpBlackoutRvlVo();
-			lpBlackoutRvlVo.setbCt("50");
-			lpBlackoutRvlVo.setbDt("70");
-			list.add(lpBlackoutRvlVo);
+			lpBlackoutRviVo = new LpBlackoutRviVo();
+			lpBlackoutRviVo.setbCt("50");
+			lpBlackoutRviVo.setbDt("70");
+			list.add(lpBlackoutRviVo);
 		}
 		
 		lpBlackoutVo.setrVl(list);

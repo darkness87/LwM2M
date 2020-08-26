@@ -11,7 +11,7 @@ public class LpBlackoutVo {
 	private String cDt; // Captured Date 검침 일시
 	private String rSt; // Requested Work Result 결과 (0:대기, 1:전달완료, 2:성공, 101:무응답, 102:미지원)
 
-	List<LpBlackoutRvlVo> rVl = new ArrayList<LpBlackoutRvlVo>(); // Object / Array Requested Value Info 검침 결과에 대한 상세내용
+	List<LpBlackoutRviVo> rVl = new ArrayList<LpBlackoutRviVo>(); // Object / Array Requested Value Info 검침 결과에 대한 상세내용
 
 	public String getaId() {
 		return aId;
@@ -53,11 +53,11 @@ public class LpBlackoutVo {
 		this.rSt = rSt;
 	}
 
-	public List<LpBlackoutRvlVo> getrVl() {
+	public List<LpBlackoutRviVo> getrVl() {
 		return rVl;
 	}
 
-	public void setrVl(List<LpBlackoutRvlVo> rVl) {
+	public void setrVl(List<LpBlackoutRviVo> rVl) {
 		this.rVl = rVl;
 	}
 	
