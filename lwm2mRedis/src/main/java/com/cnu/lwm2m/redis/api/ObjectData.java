@@ -24,6 +24,26 @@ public class ObjectData {
 	ObjectMapper mapper = new ObjectMapper();
 	
 	/**
+	 * Object 데이터 GET, 리스트 GET
+	 * @param key
+	 * @return 
+	 * @return Object
+	 * @throws Exception
+	 */
+	public String getObjectStringData(String key) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if(jedis==null) {
+			return null;
+		}
+		String data = jedis.get(key);
+		if(data==null||data.equals("")) {
+			return null;
+		}
+		redisConnect.close();
+		return data;
+	}
+	
+	/**
 	 * Object 데이터 SET
 	 * @param key
 	 * @param object
@@ -53,7 +73,7 @@ public class ObjectData {
 	 * @return Object
 	 * @throws Exception
 	 */
-	public <T> Object getObjectData(String key) throws Exception {
+	public Object getObjectData(String key) throws Exception {
 		
 		Jedis jedis = redisConnect.connect();
 		
@@ -110,4 +130,33 @@ public class ObjectData {
 		return object;
 	}
 	
+	
+	// TODO
+	public <T> List<T> getTData(String key) throws Exception {
+		
+		Jedis jedis = redisConnect.connect();
+		
+		if(jedis==null) {
+			return null;
+		}
+		
+		List<T> object = mapper.readValue(jedis.get(key),new TypeReference<List<T>>(){});
+		redisConnect.close();
+		
+		return object;
+	}
+	// TODO
+	public <T> List<T> getTListData(String key) throws Exception {
+		
+		Jedis jedis = redisConnect.connect();
+		
+		if(jedis==null) {
+			return null;
+		}
+		
+		List<T> object = mapper.readValue(jedis.get(key),new TypeReference<List<T>>(){});
+		redisConnect.close();
+		
+		return object;
+	}
 }

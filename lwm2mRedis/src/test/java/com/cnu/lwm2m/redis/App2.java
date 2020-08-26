@@ -9,7 +9,7 @@ import java.util.Random;
 import com.cnu.lwm2m.redis.api.ObjectData;
 import com.cnu.lwm2m.redis.api.RedisConnect;
 import com.cnu.lwm2m.redis.vo.LpLoadProfileVo;
-import com.cnu.lwm2m.redis.vo.meterVo;
+import com.cnu.lwm2m.redis.vo.MeterVo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,10 +36,10 @@ public class App2
 		
 		
 		List<Object> list = new ArrayList<Object>();
-		meterVo meterVo = new meterVo();
+		MeterVo meterVo = new MeterVo();
 		
 		for(int i=100;i<130;i++) {
-			meterVo = new meterVo();
+			meterVo = new MeterVo();
 			meterVo.setMeterId("11190000"+i);
 			list.add(meterVo);
 		}
@@ -49,7 +49,7 @@ public class App2
 		
 		
 		
-		List<meterVo> meterObject = mapper.readValue(jedis.get("meterid"),new TypeReference<List<meterVo>>(){});
+		List<MeterVo> meterObject = mapper.readValue(jedis.get("meterid"),new TypeReference<List<MeterVo>>(){});
 		
 		
 		
