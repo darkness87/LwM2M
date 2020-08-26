@@ -49,10 +49,11 @@ public class ObjectData {
 	/**
 	 * Object 데이터 GET
 	 * @param key
+	 * @return 
 	 * @return Object
 	 * @throws Exception
 	 */
-	public Object getObjectData(String key) throws Exception {
+	public <T> Object getObjectData(String key) throws Exception {
 		
 		Jedis jedis = redisConnect.connect();
 		
