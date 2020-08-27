@@ -19,7 +19,7 @@ public class App {
 	
 	public static void main(String[] args) throws Exception {
 		
-		System.out.println("=== start test ===");
+		log.info("=== start test ===");
 
 		RedisConnect redisConnect = new RedisConnect();
 		ObjectMapper mapper = new ObjectMapper();
@@ -29,7 +29,7 @@ public class App {
 		
 		redisConnect.close();
 		
-		System.out.println("=== end test ===");
+		log.info("=== end test ===");
 
 	}
 }

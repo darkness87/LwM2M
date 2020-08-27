@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.cnu.lwm2m.redis.api.ObjectData;
+import com.cnu.lwm2m.redis.api.RedisObjectData;
 import com.cnu.lwm2m.redis.api.RedisConnect;
 import com.cnu.lwm2m.redis.vo.LpBlackoutRviVo;
 import com.cnu.lwm2m.redis.vo.LpBlackoutVo;
@@ -32,7 +32,7 @@ public class App1 {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		ObjectData objectData = new ObjectData();
+		RedisObjectData objectData = new RedisObjectData();
 		LpBlackoutVo lpBlackoutVo = new LpBlackoutVo();
 		
 		lpBlackoutVo.setaId("1");

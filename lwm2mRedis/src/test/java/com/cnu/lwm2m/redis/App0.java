@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.cnu.lwm2m.redis.api.ObjectData;
+import com.cnu.lwm2m.redis.api.RedisObjectData;
 import com.cnu.lwm2m.redis.vo.MeterVo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +17,7 @@ public class App0 {
 		System.out.println("===== Meter 정보 생성");
 		String key = "Meter:Info:List";
 		
-		ObjectData objectData = new ObjectData();
+		RedisObjectData objectData = new RedisObjectData();
 		ObjectMapper mapper = new ObjectMapper();
 		
 		List<Object> list = new ArrayList<Object>();
@@ -43,12 +43,12 @@ public class App0 {
 		List<MeterVo> meterlist = mapper.readValue(objectData.getObjectStringData(key),new TypeReference<List<MeterVo>>(){});
 		
 		for(int i=0;meterlist.size()>i;i++) {
-			 System.out.println(meterlist.get(i).getMeterId());
+//			 System.out.println(meterlist.get(i).getMeterId());
 		};
 		
 		// Json 정렬
 		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist);
-		System.out.println(data);
+//		System.out.println(data);
 		
 		
 		// meter 정보 get 2
@@ -62,7 +62,7 @@ public class App0 {
 		
 		MeterVo meterlist2 = mapper.readValue(objectData.getObjectStringData(key2),MeterVo.class);
 		String data2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist2);
-		System.out.println(data2);
+//		System.out.println(data2);
 
 
 		System.out.println("===== 종료");

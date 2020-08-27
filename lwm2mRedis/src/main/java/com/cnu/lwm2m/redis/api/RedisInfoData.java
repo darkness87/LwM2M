@@ -2,6 +2,9 @@ package com.cnu.lwm2m.redis.api;
 
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import redis.clients.jedis.Jedis;
@@ -11,8 +14,9 @@ import redis.clients.jedis.Jedis;
  * @version 0.1
  * @since 2020.08.18
  */
-public class InfoData {
+public class RedisInfoData {
 
+	static final Logger log = LoggerFactory.getLogger(RedisInfoData.class);
 	/*
 	 * Class 생성시 DbConnect, ObjectMapper 선언하여 사용
 	 * 레디스 연동을 위한 Jedis 라이브러리 사용
@@ -28,17 +32,14 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public Set<String> getAllKey() throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return null;
 		}
-		
 		Set<String> keys = jedis.keys("*");
 		redisConnect.close();
-		
-		return keys; // return 처리 오류에 따른 변경 필요
+		return keys;
 	}
 	
 	/**
@@ -48,17 +49,14 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public Set<String> getSearchKey(String key) throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return null;
 		}
-		
 		Set<String> keys = jedis.keys("*"+key+"*");
 		redisConnect.close();
-		
-		return keys; // return 처리 오류에 따른 변경 필요
+		return keys;
 	}
 	
 	/**
@@ -68,16 +66,13 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public Boolean getBooleanKey(String key) throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return null;
 		}
-		
 		Boolean ex = jedis.exists(key);
 		redisConnect.close();
-		
 		return ex;
 	}
 	
@@ -90,16 +85,13 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public int setExpireKey(String key, int sec) throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return 1;
 		}
-		
 		jedis.expire(key, sec);
 		redisConnect.close();
-		
 		return 0;
 	}
 	
@@ -110,19 +102,15 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public int setPersistKey(String key) throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return 1;
 		}
-		
 		jedis.persist(key);
 		redisConnect.close();
-		
 		return 0;
 	}
-	
 	
 	/**
 	 * KEY 삭제
@@ -131,16 +119,13 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public int setDelKey(String key) throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return 1;
 		}
-		
 		jedis.del(key);
 		redisConnect.close();
-		
 		return 0;
 	}
 	
@@ -150,16 +135,13 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public String getClientList() throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return null;
 		}
-		
 		String clientList = jedis.clientList();
 		redisConnect.close();
-		
 		return clientList;
 	}
 	
@@ -169,16 +151,13 @@ public class InfoData {
 	 * @throws Exception
 	 */
 	public String getRedisInfo() throws Exception{
-		
 		Jedis jedis = redisConnect.connect();
-		
 		if(jedis==null) {
+			log.info("Redis 연결오류");
 			return null;
 		}
-		
 		String redisInfo = jedis.info();
 		redisConnect.close();
-		
 		return redisInfo;
 	}
 	

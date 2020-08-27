@@ -5,7 +5,6 @@ import java.util.List;
 
 public class LpMeteringNormalVo {
 
-
 	private String rId; // Request ID 요청 ID
 	private String aId; // Agent ID Agent의 고유 ID
 	private String mId; // Meter ID 계기 ID
