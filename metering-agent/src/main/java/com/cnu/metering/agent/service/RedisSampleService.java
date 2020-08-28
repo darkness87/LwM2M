@@ -6,12 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cnu.lwm2m.redis.api.RedisInfoData;
-import com.cnu.lwm2m.redis.api.RedisObjectData;
 import com.cnu.lwm2m.redis.vo.LpBlackoutRviVo;
 import com.cnu.lwm2m.redis.vo.LpBlackoutVo;
 import com.cnu.lwm2m.redis.vo.LpLoadProfileVo;

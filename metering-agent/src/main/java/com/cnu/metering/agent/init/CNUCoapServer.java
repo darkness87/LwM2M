@@ -3,7 +3,6 @@ package com.cnu.metering.agent.init;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
-import java.util.List;
 
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.CoapServer;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Component;
 import com.cnu.metering.agent.service.CommonService;
 import com.cnu.metering.agent.service.MeterService;
 import com.cnu.metering.agent.service.RedisSampleService;
-import com.cnu.metering.agent.vo.MeterVO;
-import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
 

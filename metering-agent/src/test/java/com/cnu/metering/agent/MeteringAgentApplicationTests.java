@@ -3,11 +3,11 @@ package com.cnu.metering.agent;
 import java.io.IOException;
 
 import org.eclipse.californium.core.CoapClient;
+import org.eclipse.californium.core.CoapResponse;
+import org.eclipse.californium.core.Utils;
 import org.eclipse.californium.elements.exception.ConnectorException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.cnu.metering.agent.service.RedisSampleService;
 
 @SpringBootTest
 class MeteringAgentApplicationTests {
@@ -16,31 +16,30 @@ class MeteringAgentApplicationTests {
 	void contextLoads() {
 	}
 
-	/*
-	 * public static void main(String[] args) throws Exception {
-	 * 
-	 * RedisSampleService RedisSampleService = new RedisSampleService();
-	 * 
-	 * 
-	 * }
-	 */
 	
 	public static void main(String[] args) throws ConnectorException, IOException {
-	  	CoapClient client1 = new CoapClient("coap://localhost:25683/cmd");
+	  	CoapClient client = new CoapClient("coap://localhost:25683/cmd");
 
-	  	String text = client1.get().getResponseText(); // blocking call
-//	  	String xml = client1.get("").getResponseText();
+		CoapResponse response = null;
+		String result = null;
+		try {
+			response = client.get();
+		} catch (ConnectorException | IOException e) {
+			System.out.println("Got an error: " + e.getMessage());
+		}
 
-		/*
-		 * CoapClient client2 = new CoapClient("coap://localhost:15683/cmd");
-		 * 
-		 * CoapResponse resp = client2.post("payload", "text"); // for response details
-		 * System.out.println( resp.isSuccess() ); System.out.println( resp.getOptions()
-		 * );
-		 * 
-		 * client2.delete();
-		 */
-	  	
+		if (response!=null) {
+			System.out.println("code : " + response.getCode());
+			System.out.println("option : " + response.getOptions());
+			System.out.println("responseText : " + response.getResponseText());
+			System.out.println("advanced : " + response.advanced());
+			result = Utils.prettyPrint(response);
+			System.out.println("result : " + result);
+		} else {
+			System.out.println("No response received.");
+		}
+		client.shutdown();
+        
 	  }
 	
 }
