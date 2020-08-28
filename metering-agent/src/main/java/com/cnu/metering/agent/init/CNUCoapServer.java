@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.cnu.metering.agent.service.CommonService;
 import com.cnu.metering.agent.service.MeterService;
+import com.cnu.metering.agent.service.RedisSampleService;
 import com.cnu.metering.agent.vo.MeterVO;
 import com.google.gson.Gson;
 
@@ -43,6 +44,8 @@ public class CNUCoapServer extends CoapServer {
 	CommonService commonService;
 	@Autowired
 	MeterService meterService;
+
+	RedisSampleService redisSampleService = new RedisSampleService();
 
 	public void addEndpoints() {
 		NetworkConfig config = NetworkConfig.getStandard();
@@ -84,13 +87,17 @@ public class CNUCoapServer extends CoapServer {
 		public void handleGET(CoapExchange exchange) {
 			log.info("GET method 접근");
 			// respond to the request
-			String requestText = exchange.getRequestText();
-			// TODO: json 데이터에 대한 처리 후 분기
-			log.debug(requestText);
-			// 분기 후 처리내용
-			Gson gson = new Gson();
-			List<MeterVO> meterList = meterService.getMeterList();
-			exchange.respond(gson.toJson(meterList));
+			String data = "";
+			try {
+				data = redisSampleService.getMeterList("meter:info");
+			} catch (Exception e) {
+				e.printStackTrace();
+				exchange.respond(e.getMessage());
+				return;
+			}
+//			exchange.respond("Hello World! GET");
+
+			exchange.respond(data);
 		}
 
 		@Override

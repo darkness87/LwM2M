@@ -19,13 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
-public class Lwm2mClientApplication implements ApplicationRunner, DisposableBean {
+public class MeteringAgentApplication implements ApplicationRunner, DisposableBean {
 
 	private static CNUCoapServer cnuCoapServer;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Lwm2mClientApplication.class, args);
-		Lwm2mClientApplication app = new Lwm2mClientApplication();
+		SpringApplication.run(MeteringAgentApplication.class, args);
+		MeteringAgentApplication app = new MeteringAgentApplication();
 		app.coapServerStart();
 	}
 
