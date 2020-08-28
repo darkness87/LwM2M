@@ -24,7 +24,6 @@ public class RedisInfoData {
 	 */
 
 	RedisConnect redisConnect = new RedisConnect();
-	ObjectMapper mapper = new ObjectMapper();
 	
 	/**
 	 * Key 전체 조회
