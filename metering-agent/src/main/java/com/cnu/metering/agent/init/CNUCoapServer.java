@@ -18,6 +18,9 @@ import org.springframework.stereotype.Component;
 import com.cnu.metering.agent.dao.RedisDao;
 import com.cnu.metering.agent.service.CommonService;
 import com.cnu.metering.agent.service.MeterService;
+import com.cnu.metering.agent.vo.MeterInfoVO;
+import com.cnu.metering.agent.vo.MeterVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,16 +95,18 @@ public class CNUCoapServer extends CoapServer implements DisposableBean {
 		public void handleGET(CoapExchange exchange) {
 			log.info("GET method 접근");
 			// respond to the request
+			MeterInfoVO meterVO;
 			String data = "";
+			ObjectMapper mapper = new ObjectMapper();
 
 			try {
-				data = redisDAO.getRedisData("meter:info");
+				meterVO = redisDAO.getRedisData("Meter:Info:One",MeterInfoVO.class);
+				data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterVO);
 			} catch (Exception e) {
 				e.printStackTrace();
 				exchange.respond(e.getMessage());
 				return;
 			}
-
 			exchange.respond(data);
 		}
 

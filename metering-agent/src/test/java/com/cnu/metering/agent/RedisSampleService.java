@@ -45,18 +45,15 @@ public class RedisSampleService {
 		}
 
 		redisDao.setRedisData(key, list); // 데이터 set, (Key, Value) 값으로 저장
-		String redisData = redisDao.getRedisData(key);
+		MeterVO redisData = redisDao.getRedisData(key,MeterVO.class);
 		log.info("{} => Test OK : {}", key, redisData);
 	}
 
 	public String getMeterList(String key) throws Exception {
-		key = "meter:info";
-		String redisData = redisDao.getRedisData(key);
+		key = "Meter:Info:List";
+		List<MeterVO> redisData = redisDao.getRedisData(key); // 데이터 get, Object를 List<MeterVo> 타입으로
 
-		List<MeterVO> meterlist = mapper.readValue(redisData, new TypeReference<List<MeterVO>>() {
-		}); // 데이터 get, Object를 List<MeterVo> 타입으로
-
-		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist);
+		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(redisData);
 		log.info(data); // Json 정렬
 
 		return data;
@@ -104,10 +101,9 @@ public class RedisSampleService {
 		String fdate = baseFormat.format(date);
 		key = "LoadProfile:" + meterid + ":" + fdate;
 
-		String redisData = redisDao.getRedisData(key);
-		LpLoadProfileVO loadProfileData = mapper.readValue(redisData, LpLoadProfileVO.class);
+		LpLoadProfileVO redisData = redisDao.getRedisData(key,LpLoadProfileVO.class);
 
-		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(loadProfileData);
+		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(redisData);
 		log.info(data); // Json 정렬
 
 		return data;
@@ -158,9 +154,7 @@ public class RedisSampleService {
 
 		key = "BlackOut:" + meterid + ":" + fdate; // KEY명 규칙 필요
 
-		String redisData = redisDao.getRedisData(key);
-
-		LpBlackoutVO blackOutData = mapper.readValue(redisData, LpBlackoutVO.class);
+		LpBlackoutVO blackOutData = redisDao.getRedisData(key,LpBlackoutVO.class);
 
 		for (int i = 0; blackOutData.getrVl().size() > i; i++) {
 			blackOutData.getrVl().get(i).getbCt();

@@ -1,6 +1,6 @@
 package com.cnu.metering.agent.vo;
 
-public class MeterVO {
+public class MeterInfoVO {
 
 	private String meterId; // 계량기번호
 	private String meterType; // 계량기타입

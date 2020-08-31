@@ -17,8 +17,8 @@ public class MeterService extends AbsService {
 
 		MeterVO meterVO1 = new MeterVO();
 		meterVO1.setMeterId("0421100001");
-		meterVO1.setType("G");
-		MeterVO meterVO2 = new MeterVO("0421100001", "E");
+		meterVO1.setMeterType("G");
+		MeterVO meterVO2 = new MeterVO("0421100001", "E","","");
 
 		meterList.add(meterVO1);
 		meterList.add(meterVO2);

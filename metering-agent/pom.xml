@@ -94,13 +94,13 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- redis user lib systemPath property-->
+		<!-- redis user lib systemPath dependency-->
 		<dependency>
 			<groupId>com.cnu.lwm2m.redis</groupId>
 			<artifactId>api</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/lwm2mRedis.jar</systemPath>
+			<systemPath>${basedir}/lib/cnuRedis.jar</systemPath>
 		</dependency>
 		
 	</dependencies>

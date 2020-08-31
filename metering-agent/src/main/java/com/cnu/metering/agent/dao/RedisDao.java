@@ -1,5 +1,6 @@
 package com.cnu.metering.agent.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Repository;
@@ -14,12 +15,27 @@ public class RedisDao {
 	RedisInfoData redisInfoData = new RedisInfoData();
 	
 	public int setRedisData(String key,Object object) throws Exception {
-		int returnValue = redisObjectData.setObjectData(key, object);
+		int returnValue = redisObjectData.setRedisObjectData(key, object);
 		return returnValue;
 	}
 	
-	public String getRedisData(String key) throws Exception {
-		String data = redisObjectData.getObjectStringData(key);
+	public int setRedisStringData(String key,String setString) throws Exception {
+		int returnValue = redisObjectData.setRedisStringData(key, setString);
+		return returnValue;
+	}
+	
+	public <T> T getRedisData(String key,Class<T> T) throws Exception {
+		T object = redisObjectData.getRedisObjectData(key,T);
+		return object;
+	}
+	
+	public <T> List<T> getRedisData(String key) throws Exception {
+		List<T> object = redisObjectData.getRedisListObjectData(key);
+		return object;
+	}
+
+	public String getRedisStringData(String key) throws Exception {
+		String data = redisObjectData.getRedisStringData(key);
 		return data;
 	}
 	
