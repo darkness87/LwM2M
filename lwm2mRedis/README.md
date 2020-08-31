@@ -1,4 +1,4 @@
-## LwM2MRedis.jar
+## cnuRedis.jar
 
 @author skchae@cnuglobal.com
 @version 0.1_20200818
@@ -12,14 +12,14 @@
 
   |라이브러리              |비고      |
   |----------------|-----------|
-  |junit-3.8.1.jar||
   |jedis-3.3.0.jar||
   |commons-pool2-2.6.2.jar||
-  |slf4j-api-1.7.30.jar||
-  |slf4j-simple-1.7.30.jar||
   |jackson-databind-2.11.0.jar||
   |jackson-annotations-2.11.0.jar||
   |jackson-core-2.11.0.jar||
+  |junit-3.8.1.jar|삭제|
+  |slf4j-api-1.7.30.jar|삭제|
+  |slf4j-simple-1.7.30.jar|삭제|
 
 
 ## API Class
@@ -38,31 +38,21 @@
 
   ```  
 
-- ObjectData
-  => Object 데이터를 get/set 하여 할용할 수 있도록 한다.
+- RedisObjectData
+  => Object 또는 String Object 데이터를 get/set 하여 할용할 수 있도록 한다.
   => List 된 Object 정보도 get/set
 
   ```java
-  ObjectData objectData = new ObjectData();
+  RedisObjectData redisObjectData = new RedisObjectData();
 
   // 해당 키 정보로 Object 값 SET
-  objectData.setObjectData(String key, Object object);
-  
-  // 해당 키 정보로 Object 값 GET
-  objectData.getObjectData(String key);
+  redisObjectData.setRedisObjectData(String key, Object object);
+  // 해당 키 정보로 String 값 SET
+  redisObjectData.setRedisStringData(String key, String setString);
 
-  // 해당 키 정보로 List Object 값 SET
-  objectData.setObjectListData(String key, List<Object> object)
-  
-  // 해당 키 정보로 List Object 값 GET
-  objectData.getObjectListData(String key)
-
-  ```  
-  
-  ```java
 
 	// 사용 예시 1
-	ObjectData objectData = new ObjectData();
+	RedisObjectData redisObjectData = new RedisObjectData();
 
 	LpDataVo lpDataVo = new LpDataVo();
 	
@@ -70,8 +60,7 @@
 	.
 	.
 	.
-
-	objectData.setObjectData(key, lpDataVo);
+	redisObjectData.setRedisObjectData(key, lpDataVo); // Object 데이터 SET
 
 
 	// 사용 예시 2
@@ -85,166 +74,76 @@
 		.
 		.
 		.
-		.
-		.
-			
 		list.add(LoadProfileVo);
 			
 	}
-		
-		objectData.setObjectListData(key, list);
+	redisObjectData.setObjectListData(key, list); // List<Objcet> 데이터 SET
+
+
+	// 사용 예시 3
+	redisObjectData.setRedisStringData(String key, String setString); // String 데이터 SET
+
+  ``` 
+  
+  ```java
+  RedisObjectData redisObjectData = new RedisObjectData();
+
+  // 해당 키 정보로 String 값 GET
+  redisObjectData.getRedisStringData(String key);
+
+  // 해당 키 정보로 Object 값 GET
+  redisObjectData.getRedisObjectData(String key,Class<T> T);
+
+  // 해당 키 정보로 List<Object> 값 GET
+  redisObjectData.getRedisListObjectData(String key);
+
+
+	// 사용 예시 1
+	RedisObjectData redisObjectData = new RedisObjectData();
+
+	String meter = redisTest.getRedisStringData("Meter:Info:One"); // String 가져올시
+
+	// 사용 예시 2
+	MeterVo meterOne = redisTest.getRedisObjectData("Meter:Info:One",MeterVo.class); // Object 가져올시
+
+	// 사용 예시 3
+	List<MeterVo> meter = redisTest.getRedisListObjectData("Meter:Info:List"); // List화된 Object 가져올시
+
   ``` 
 
-- InfoData
+
+- RedisInfoData
   => 전체 KEY 조회, KEY 검색, KEY값 유무, KEY데이터 보관일(초) 설정, KEY 삭제, 접속 Client확인, 상태 등을 확인할 수 있다.
 
   ```java
-  InfoData infoData = new InfoData();
+  RedisInfoData redisInfoData = new RedisInfoData();
   
   // 전체 KEY 조회 , return Set<String>
-  infoData.getAllKey();
+  redisInfoData.getAllKey();
 
   // 검색 KEY 조회, return Set<String>
-  infoData.getSearchKey(String key);
+  redisInfoData.getSearchKey(String key);
 
   // KEY 값 유무, return true or false
-  infoData.getBooleanKey(String key);
+  redisInfoData.getBooleanKey(String key);
   
   // KEY Expire 초 세팅 (해당 초 만큼 데이터 유지)
-  infoData.setExpireKey(String key, int sec);
+  redisInfoData.setExpireKey(String key, int sec);
   
   // KEY Expire 해제
-  infoData.setPersistKey(String key);
+  redisInfoData.setPersistKey(String key);
   
   // KEY 삭제
-  infoData.setDelKey(String key);
+  redisInfoData.setDelKey(String key);
   
   // 현재 접속 Client 리스트
-  infoData.getClientList();
+  redisInfoData.getClientList();
   
   // Radis 정보 출력
-  infoData.getRedisInfo();
+  redisInfoData.getRedisInfo();
   
   ```  
   
-- LpData
-  => Metering Data 정보를 조회 (미사용 예정 - ObjectData로 통일)
-  ```java
-  LpData lpData = new LpData();
-  
-  ```  
-  
-
-## Sample
-
-- RedisConnect 를 이용한 sample
-
-  ```java
-	
-	// RedisConnect 직접코드 예시
-
-	RedisConnect redisConnect = new RedisConnect();
-	ObjectMapper mapper = new ObjectMapper();
-	Jedis jedis = redisConnect.connect();
-	
-	List<Object> list = new ArrayList<Object>();
-	meterVo meterVo = new meterVo();
-	
-	// 임의 30개 계량기 meterid 등록
-	for(int i=100;i<130;i++) {
-		meterVo = new meterVo();
-		meterVo.setMeterId("11190000"+i);
-		list.add(meterVo);
-	}
-	
-	String setString1 = mapper.writeValueAsString(list);
-	jedis.set("meterid", setString1);
-	
-	
-	// 계량기 meterid 리스트 불러오기
-	List<meterVo> meterObject = mapper.readValue(jedis.get("meterid"),new TypeReference<List<meterVo>>(){});
-	
-	
-	// 임의 KEY명 지정하여 임의 데이터 값 넣기
-	LpLoadProfileVo lp = new LpLoadProfileVo();
-	Date date = new Date();
-	SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
-	String fdate = baseFormat.format(date);
-	String meterid = "";
-	String key = "";
-	Random rnd = new Random();
-	
-	for(int i=0;i<meterObject.size();i++) {
-		lp = new LpLoadProfileVo();
-		
-		meterid = meterObject.get(i).getMeterId();
-		key = "LoadProfile:"+meterid+":"+fdate;
-		
-		rnd = new Random();
-		
-		lp.setAid("agent_cnu_13493"); // Agent ID
-		lp.setMid(meterid); // Meter ID
-		lp.setcDv("0"); // 검침구분 (0:정규, 1:재검침, 2:자율검침)
-		lp.setbDt(baseFormat.format(date)); // Base Date 수집기준일시
-		lp.setfPa(String.valueOf(rnd.nextInt(10))); // 순방향 유효전력량
-		lp.setfGa(String.valueOf(rnd.nextInt(10))); // 순방향 지상무효전력량
-		lp.setfRa(String.valueOf(rnd.nextInt(10))); // 순방향 진상무효전력량
-		lp.setfAa(String.valueOf(rnd.nextInt(10))); // 순방향 피상전력량
-		lp.setmDt(baseFormat.format(date)); // Date // 검침일시 (계기기록시간)
-		lp.setmSt("11"); // 계기 상태정보
-		lp.setrPa(String.valueOf(rnd.nextInt(10))); // 역방향 유효전력량
-		lp.setrRa(String.valueOf(rnd.nextInt(10))); // 역방향 진상무효전력량
-		lp.setrGa(String.valueOf(rnd.nextInt(10))); // 역방향 지상무효전력량
-		lp.setrSt("2"); // 결과 (0:대기, 1:전달완료, 2:성공, 101:실패, 102:미지원)
-		lp.setcDt(baseFormat.format(date)); // Date // Master 요청에 대한 상세정보
-	
-		jedis.set(key, mapper.writeValueAsString(lp));
-		jedis.expire(key, 86400); // 1일 
-		
-	}
-	
-	redisConnect.close();
-	
-	System.out.println("sample ===== "+fdate);
-  
-  ```  
-
-- ObjectData 를 이용한 sample
-
-  ```java
-
-	// ObjectData를 이용한 Metering Data 정전복전 예시 
-
-	ObjectMapper mapper = new ObjectMapper();
-		
-	ObjectData objectData = new ObjectData(); 
-	LpBlackoutVo lpBlackoutVo = new LpBlackoutVo(); // 정전복전VO
-		
-	lpBlackoutVo.setaId("1");
-	lpBlackoutVo.setcDt("2");
-	lpBlackoutVo.setmId("3");
-	lpBlackoutVo.setoCd("4");
-	lpBlackoutVo.setrSt("5");
-		
-	List<LpBlackoutRvlVo> list = new ArrayList<LpBlackoutRvlVo>();
-	LpBlackoutRvlVo lpBlackoutRvlVo = new LpBlackoutRvlVo();  // 정전복전 상세VO
-		
-	for(int i=0;i<10;i++) {
-		lpBlackoutRvlVo = new LpBlackoutRvlVo();
-		lpBlackoutRvlVo.setbCt("50");
-		lpBlackoutRvlVo.setbDt("70");
-		list.add(lpBlackoutRvlVo);
-	}
-		
-	lpBlackoutVo.setrVl(list);
-	
-	objectData.setObjectData("testkey", lpBlackoutVo); // 키 규칙에 따른 키 값 생성 해야함
-	
-	// Json 값으로 정렬해서 보여주기
-	String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectData.getObjectData("testkey"));
-        System.out.println(data);
-
-  ```  
 
 ## KEY 규칙
 
@@ -266,7 +165,7 @@
 - KEYS * 로 모든키 검색 가능
 
 - KEYS *202008240930 으로 검색하면 * 다음으로 입력한 키값 검색 (앞,뒤,중간 가능)
-- KEYS *11190000110*202008240930 으로도 검색 가능
+- KEYS *11190000110 *202008240930 으로도 검색 가능
 
 
 ## Config
@@ -291,3 +190,110 @@
 * Fat Jar Eclipse Plug-In 을 설치하여 배포한다.
 * 해당 플러그인을 설치하면 사용되는 라이브러리까지 모두 포함하여 jar 파일 생성이 가능한다.
 * 개발시 jar파일에 포함된 중복 라이브러리는 피한다.
+
+
+## Sample Code
+
+- Sample Code
+
+  ```java
+
+  java test 패키지 샘플코드 참고
+	
+  ```  
+
+  ```java
+
+  // RedisConnect 직접코드 예시 (참고용)
+
+  RedisConnect redisConnect = new RedisConnect();
+  ObjectMapper mapper = new ObjectMapper();
+  Jedis jedis = redisConnect.connect();
+  
+  List<Object> list = new ArrayList<Object>();
+  meterVo meterVo = new meterVo();
+  
+  // 임의 30개 계량기 meterid 등록
+  for(int i=100;i<130;i++) {
+  	meterVo = new meterVo();
+  	meterVo.setMeterId("11190000"+i);
+  	list.add(meterVo);
+  }
+  
+  String setString1 = mapper.writeValueAsString(list);
+  jedis.set("meterid", setString1);
+  
+  
+  // 계량기 meterid 리스트 불러오기
+  List<meterVo> meterObject = mapper.readValue(jedis.get("meterid"),new TypeReference<List<meterVo>>(){});
+  
+  
+  // 임의 KEY명 지정하여 임의 데이터 값 넣기
+  LpLoadProfileVo lp = new LpLoadProfileVo();
+  Date date = new Date();
+  SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
+  String fdate = baseFormat.format(date);
+  String meterid = "";
+  String key = "";
+  Random rnd = new Random();
+  
+  for(int i=0;i<meterObject.size();i++) {
+  	lp = new LpLoadProfileVo();
+  	
+  	meterid = meterObject.get(i).getMeterId();
+  	key = "LoadProfile:"+meterid+":"+fdate;
+  	
+  	rnd = new Random();
+  	
+  	lp.setAid("agent_cnu_13493"); // Agent ID
+  	lp.setMid(meterid); // Meter ID
+  	lp.setcDv("0"); // 검침구분 (0:정규, 1:재검침, 2:자율검침)
+  	lp.setbDt(baseFormat.format(date)); // Base Date 수집기준일시
+  	lp.setfPa(String.valueOf(rnd.nextInt(10))); // 순방향 유효전력량
+  	lp.setfGa(String.valueOf(rnd.nextInt(10))); // 순방향 지상무효전력량
+  	lp.setfRa(String.valueOf(rnd.nextInt(10))); // 순방향 진상무효전력량
+  	lp.setfAa(String.valueOf(rnd.nextInt(10))); // 순방향 피상전력량
+  	lp.setmDt(baseFormat.format(date)); // Date // 검침일시 (계기기록시간)
+  	lp.setmSt("11"); // 계기 상태정보
+  	lp.setrPa(String.valueOf(rnd.nextInt(10))); // 역방향 유효전력량
+  	lp.setrRa(String.valueOf(rnd.nextInt(10))); // 역방향 진상무효전력량
+  	lp.setrGa(String.valueOf(rnd.nextInt(10))); // 역방향 지상무효전력량
+  	lp.setrSt("2"); // 결과 (0:대기, 1:전달완료, 2:성공, 101:실패, 102:미지원)
+  	lp.setcDt(baseFormat.format(date)); // Date // Master 요청에 대한 상세정보
+  
+  	jedis.set(key, mapper.writeValueAsString(lp));
+  	jedis.expire(key, 86400); // 1일 
+  	
+  }
+  
+  redisConnect.close();
+  
+  System.out.println("sample ===== "+fdate);
+	
+  ```  
+
+## CoAP
+
+- 전달 정보 (테스트 샘플값)
+
+//==[ CoAP Response ]============================================
+MID    : 18773
+Token  : 9C210F745C8C662C
+Type   : ACK
+Status : 2.05 - CONTENT
+Options: {"Content-Format":"text/plain"}
+RTT    : 129 ms
+Payload: 256 Bytes
+//---------------------------------------------------------------
+[ {
+  "meterId" : "11190000100",
+  "meterType" : "Advance E-type",
+  "rDt" : "20200828093300",
+  "info" : "기타정보"
+}, {
+  "meterId" : "11190000101",
+  "meterType" : "Advance E-type",
+  "rDt" : "20200828093300",
+  "info" : "기타정보"
+} ]
+//===============================================================
