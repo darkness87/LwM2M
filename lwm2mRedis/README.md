@@ -88,20 +88,20 @@
   ```java
   RedisObjectData redisObjectData = new RedisObjectData();
 
-  //
+  // 해당 키 정보로 String 값 GET
   redisObjectData.getRedisStringData(String key);
 
-  //
+  // 해당 키 정보로 Object 값 GET
   redisObjectData.getRedisObjectData(String key,Class<T> T);
 
-  //
+  // 해당 키 정보로 List<Object> 값 GET
   redisObjectData.getRedisListObjectData(String key);
 
 
 	// 사용 예시 1
 	RedisObjectData redisObjectData = new RedisObjectData();
 
-	String meter = redisTest.getRedisStringData("Meter:Info:One"); // Object 가져올시
+	String meter = redisTest.getRedisStringData("Meter:Info:One"); // String 가져올시
 
 	// 사용 예시 2
 	MeterVo meterOne = redisTest.getRedisObjectData("Meter:Info:One",MeterVo.class); // Object 가져올시
