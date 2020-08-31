@@ -1,4 +1,4 @@
-package com.cnu.metering.agent.service;
+package com.cnu.metering.agent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,13 +6,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cnu.lwm2m.redis.vo.LpBlackoutRviVo;
-import com.cnu.lwm2m.redis.vo.LpBlackoutVo;
-import com.cnu.lwm2m.redis.vo.LpLoadProfileVo;
-import com.cnu.lwm2m.redis.vo.MeterVo;
 import com.cnu.metering.agent.dao.RedisDao;
+import com.cnu.metering.agent.vo.LpBlackoutRviVO;
+import com.cnu.metering.agent.vo.LpBlackoutVO;
+import com.cnu.metering.agent.vo.LpLoadProfileVO;
+import com.cnu.metering.agent.vo.MeterVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Redis Set / Get 에 대한 Meter데이터 Sample Code
+ * 
  * @author sookwon
  * @since 2020.08.26
  */
@@ -27,59 +29,50 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RedisSampleService {
 
-//	@Autowired
-	RedisDao redisDao = new RedisDao();
-//	@Autowired
-	ObjectMapper mapper = new ObjectMapper();
-	
-	public void setMeterList(String key,String data) throws Exception {
-		
-		key = "meter:info";
-		
+	@Autowired
+	RedisDao redisDao;
+	@Autowired
+	ObjectMapper mapper;
+
+	public void setMeterList(String key) throws Exception {
 		List<Object> list = new ArrayList<Object>();
-		MeterVo meterVo = new MeterVo();
-		
-		Date date = new Date();
-		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		String rdate = baseFormat.format(date);
-		
-		for(int i=100;i<130;i++) {
-			meterVo = new MeterVo();
-			meterVo.setMeterId("11190000"+i);
-			meterVo.setMeterType("Advance E-type");
-			meterVo.setrDt(rdate);
-			meterVo.setInfo("기타정보");
-			list.add(meterVo);
+		MeterVO meterVO = new MeterVO();
+
+		for (int i = 100; i < 130; i++) {
+			meterVO = new MeterVO();
+			meterVO.setMeterId("11190000" + i);
+			list.add(meterVO);
 		}
-		
+
 		redisDao.setRedisData(key, list); // 데이터 set, (Key, Value) 값으로 저장
-		log.info(key+" => Test OK");
+		String redisData = redisDao.getRedisData(key);
+		log.info("{} => Test OK : {}", key, redisData);
 	}
-	
-	public String getMeterList(String key) throws Exception{
-		
+
+	public String getMeterList(String key) throws Exception {
 		key = "meter:info";
 		String redisData = redisDao.getRedisData(key);
-		List<MeterVo> meterlist = mapper.readValue(redisData,new TypeReference<List<MeterVo>>(){}); // 데이터 get, Object를 List<MeterVo> 타입으로
+
+		List<MeterVO> meterlist = mapper.readValue(redisData, new TypeReference<List<MeterVO>>() {
+		}); // 데이터 get, Object를 List<MeterVo> 타입으로
 
 		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist);
 		log.info(data); // Json 정렬
-		
+
 		return data;
 	}
-	
-	public void setLpData(String key,String data) throws Exception{
-		
+
+	public void setLpData(String key, String data) throws Exception {
 		Date date = new Date();
 		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		String fdate = baseFormat.format(date);
 		String meterid = "11190000999";
 		Random rnd = new Random();
-		
-		key = "LoadProfile:"+meterid+":"+fdate; // KEY명 규칙 필요
 
-		LpLoadProfileVo lp = new LpLoadProfileVo();
-		
+		key = "LoadProfile:" + meterid + ":" + fdate; // KEY명 규칙 필요
+
+		LpLoadProfileVO lp = new LpLoadProfileVO();
+
 		lp.setAid("agent_cnu_13493"); // Agent ID
 		lp.setMid(meterid); // Meter ID
 		lp.setcDv("0"); // 검침구분 (0:정규, 1:재검침, 2:자율검침)
@@ -96,89 +89,88 @@ public class RedisSampleService {
 		lp.setrAa(String.valueOf(rnd.nextInt(10))); // 역방향 피상전력량
 		lp.setrSt("2"); // 결과 (0:대기, 1:전달완료, 2:성공, 101:실패, 102:미지원)
 		lp.setcDt(baseFormat.format(date)); // Date
-		
+
 		redisDao.setRedisData(key, lp); // int 0 값 : 성공, 그외 실패
 		redisDao.setExpireKey(key, 86400); // 키값 expire 설정 * 필수 * => 7일 : 604,800 초 , 1일 : 86400 초
-		
-		log.info(key+" => Test OK");
+
+		log.info(key + " => Test OK");
 	}
-	
-	public String getLpData(String key) throws Exception{
-		
+
+	public String getLpData(String key) throws Exception {
+
 		String meterid = "11190000999";
 		Date date = new Date();
 		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		String fdate = baseFormat.format(date);
-		key = "LoadProfile:"+meterid+":"+fdate;
-		
+		key = "LoadProfile:" + meterid + ":" + fdate;
+
 		String redisData = redisDao.getRedisData(key);
-		LpLoadProfileVo loadProfileData = mapper.readValue(redisData,LpLoadProfileVo.class);
+		LpLoadProfileVO loadProfileData = mapper.readValue(redisData, LpLoadProfileVO.class);
 
 		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(loadProfileData);
 		log.info(data); // Json 정렬
-		
+
 		return data;
 	}
 
-	public void setLpBlackout(String key,String data) throws Exception{
-		
+	public void setLpBlackout(String key, String data) throws Exception {
+
 		Date date = new Date();
 		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		String fdate = baseFormat.format(date);
 		String meterid = "11190000999";
 		Random rnd = new Random();
-		
-		key = "BlackOut:"+meterid+":"+fdate; // KEY명 규칙 필요
-		
-		LpBlackoutVo lpBlackoutVo = new LpBlackoutVo();
-		
+
+		key = "BlackOut:" + meterid + ":" + fdate; // KEY명 규칙 필요
+
+		LpBlackoutVO lpBlackoutVo = new LpBlackoutVO();
+
 		lpBlackoutVo.setaId("agent_cnu_13493");
 		lpBlackoutVo.setcDt(fdate);
 		lpBlackoutVo.setmId(meterid);
 		lpBlackoutVo.setoCd("111");
 		lpBlackoutVo.setrSt("222");
-		
-		List<LpBlackoutRviVo> list = new ArrayList<LpBlackoutRviVo>();
-		LpBlackoutRviVo lpBlackoutRviVo = new LpBlackoutRviVo();
-		
-		for(int i=0;i<10;i++) {
-			lpBlackoutRviVo = new LpBlackoutRviVo();
-			lpBlackoutRviVo.setbCt(String.valueOf(rnd.nextInt(100)));
-			lpBlackoutRviVo.setbDt(fdate);
-			list.add(lpBlackoutRviVo);
+
+		List<LpBlackoutRviVO> list = new ArrayList<LpBlackoutRviVO>();
+		LpBlackoutRviVO lpBlackoutRviVO = new LpBlackoutRviVO();
+
+		for (int i = 0; i < 10; i++) {
+			lpBlackoutRviVO = new LpBlackoutRviVO();
+			lpBlackoutRviVO.setbCt(String.valueOf(rnd.nextInt(100)));
+			lpBlackoutRviVO.setbDt(fdate);
+			list.add(lpBlackoutRviVO);
 		}
-		
+
 		lpBlackoutVo.setrVl(list);
-		
+
 		redisDao.setRedisData(key, lpBlackoutVo);
-		
-		log.info(key+" => Test OK");
-		
+
+		log.info(key + " => Test OK");
+
 	}
-	
-	public String getLpBlackout(String key) throws Exception{
-		
+
+	public String getLpBlackout(String key) throws Exception {
+
 		Date date = new Date();
 		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		String fdate = baseFormat.format(date);
 		String meterid = "11190000999";
-		
-		key = "BlackOut:"+meterid+":"+fdate; // KEY명 규칙 필요
-		
-		String redisData = redisDao.getRedisData(key);
-		
-		LpBlackoutVo blackOutData = mapper.readValue(redisData,LpBlackoutVo.class);
 
-		String aId = blackOutData.getaId();
-		for(int i =0;blackOutData.getrVl().size()>i;i++){
+		key = "BlackOut:" + meterid + ":" + fdate; // KEY명 규칙 필요
+
+		String redisData = redisDao.getRedisData(key);
+
+		LpBlackoutVO blackOutData = mapper.readValue(redisData, LpBlackoutVO.class);
+
+		for (int i = 0; blackOutData.getrVl().size() > i; i++) {
 			blackOutData.getrVl().get(i).getbCt();
 			blackOutData.getrVl().get(i).getbDt();
 		}
-		
+
 		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(blackOutData);
 		log.info(data);
-				
+
 		return data;
 	}
-	
+
 }

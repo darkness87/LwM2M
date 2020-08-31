@@ -7,42 +7,49 @@ import java.net.SocketException;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.CoapServer;
 import org.eclipse.californium.core.network.CoapEndpoint;
+import org.eclipse.californium.core.network.Endpoint;
 import org.eclipse.californium.core.network.config.NetworkConfig;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.eclipse.californium.elements.util.NetworkInterfacesUtil;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cnu.metering.agent.dao.RedisDao;
 import com.cnu.metering.agent.service.CommonService;
 import com.cnu.metering.agent.service.MeterService;
-import com.cnu.metering.agent.service.RedisSampleService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class CNUCoapServer extends CoapServer {
+public class CNUCoapServer extends CoapServer implements DisposableBean {
 
 	private static final int COAP_PORT = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.COAP_PORT);
 //	private static final int TCP_THREADS = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.TCP_WORKER_THREADS);
 //	private static final int TCP_IDLE_TIMEOUT = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.TCP_CONNECTION_IDLE_TIMEOUT);
 
-//	public static void main(String[] args) {
-//		try {
-//			CNUCoapServer server = new CNUCoapServer();
-//			server.addEndpoints();
-//			server.start();
-//		} catch (SocketException e) {
-//			log.error("Failed to initialize server: " + e.getMessage(), e);
-//		}
-//	}
-
 	@Autowired
 	CommonService commonService;
 	@Autowired
 	MeterService meterService;
+	@Autowired
+	RedisDao redisDAO;
 
-	RedisSampleService redisSampleService = new RedisSampleService();
+	public CNUCoapServer() throws SocketException {
+		log.debug("init Construct CNUCoapServer()");
+		add(new CNUCoapResource("cmd"));
+	}
+
+	public void run() {
+		// add endpoints on all IP addresses
+		addEndpoints();
+		start();
+
+		for (Endpoint endpoint : this.getEndpoints()) {
+			log.debug("init complete meterCoapserver: {}", endpoint.getUri() + "/" + this.getRoot().getURI());
+		}
+	}
 
 	public void addEndpoints() {
 		NetworkConfig config = NetworkConfig.getStandard();
@@ -64,15 +71,16 @@ public class CNUCoapServer extends CoapServer {
 		}
 	}
 
-	public CNUCoapServer() throws SocketException {
-		// provide an instance of a Hello-World resource
-		log.debug("init Construct CNUCoapServer()");
-		add(new HelloWorldResource("cmd"));
+	@Override
+	public void destroy() {
+		this.stop();
+		this.destroy();
+		log.info("destroyed cnuCoapServer!!");
 	}
 
-	class HelloWorldResource extends CoapResource {
+	class CNUCoapResource extends CoapResource {
 
-		public HelloWorldResource(String resourceId) {
+		public CNUCoapResource(String resourceId) {
 			// set resource identifier
 			super(resourceId);
 
@@ -85,14 +93,14 @@ public class CNUCoapServer extends CoapServer {
 			log.info("GET method 접근");
 			// respond to the request
 			String data = "";
+
 			try {
-				data = redisSampleService.getMeterList("meter:info");
+				data = redisDAO.getRedisData("meter:info");
 			} catch (Exception e) {
 				e.printStackTrace();
 				exchange.respond(e.getMessage());
 				return;
 			}
-//			exchange.respond("Hello World! GET");
 
 			exchange.respond(data);
 		}

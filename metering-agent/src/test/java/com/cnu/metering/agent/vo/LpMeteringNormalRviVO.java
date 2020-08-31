@@ -1,6 +1,6 @@
 package com.cnu.metering.agent.vo;
 
-public class LpMeteringNormalRviVo {
+public class LpMeteringNormalRviVO {
 
 	private String c; // Captured Obis Code
 	private Integer t; // Captured Obis	Type

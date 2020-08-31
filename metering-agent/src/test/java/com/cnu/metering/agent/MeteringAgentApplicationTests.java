@@ -7,16 +7,18 @@ import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.Utils;
 import org.eclipse.californium.elements.exception.ConnectorException;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class MeteringAgentApplicationTests {
 
+	@Autowired
 	@Test
 	void contextLoads() {
+		
 	}
 
-	
 	public static void main(String[] args) throws ConnectorException, IOException {
 	  	CoapClient client = new CoapClient("coap://localhost:25683/cmd");
 

@@ -1,6 +1,6 @@
 package com.cnu.metering.agent.vo;
 
-public class LpAvgVoltVo {
+public class LpAvgVoltVO {
 
 	private String aId; // Agent ID Agent의 고유 ID
 	private String mId; // Meter ID 계기 ID

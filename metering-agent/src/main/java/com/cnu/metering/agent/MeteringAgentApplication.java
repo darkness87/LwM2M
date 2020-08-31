@@ -1,10 +1,7 @@
 package com.cnu.metering.agent;
 
-import java.net.SocketException;
 import java.util.Arrays;
 
-import org.eclipse.californium.core.network.Endpoint;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
@@ -19,45 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
-public class MeteringAgentApplication implements ApplicationRunner, DisposableBean {
+public class MeteringAgentApplication implements ApplicationRunner {
 
-	private static CNUCoapServer cnuCoapServer;
+	private static ApplicationContext context;
 
 	public static void main(String[] args) {
-		SpringApplication.run(MeteringAgentApplication.class, args);
-		MeteringAgentApplication app = new MeteringAgentApplication();
-		app.coapServerStart();
-	}
-
-	private void coapServerStart() {
-		// add endpoints on all IP addresses
-		try {
-			cnuCoapServer = new CNUCoapServer();
-		} catch (SocketException e) {
-			log.error(e.getMessage(), e);
-			return;
-		}
-
-		log.debug("coapServer Object : {}", cnuCoapServer);
-		cnuCoapServer.addEndpoints();
-		cnuCoapServer.start();
-
-		for (Endpoint endpoint : cnuCoapServer.getEndpoints()) {
-			log.debug("init complete meterCoapserver: {}", endpoint.getUri() + "/" + cnuCoapServer.getRoot().getURI());
-		}
-	}
-
-	@Override
-	public void destroy() throws Exception {
-		log.info("destroy!!!");
-
-		if (cnuCoapServer != null) {
-			cnuCoapServer.stop();
-			cnuCoapServer.destroy();
-			log.debug("CNUCoapServer destroy!!!");
-		}
-
-		log.info("destroyed cnuCoapServer: {}", cnuCoapServer);
+		context = SpringApplication.run(MeteringAgentApplication.class, args);
+		MeteringAgentApplication.context.getBean("CNUCoapServer", CNUCoapServer.class).run();
 	}
 
 	@Override

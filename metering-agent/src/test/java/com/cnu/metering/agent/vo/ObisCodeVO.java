@@ -1,6 +1,6 @@
 package com.cnu.metering.agent.vo;
 
-public class ObisCodeVo {
+public class ObisCodeVO {
 
 	private String obisCode;
 	private String scheduleTime;

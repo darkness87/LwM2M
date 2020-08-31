@@ -5,7 +5,7 @@ package com.cnu.metering.agent.vo;
  * @version 0.1
  * @since 2020.08.10
  */
-public class BaseObjectVo {
+public class BaseObjectVO {
 
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -1234567891234567890L;

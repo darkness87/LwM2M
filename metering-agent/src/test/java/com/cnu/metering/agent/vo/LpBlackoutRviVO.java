@@ -1,6 +1,6 @@
 package com.cnu.metering.agent.vo;
 
-public class LpBlackoutRviVo {
+public class LpBlackoutRviVO {
 
 	private String bDt; // Base Date 수집기준일시
 	private String bCt; // Blackout Count 정복전 횟수

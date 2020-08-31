@@ -5,7 +5,7 @@ package com.cnu.metering.agent.vo;
  * @version 0.1
  * @since 2020.08.10
  */
-public class LpDataVo {
+public class LpDataVO {
 
 	private String aId; // Agent ID Agent의 고유 ID
 	private String mId; // Meter ID 계기 ID

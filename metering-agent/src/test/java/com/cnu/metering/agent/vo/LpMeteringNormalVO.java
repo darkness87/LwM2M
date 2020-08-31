@@ -3,7 +3,7 @@ package com.cnu.metering.agent.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LpMeteringNormalVo {
+public class LpMeteringNormalVO {
 
 	private String rId; // Request ID 요청 ID
 	private String aId; // Agent ID Agent의 고유 ID
@@ -15,7 +15,7 @@ public class LpMeteringNormalVo {
 	private String rSt; // Requested Work 결과 (0:대기, 1:전달완료, 2:성공, 101:무응답, 102:미지원) 
 	private Object rVI; // Object / Array Requested Value Info 검침 결과에 대한 상세내용
 	
-	List<LpMeteringNormalRviVo> rVl = new ArrayList<LpMeteringNormalRviVo>(); // Object / Array Requested Value Info 검침 결과에 대한 상세내용
+	List<LpMeteringNormalRviVO> rVl = new ArrayList<LpMeteringNormalRviVO>(); // Object / Array Requested Value Info 검침 결과에 대한 상세내용
 	
 	public String getrId() {
 		return rId;
@@ -89,11 +89,11 @@ public class LpMeteringNormalVo {
 		this.rVI = rVI;
 	}
 
-	public List<LpMeteringNormalRviVo> getrVl() {
+	public List<LpMeteringNormalRviVO> getrVl() {
 		return rVl;
 	}
 
-	public void setrVl(List<LpMeteringNormalRviVo> rVl) {
+	public void setrVl(List<LpMeteringNormalRviVO> rVl) {
 		this.rVl = rVl;
 	}
 	
