@@ -30,39 +30,17 @@ public class RedisObjectData {
 	ObjectMapper mapper = new ObjectMapper();
 	
 	/**
-	 * Object 데이터 GET, 리스트 GET
-	 * @param key
-	 * @return 
-	 * @return Object
-	 * @throws Exception
-	 */
-	public String getObjectStringData(String key) throws Exception {
-		Jedis jedis = redisConnect.connect();
-		if(jedis==null) {
-			log.info("Redis 연결오류");
-			return null;
-		}
-		String data = jedis.get(key);
-		if(data==null||data.equals("")) {
-			log.info("KEY에 해당되는 데이터 없음");
-			return null;
-		}
-		redisConnect.close();
-		return data;
-	}
-	
-	/**
 	 * Object 데이터 SET
 	 * @param key
 	 * @param object
 	 * @return 0:success, 1:fail
 	 * @throws Exception
 	 */
-	public int setObjectData(String key, Object object) throws Exception{
+	public int setRedisObjectData(String key, Object object) throws Exception{
 		String setString = mapper.writeValueAsString(object);
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
 			return 1;
 		}
 		jedis.set(key, setString);
@@ -71,84 +49,89 @@ public class RedisObjectData {
 	}
 	
 	/**
-	 * Object 데이터 GET
+	 * String 데이터 SET
 	 * @param key
-	 * @return 
-	 * @return Object
+	 * @param setString
+	 * @return
 	 * @throws Exception
 	 */
-	public Object getObjectData(String key) throws Exception {
+	public int setRedisStringData(String key, String setString) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			return 1;
+		}
+		jedis.set(key, setString);
+		redisConnect.close();
+		return 0;
+	}
+	
+	/**
+	 * String, Object String 데이터 GET
+	 * @param key
+	 * @return 
+	 * @return String
+	 * @throws Exception
+	 */
+	public String getRedisStringData(String key) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if(jedis==null) {
+			log.info("=== Redis Connect Error");
 			return null;
 		}
-		Object object = mapper.readValue(jedis.get(key),Object.class);
-		if(object==null||object.equals("")) {
-			log.info("KEY에 해당되는 데이터 없음");
+		String data = jedis.get(key);
+		if(data==null||data.equals("")) {
+			log.info("=== Redis Data Null");
+			return null;
+		}
+		redisConnect.close();
+		return data;
+	}
+
+	/**
+	 * Object 데이터 GET
+	 * @param <T>
+	 * @param key
+	 * @param T
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> T getRedisObjectData(String key,Class<T> T) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if(jedis==null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return null;
+		}
+		T object = (T) mapper.readValue(jedis.get(key),T);
+		if(object==null) {
+			log.info("=== Redis Data Null");
+			redisConnect.close();
 			return null;
 		}
 		redisConnect.close();
 		return object;
-	}
-	
-	/**
-	 * List<Object> 데이터 SET
-	 * @param key
-	 * @param object
-	 * @return 0:success, 1:fail
-	 * @throws Exception
-	 */
-	public int setObjectListData(String key, List<Object> object) throws Exception{
-		String setString = mapper.writeValueAsString(object);
-		Jedis jedis = redisConnect.connect();
-		if(jedis==null) {
-			log.info("Redis 연결오류");
-			return 1;
-		}
-		jedis.set(key, setString);
-		redisConnect.close();
-		return 0;
 	}
 	
 	/**
 	 * List<Object> 데이터 GET
+	 * @param <T>
 	 * @param key
-	 * @return List<Object>
+	 * @return
 	 * @throws Exception
 	 */
-	public List<Object> getObjectListData(String key) throws Exception {
+	public <T> List<T> getRedisListObjectData(String key) throws Exception {
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
-			return null;
-		}
-		List<Object> object = mapper.readValue(jedis.get(key),new TypeReference<List<Object>>(){});
-		if(object==null||object.equals("")) {
-			log.info("KEY에 해당되는 데이터 없음");
-			return null;
-		}
-		redisConnect.close();
-		return object;
-	}
-	
-	// TODO
-	public <T> List<T> getTData(String key) throws Exception {
-		Jedis jedis = redisConnect.connect();
-		if(jedis==null) {
+			log.info("=== Redis Connect Error");
 			return null;
 		}
 		List<T> object = mapper.readValue(jedis.get(key),new TypeReference<List<T>>(){});
-		redisConnect.close();
-		return object;
-	}
-	// TODO
-	public <T> List<T> getTListData(String key) throws Exception {
-		Jedis jedis = redisConnect.connect();
-		if(jedis==null) {
+		if(object==null) {
+			log.info("=== Redis Data Null");
+			redisConnect.close();
 			return null;
 		}
-		List<T> object = mapper.readValue(jedis.get(key),new TypeReference<List<T>>(){});
 		redisConnect.close();
 		return object;
 	}

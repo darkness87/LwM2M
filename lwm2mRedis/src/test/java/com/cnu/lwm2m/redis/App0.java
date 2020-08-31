@@ -36,11 +36,11 @@ public class App0 {
 			list.add(meterVo);
 		}
 		// meter 정보 set
-		objectData.setObjectData(key, list);
+		objectData.setRedisObjectData(key, list);
 		
 		
 		// meter 정보 get 1 (list)
-		List<MeterVo> meterlist = mapper.readValue(objectData.getObjectStringData(key),new TypeReference<List<MeterVo>>(){});
+		List<MeterVo> meterlist = objectData.getRedisListObjectData(key);
 		
 		for(int i=0;meterlist.size()>i;i++) {
 //			 System.out.println(meterlist.get(i).getMeterId());
@@ -58,9 +58,9 @@ public class App0 {
 		meterVo2.setMeterType("Advance E-type");
 		meterVo2.setrDt(rdate);
 		meterVo2.setInfo("기타정보");
-		objectData.setObjectData(key2, meterVo2);
+		objectData.setRedisObjectData(key2, meterVo2);
 		
-		MeterVo meterlist2 = mapper.readValue(objectData.getObjectStringData(key2),MeterVo.class);
+		MeterVo meterlist2 = objectData.getRedisObjectData(key2,MeterVo.class);
 		String data2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist2);
 //		System.out.println(data2);
 

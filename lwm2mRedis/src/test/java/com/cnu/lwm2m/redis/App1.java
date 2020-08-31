@@ -53,9 +53,9 @@ public class App1 {
 		
 		lpBlackoutVo.setrVl(list);
 		
-		objectData.setObjectData("testkey", lpBlackoutVo);
+		objectData.setRedisObjectData("testkey", lpBlackoutVo);
 		
-		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectData.getObjectData("testkey"));
+		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectData.getRedisStringData("testkey"));
         System.out.println(data);
 		
 //		redisConnect.close();

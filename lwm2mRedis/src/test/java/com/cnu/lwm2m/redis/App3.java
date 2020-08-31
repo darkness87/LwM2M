@@ -18,26 +18,29 @@ public class App3 {
 	
 	static final Logger log = LoggerFactory.getLogger(App3.class);
 	
+	static Runtime runtime = Runtime.getRuntime();
+
 	public static void main(String[] args) throws Exception {
 		
 		log.info("=== start test ===");
 
 		ObjectMapper mapper = new ObjectMapper();
-
 		RedisTest redisTest = new RedisTest();
 
-		List<MeterVo> meter = redisTest.getTListData("Meter:Info:List");
-
-		//String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meter);
+		List<MeterVo> meter = redisTest.getRedisListData("Meter:Info:List"); // List화된 Object 가져올시
+		String dataList = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meter);
+//		log.info(dataList);
 		
-		log.info(meter.toString());
-		
-		
-		MeterVo meterOne = redisTest.getTData("Meter:Info:One");
-		
-		log.info(meterOne.toString());
+		MeterVo meterOne = redisTest.getRedisData("Meter:Info:One",MeterVo.class); // Object 가져올시
+		String dataOne = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterOne);
+//		log.info(dataOne);
 		
 		log.info("=== end test ===");
+		
+		long max = runtime.maxMemory() / 1024 / 1024;
+	    long total = runtime.totalMemory() / 1024 / 1024;
+	    long free = runtime.freeMemory() / 1024 / 1024;
+	    log.info(String.format("Max: %,dMB, Total: %,dMB, Free: %,dMB, Used: %,dMB", max, total, free, total - free));
 
 	}
 }
