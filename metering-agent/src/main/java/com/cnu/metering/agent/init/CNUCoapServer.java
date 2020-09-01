@@ -19,7 +19,6 @@ import com.cnu.metering.agent.dao.RedisDao;
 import com.cnu.metering.agent.service.CommonService;
 import com.cnu.metering.agent.service.MeterService;
 import com.cnu.metering.agent.vo.MeterInfoVO;
-import com.cnu.metering.agent.vo.MeterVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;

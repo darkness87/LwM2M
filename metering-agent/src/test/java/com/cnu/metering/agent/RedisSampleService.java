@@ -14,7 +14,6 @@ import com.cnu.metering.agent.vo.LpBlackoutRviVO;
 import com.cnu.metering.agent.vo.LpBlackoutVO;
 import com.cnu.metering.agent.vo.LpLoadProfileVO;
 import com.cnu.metering.agent.vo.MeterVO;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
