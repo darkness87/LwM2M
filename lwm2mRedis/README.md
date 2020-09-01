@@ -148,7 +148,7 @@
 ## KEY 규칙
 
 - KEY 하나에 하나의 데이터가 들어간다.
-- KEY 이름은 아래와 같은 규칙을 따른다. 예) Metering Data 일 경우
+- KEY 이름은 아래와 같은 규칙을 따른거나 정해야한다. 예) Metering Data 일 경우
  * 데이터명:계량기번호:날짜
  * LoadProfile:11190000110:202008240930
  * LoadProfile:11190000110:202008240945
@@ -159,8 +159,7 @@
 - KEY는 최소 7일 데이터를 가지고 있어야 하므로 expire 설정으로 해당 KEY의 유효 시간을 설정하면 관리하기 편하다.
 
 - 초기화 진행시 flushAll 명령어로 모든 키가 삭제 될수 있어야 한다.
-- expire 설정되지 않은 키에 대한 관리가 필요하다.
-- 스케줄 관리를 위한 KEY 관리는 스케줄명:스케줄실행시간 으로 했을시 문제 없는지 확인한다. (확인 필요 - 즉시실행이 아닌 스케줄시간으로 처리시)
+- expire 설정 필요
 
 - KEYS * 로 모든키 검색 가능
 
@@ -170,8 +169,8 @@
 
 ## Config
 
-- config.properties 파일 초기 세팅 정보
-  => 단, config.properties 파일이 없을 경우 Exception 처리 후 파일 생성
+- RedisConfig.properties 파일 초기 세팅 정보
+  => 단, RedisConfig.properties 파일이 없을 경우 Exception 처리 후 파일 생성
   => 파일이 생성되면 아래 초기 정보가 들어가고 변경사항이 있을 경우 변경해야 함
 
   ```java
