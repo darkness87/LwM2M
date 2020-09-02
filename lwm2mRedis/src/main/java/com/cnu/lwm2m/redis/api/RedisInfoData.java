@@ -1,10 +1,12 @@
 package com.cnu.lwm2m.redis.api;
 
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import redis.clients.jedis.Jedis;
@@ -33,7 +35,8 @@ public class RedisInfoData {
 	public Set<String> getAllKey() throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		Set<String> keys = jedis.keys("*");
@@ -50,7 +53,8 @@ public class RedisInfoData {
 	public Set<String> getSearchKey(String key) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		Set<String> keys = jedis.keys("*"+key+"*");
@@ -67,7 +71,8 @@ public class RedisInfoData {
 	public Boolean getBooleanKey(String key) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		Boolean ex = jedis.exists(key);
@@ -86,7 +91,8 @@ public class RedisInfoData {
 	public int setExpireKey(String key, int sec) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return 1;
 		}
 		jedis.expire(key, sec);
@@ -103,7 +109,8 @@ public class RedisInfoData {
 	public int setPersistKey(String key) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return 1;
 		}
 		jedis.persist(key);
@@ -120,7 +127,8 @@ public class RedisInfoData {
 	public int setDelKey(String key) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return 1;
 		}
 		jedis.del(key);
@@ -136,7 +144,8 @@ public class RedisInfoData {
 	public String getClientList() throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		String clientList = jedis.clientList();
@@ -152,12 +161,69 @@ public class RedisInfoData {
 	public String getRedisInfo() throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
-			log.info("Redis 연결오류");
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		String redisInfo = jedis.info();
 		redisConnect.close();
 		return redisInfo;
+	}
+	
+	/**
+	 * Object 중복 및 데이터형태 체크
+	 * @param <T>
+	 * @param jedis
+	 * @param key
+	 * @param T
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> int getRedisKeyClassCheck(Jedis jedis,String key,Class<?> T) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		if(jedis.exists(key)==true) {
+			log.info("=== Redis Key Duplicate");
+			try {
+				mapper.readValue(jedis.get(key),T);
+				mapper = null;
+			}catch(Exception e){
+				log.info(e.toString());
+				redisConnect.close();
+				return 3; // 중복 키 , object 형태 틀림
+			}
+			redisConnect.close();
+			return 2; // 중복 키 , object 형태 맞음
+		};
+		redisConnect.close();
+		return 0; // 이상 없을 시
+	}
+	
+	/**
+	 * List<Object> 중복 및 데이터형태 체크
+	 * @param <T>
+	 * @param jedis
+	 * @param key
+	 * @param T
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> int getRedisKeyListCheck(Jedis jedis,String key,List<T> T) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		if(jedis.exists(key)==true) {
+			log.info("=== Redis Key Duplicate");
+			try {
+				mapper.readValue(jedis.get(key),new TypeReference<List<T>>(){});
+				mapper = null;
+			}catch(Exception e){
+				log.info(e.toString());
+				redisConnect.close();
+				return 3; // 중복 키 , object 형태 틀림
+			}
+			redisConnect.close();
+			return 2; // 중복 키 , object 형태 맞음
+		};
+		redisConnect.close();
+		return 0; // 이상 없을 시
 	}
 	
 }

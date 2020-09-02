@@ -29,6 +29,58 @@ public class RedisObjectData {
 	RedisConnect redisConnect = new RedisConnect();
 	ObjectMapper mapper = new ObjectMapper();
 	
+	RedisInfoData redisInfoData = new RedisInfoData();
+	
+	/**
+	 * Object 데이터 값 체크 후 SET
+	 * @param <T>
+	 * @param key
+	 * @param object
+	 * @return 0:success, 1:fail, 2:중복키(Object 형태 같음), 3:중복키(Object 형태 다름)
+	 * @throws Exception
+	 */
+	public <T> int setRedisObjectDataConfirm(String key, Object object,Class<T> T) throws Exception{
+		Jedis jedis = redisConnect.connect();
+		if(jedis==null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return 1;
+		}
+		int returnValue = redisInfoData.getRedisKeyClassCheck(jedis,key, T);
+		
+		if(returnValue == 0) {
+			String setString = mapper.writeValueAsString(object);
+			jedis.set(key, setString);
+		}
+		redisConnect.close();
+		return returnValue;
+	}
+	
+	/**
+	 * List<Object> 데이터 값 체크 후 SET
+	 * @param <T>
+	 * @param key
+	 * @param T
+	 * @return 0:success, 1:fail, 2:중복키(Object 형태 같음), 3:중복키(Object 형태 다름)
+	 * @throws Exception
+	 */
+	public <T> int setRedisObjectListConfirm(String key, List<T> T) throws Exception{
+		Jedis jedis = redisConnect.connect();
+		if(jedis==null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return 1;
+		}
+		int returnValue = redisInfoData.getRedisKeyListCheck(jedis,key, T);
+		
+		if(returnValue == 0) {
+			String setString = mapper.writeValueAsString(T);
+			jedis.set(key, setString);
+		}
+		redisConnect.close();
+		return returnValue;
+	}
+	
 	/**
 	 * Object 데이터 SET
 	 * @param key
@@ -41,6 +93,7 @@ public class RedisObjectData {
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
 			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return 1;
 		}
 		jedis.set(key, setString);
@@ -52,13 +105,14 @@ public class RedisObjectData {
 	 * String 데이터 SET
 	 * @param key
 	 * @param setString
-	 * @return
+	 * @return 0:success, 1:fail
 	 * @throws Exception
 	 */
 	public int setRedisStringData(String key, String setString) throws Exception{
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
 			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return 1;
 		}
 		jedis.set(key, setString);
@@ -77,11 +131,13 @@ public class RedisObjectData {
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
 			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		String data = jedis.get(key);
 		if(data==null||data.equals("")) {
 			log.info("=== Redis Data Null");
+			redisConnect.close();
 			return null;
 		}
 		redisConnect.close();
@@ -124,6 +180,7 @@ public class RedisObjectData {
 		Jedis jedis = redisConnect.connect();
 		if(jedis==null) {
 			log.info("=== Redis Connect Error");
+			redisConnect.close();
 			return null;
 		}
 		List<T> object = mapper.readValue(jedis.get(key),new TypeReference<List<T>>(){});
