@@ -25,11 +25,12 @@ public class ObjectExcuteTask {
 			client.stop(true);
 			sleep("LwM2M Client is Disabled", timeout);
 			List<LwM2mObjectEnabler> list = new ArrayList<LwM2mObjectEnabler>(client.getObjectTree().getObjectEnablers().values());
-			
+			log.info("Object check : {}ea", list.size());
+
 			for (LwM2mObjectEnabler o : list) {
 				log.info("{} / {} / {}", o.getId(), o.getObjectModel().id, o.getObjectModel().urn);
 			}
-			
+
 			client.start();
 		} catch(Exception e) {
 			log.error(e.getMessage(), e);
