@@ -70,6 +70,16 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
+		
+		<!-- jni user lib systemPath dependency-->
+		<dependency>
+			<groupId>AMI</groupId>
+			<artifactId>api</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/jni.jar</systemPath>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -77,6 +87,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- user lib include -->
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
