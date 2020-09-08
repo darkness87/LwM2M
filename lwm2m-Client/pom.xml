@@ -77,7 +77,7 @@
 			<artifactId>api</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/jni.jar</systemPath>
+			<systemPath>${basedir}/lib/cnuJni.jar</systemPath>
 		</dependency>
 		
 	</dependencies>

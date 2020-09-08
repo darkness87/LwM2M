@@ -7,11 +7,12 @@ public class JNI
 {
 			
 	static {
-		String path = new JniConfig().getJniPath(); // 프로퍼티 Path
+		//String path = new JniConfig().getJniPath(); // 프로퍼티 Path 사용시
+		
 		//String path = System.getProperty("java.class.path")+"/AMI/"; // Class Path
 		//String path = new File("").getAbsolutePath()+"/src/main/resources";
 
-		System.out.println(path);
+		String path = System.getProperty("user.dir")+"/src/main/resources/";
 		
         File lib = new File(path + System.mapLibraryName("JNI")); // 리눅스 환경에서는 .so파일에 lib파일명이 추가 // libJNI.so
         System.load(lib.getAbsolutePath());
