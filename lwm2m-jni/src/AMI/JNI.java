@@ -1,24 +1,20 @@
 package AMI;
 
 import java.io.File;
-import AMI.JniConfig;
+//import AMI.JniConfig;
 
 public class JNI 
 {
 			
 	static {
-		//String path = new JniConfig().getJniPath(); // «¡∑Œ∆€∆º Path ªÁøÎΩ√
+		//String path = new JniConfig().getJniPath(); // ÌîÑÎ°úÌçºÌã∞ Path ÏÇ¨Ïö©Ïãú
 		
-		//String path = System.getProperty("java.class.path")+"/AMI/"; // Class Path
-		//String path = new File("").getAbsolutePath()+"/src/main/resources";
-
 		String path = System.getProperty("user.dir")+"/src/main/resources/";
 		
-        File lib = new File(path + System.mapLibraryName("JNI")); // ∏Æ¥™Ω∫ »Ø∞Êø°º≠¥¬ .so∆ƒ¿œø° lib∆ƒ¿œ∏Ì¿Ã √ﬂ∞° // libJNI.so
+        File lib = new File(path + System.mapLibraryName("JNI"));
         System.load(lib.getAbsolutePath());
     }
     
-	// «•¡ÿ∞¥√º : Device , Object : 3
     private native String get_maker();
     private native String get_model();
     private native String get_serial_num();
@@ -36,7 +32,6 @@ public class JNI
     private native String get_hw_ver();
     private native int get_total_memory();
     
-    // «•¡ÿ∞¥√º : Connectivity monitoring , Object : 4
     private native int get_rsrp();
     private native int get_rsrq();
     private native String get_ip_address();
@@ -45,10 +40,8 @@ public class JNI
     private native int get_mcc();
     private native int get_snr();
     
-    // «•¡ÿ∞¥√º : Firmware , Object : 5
     private native String get_fw_ver();
     
-    // «•¡ÿ∞¥√º : Connectivity statistics , Object : 7
     private native int get_tx_data_count();
     private native int get_rx_data_count();
     private native int set_trx_data_clear();
@@ -57,7 +50,6 @@ public class JNI
     private native int get_data_collect_period();
     private native int set_data_collect_period();
     
-    // KEPCO∞¥√º : AMI Common Control , Object : 26241
     private native String get_ami_name(); 
     private native int get_ami_type();
     private native String get_ami_date();
@@ -67,7 +59,7 @@ public class JNI
     private native String get_ram_rate();
     private native String get_mear_pwr_vlt();
     private native String get_mear_cons_cur();
-    private native void exe_factory_reboot_amicc(); // Object 3π¯∞˙ «‘ºˆ∏Ì ¡ﬂ∫π, øÏº± ¿”Ω√∑Œ µ⁄ø° amicc ∫Ÿ¿”
+    private native void exe_factory_reboot_amicc();
     private native void exe_last_reboot(); 
     private native String get_pwr_off_time();
     private native String get_pwr_on_time();
@@ -85,18 +77,15 @@ public class JNI
     private native String get_rs485dlb_test_output_data();
     private native void exe_led_test();
     
-    // KEPCO∞¥√º : AMI Network , Object : 26243
     private native int get_wan_code();
     private native int get_communication_code();
     private native int get_telecom_company();
     private native String get_phone_number();
     private native int get_tx_power();
     
-    // KEPCO∞¥√º : AMI Software , Object : 26249
     private native String get_os_name();
     private native String get_os_version();
     
-    // ∫∏æ»∞¥√º : AMI Security , Object : 26245
     private native String get_cypher_module_version();
     private native String get_cypher_sw_version(); 
     private native void exe_cypher_test_start();
@@ -104,43 +93,12 @@ public class JNI
     private native void exe_integrity_test_start();
     private native void exe_integrity_test_stop();
     
-    // ±‚≈∏ : ≈ÎΩ≈ ∏µ‚
     private native void exe_module_open(); 
     private native String get_date_time();
-
-	/*
-	 * // æÀ∞Ì∏Æ¡Ú øÓøµø° « ø‰ public native long openHandle(); public native void
-	 * closeHandle(); public native int setInitialVector(byte[] in_array, int
-	 * in_len); public native int encryptAria128Gcm(int key_index, byte[] in_array,
-	 * int in_len, Output out); public native int decryptAria128Gcm(int key_index,
-	 * byte[] in_array, int in_len, Output out); public native int getSha256(byte[]
-	 * in_array, int in_len, Output out); public native int getHmacSha256(int
-	 * key_index, byte[] in_array, int in_len, Output out); public native int
-	 * verifyHmacSha256(int key_index, byte[] in_array, int in_len, byte[]
-	 * mac_array, int mac_len); public native int getEcdsaP256(int key_index, byte[]
-	 * in_array, int in_len, Output out); public native int verifyEcdsaP256(int
-	 * key_index, byte[] in_array, int in_len, byte[] sign_array, int sign_len);
-	 * public native int getEcdhP256(int my_key_index, int other_key_index, Output
-	 * out); public native int getRandHashDrbg(int in_len, Output out); public
-	 * native int getRandCtrDrbg(int in_len, Output out);
-	 * 
-	 * // ¿Œ¡ıº≠ π◊ ≈∞ ∞¸∏Æø° « ø‰ public native int hasKey(int key_index); public native int
-	 * saveKey(int key_index, byte[] in_array, int in_len); public native int
-	 * deleteKey(int key_index); public native int deleteAllKey(); public native int
-	 * saveCert(int cert_index, byte[] in_array, int in_len); public native int
-	 * verifyCert(int cert_index, byte[] in_array, int in_len); public native int
-	 * deleteCert(int cert_index); public native int deleteAllCert(); public native
-	 * int saveSecureData(int data_index, byte[] in_array, int in_len); public
-	 * native int getSecureData(int data_index, Output out); public native int
-	 * deleteSecureData(int index); public native int deleteSecureAllData(); public
-	 * native int saveDeviceInfo(int data_index, byte[] in_array, int in_len);
-	 * public native int getDeviceInfo(int data_index, Output out);
-	 */	
     
     public static void main(String[] args){
         JNI jni = new JNI();
         
-        // «•¡ÿ∞¥√º : Device , Object : 3
         System.out.println(jni.get_maker());
         System.out.println(jni.get_model());
         System.out.println(jni.get_serial_num());
@@ -148,7 +106,6 @@ public class JNI
         jni.exe_factory_reboot();
         System.out.println(jni.available_pwr_source());
         System.out.println(jni.get_voltage());
-        
     }
     
     public String getMaker() {
@@ -156,13 +113,11 @@ public class JNI
     	String data = jni.get_maker();
     	return data;
     }
-    
     public String getModel() {
     	JNI jni = new JNI();
     	String data = jni.get_model();
     	return data;
     }
-    
     public String getSerialNum() {
     	JNI jni = new JNI();
     	String data = jni.get_serial_num();
