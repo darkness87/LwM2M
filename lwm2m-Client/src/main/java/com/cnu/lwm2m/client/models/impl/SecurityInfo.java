@@ -1,4 +1,4 @@
-package com.cnu.lwm2m.client.model.impl;
+package com.cnu.lwm2m.client.models.impl;
 
 public interface SecurityInfo {
 	public int getServerID();
