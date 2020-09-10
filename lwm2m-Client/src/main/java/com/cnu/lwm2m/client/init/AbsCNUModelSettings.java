@@ -3,12 +3,19 @@ package com.cnu.lwm2m.client.init;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.TimeZone;
 
 import org.eclipse.leshan.core.request.BindingMode;
 
 import com.cnu.lwm2m.client.models.impl.AccessControlInfo;
+import com.cnu.lwm2m.client.models.impl.ConnectivityMonitoringInfo;
 import com.cnu.lwm2m.client.models.impl.DeviceInfo;
 import com.cnu.lwm2m.client.models.impl.SecurityInfo;
 import com.cnu.lwm2m.client.models.impl.ServerInfo;
@@ -17,7 +24,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo {
+public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo
+											, ConnectivityMonitoringInfo {
 	/*******************
 	  [0] SECURITY Info
 	 *******************/
@@ -169,5 +177,78 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 		MemoryUsage nonheap = membean.getNonHeapMemoryUsage();
 		System.out.println("Heap Memory: " + heap.toString());
 		System.out.println("NonHeap Memory: " + nonheap.toString());
+	}
+
+
+
+	/**********************************
+	  [4] Connectivity Monitoring Info
+	 **********************************/
+	/** ID:2 RF 수신 세기: LTE 모뎀은 RSRP 값으로 표시한다.
+	 * (GSM: RSSI, UMTS: RSCP, LTE: RSRP, NB-IoT: NRSRP)
+	 * 서버에서 값 요청 시 1초 단위로 30초간 값을 전송한다.
+	 * Notify 설정: lt= (dBm) / 초기설정값: 통신사에서 정하며 BMT 시 제출하여야 한다. */
+	@Override public int getRadioSignalStrength() {
+		return 0;
+	}
+
+	/** ID:3 수신된 신호의 링크품질: LTE 모뎀은 RSRQ 값으로 표시한다. (3GPP 36.214 참조)
+	 * 서버에서 값 요청 시 1초 단위로 30초간 값을 전송한다.
+	 * Notify 설정: lt= () / 초기설정값: 통신사에서 정하며 BMT 시 제출하여야 한다.
+	 */
+	@Override public int getLinkQuality() {
+		return 0;
+	}
+
+	/** ID:4 모뎀의 IP 주소 (IPv6)
+	 * Ob_ID 6/4의 공인 IP 또는 11/4의 사설 IP 둘 중 하나는 필수 항목임 */
+	@Override public String getIpAddress() {
+		try {
+			String address = Inet4Address.getLocalHost().getHostAddress();
+			Enumeration<NetworkInterface> n = NetworkInterface.getNetworkInterfaces();
+
+			while (n.hasMoreElements()) {
+				NetworkInterface e = n.nextElement();
+
+				Enumeration<InetAddress> a = e.getInetAddresses();
+				while (a.hasMoreElements()) {
+					InetAddress addr = a.nextElement();
+					System.out.println("  " + addr.getHostAddress());
+				}
+			}
+
+			return address;
+		} catch (UnknownHostException e) {
+			return "null";
+		} catch (SocketException e) {
+			return "null";
+		}
+	}
+
+	/** ID:5 Res_ID_4에서 지정한 각 인터페이스의 다음 홉 라우터의 IP 주소 (공인 IP / DCU 적용)
+	 * 참조 : 이 IP 주소는 서버 IP 주소를 의미하지 않는다.  */
+	@Override public String getRouterIpAddress() {
+		return "null";
+	}
+
+	/** ID:8 Serving Cell ID, LTE Cell ID (3GPP 25.331 참조) */
+	@Override public int getCellID() {
+		return 0;
+	}
+
+	/** ID:9 Serving Mobile Network Code를 나타낸다. (3GPP 23.003 참조)
+	 * [SKT: 03, 05]  [KT: 02, 04, 08]  [LGU+: 06] */
+	@Override public int getSMNC() {
+		return 0;
+	}
+
+	/** ID:10 Serving Mobile Country Code (대한민국 : 450) */
+	private int SMCC = 450;
+
+	/** ID: 신호대 잡음 비
+	 * 서버에서 값 요청 시 1초 단위로 30초간 값을 전송한다.
+	 * Notify 설정: lt= () / 초기설정값: 통신사에서 정하며 BMT 시 제출하여야 한다 */
+	@Override public int getSignalSNR() {
+		return 0;
 	}
 }

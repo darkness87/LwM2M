@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
 import com.cnu.lwm2m.client.models.CNUAccessControl;
+import com.cnu.lwm2m.client.models.CNUConnectivityMonitoring;
 import com.cnu.lwm2m.client.models.CNUDevice;
 import com.cnu.lwm2m.client.models.CNUSecurity;
 import com.cnu.lwm2m.client.models.CNUServer;
@@ -32,6 +33,7 @@ public class CNULwm2mClient extends AbsCNUModelSettings {
 		init.setInstancesForObject(LwM2mId.SERVER, new CNUServer(this, task));
 		init.setInstancesForObject(LwM2mId.DEVICE, new CNUDevice(this, task));
 		init.setInstancesForObject(LwM2mId.ACCESS_CONTROL, new CNUAccessControl(this, task));
+		init.setInstancesForObject(LwM2mId.CONNECTIVITY_MONITORING, new CNUConnectivityMonitoring(this, task));
 
 		builder.setObjects(init.createAll());
 		builder.setCoapConfig(createConfig());	// Create CoAP Config
