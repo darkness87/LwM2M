@@ -8,6 +8,7 @@ import java.util.TimeZone;
 
 import org.eclipse.leshan.core.request.BindingMode;
 
+import com.cnu.lwm2m.client.models.impl.AccessControlInfo;
 import com.cnu.lwm2m.client.models.impl.DeviceInfo;
 import com.cnu.lwm2m.client.models.impl.SecurityInfo;
 import com.cnu.lwm2m.client.models.impl.ServerInfo;
@@ -16,7 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo {
+public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo {
 	/*******************
 	  [0] SECURITY Info
 	 *******************/
@@ -54,6 +55,37 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 
 	/** [실행] ID:9 Registration Update Trigger 실행 */
 	/** [실행] ID:10 Bootstrap-Request Trigger 실행 */
+
+
+
+	/************************
+	  [2] Acess Control Info
+	 ************************/
+	/** ID:0 Object ID 읽기  */
+	@Override public int getObjectID() {
+		return 0;
+	}
+
+	/** ID:1 Object 하위 리소스 (Instance) ID 읽기  */
+	@Override public int getObjectInstanceID() {
+		return 0;
+	}
+
+	/** ID:2 리소스 인스턴스 값에 설정된 각 비트는 해당 작업에 대한 모뎀관리 서버에 대한 액세스
+	 * 권한을 부여하며 비트 순서는 다음과 같이 지정한다. 1st LSB: R(Read, Observe, Discover, Write-Attributes)
+	 * 2nd LSB: W(Write)
+	 * 3rd LSB: E(Execute)
+	 * 4th LSB: D(Delete)
+	 * 5th LSB: C(Create)
+	 * Other bits are reserved for future use */
+	@Override public int getAccessControl() {
+		return 0;
+	}
+
+	/** ID:3 Access 권한을 갖는 모뎀관리 서버의 Short Server ID */
+	@Override public int getAccessControlOwner() {
+		return 0;
+	}
 
 
 
