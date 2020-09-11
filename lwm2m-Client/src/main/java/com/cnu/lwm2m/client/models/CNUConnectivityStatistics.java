@@ -12,34 +12,25 @@ import org.eclipse.leshan.core.response.ReadResponse;
 import org.eclipse.leshan.core.response.WriteResponse;
 
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
+import com.cnu.lwm2m.client.models.impl.ConnectivityStatisticsInfo;
 import com.cnu.lwm2m.client.models.impl.FirmwareUpdateInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CNULocation extends BaseInstanceEnabler {
+public class CNUConnectivityStatistics extends BaseInstanceEnabler {
 
 	private static final List<Integer> supportedResources = Arrays.asList(0, 1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 15, 16);
 
-	FirmwareUpdateInfo firmwareUpdate;
-	private byte[] firmwarePackage;
-	private String firmwarePackageURI;
-	private String firmwarePackageName;
-	private String firmwarePackageVersion;
+	ConnectivityStatisticsInfo connectivityStatistics;
+	private long collectionPeriod;
 
-	public CNULocation() {
+	public CNUConnectivityStatistics() {
 		// should never be used
 	}
 
-	public CNULocation(FirmwareUpdateInfo firmwareUpdate, ObjectExcuteTask task) {
-		this.firmwarePackageURI = firmwareUpdate.getFirmwarePackageURI();
-		this.firmwarePackageName = firmwareUpdate.getFirmwarePackageName();
-		this.firmwarePackageVersion = firmwareUpdate.getFirmwarePackageVersion();
-		this.firmwareUpdate = firmwareUpdate;
-	}
-
-	public byte[] getFirmwarePacakge() {
-		return firmwarePackage;
+	public CNUConnectivityStatistics(FirmwareUpdateInfo firmwareUpdate, ObjectExcuteTask task) {
+		this.collectionPeriod = connectivityStatistics.getCollectionPeriod();
 	}
 
 	@Override
@@ -49,26 +40,20 @@ public class CNULocation extends BaseInstanceEnabler {
 		}
 
 		switch (resourceid) {
-		case 1:
-			return ReadResponse.success(resourceid, firmwarePackageURI);
+		case 2:
+			return ReadResponse.success(resourceid, connectivityStatistics.getTxData());
 
 		case 3:
-			return ReadResponse.success(resourceid, firmwareUpdate.getFirmwareUpdateState());
+			return ReadResponse.success(resourceid, connectivityStatistics.getRxData());
+
+		case 4:
+			return ReadResponse.success(resourceid, connectivityStatistics.getMaxMessageSize());
 
 		case 5:
-			return ReadResponse.success(resourceid, firmwareUpdate.getFirmwareUpdateResult());
-
-		case 6:
-			return ReadResponse.success(resourceid, firmwarePackageName);
-
-		case 7:
-			return ReadResponse.success(resourceid, firmwarePackageVersion);
+			return ReadResponse.success(resourceid, connectivityStatistics.getAverageMessageSize());
 
 		case 8:
-			return ReadResponse.success(resourceid, firmwareUpdate.getFirmwareUpdateProtocolSupport());
-
-		case 9:
-			return ReadResponse.success(resourceid, firmwareUpdate.getFirmwareUpdateDeliveryMethod());
+			return ReadResponse.success(resourceid, collectionPeriod);
 
 		default:
 			return super.read(identity, resourceid);
@@ -78,6 +63,10 @@ public class CNULocation extends BaseInstanceEnabler {
 	@Override
 	public WriteResponse write(ServerIdentity identity, int resourceid, LwM2mResource value) {
 		switch (resourceid) {
+		case 8:
+			collectionPeriod = (long) value.getValue();
+			fireResourcesChange(resourceid);
+			return WriteResponse.success();
 		default:
 			return super.write(identity, resourceid, value);
 		}
@@ -85,7 +74,10 @@ public class CNULocation extends BaseInstanceEnabler {
 
 	@Override
 	public ExecuteResponse execute(ServerIdentity identity, int resourceid, String params) {
-		if (resourceid == 2) {
+		if (resourceid == 6) {
+			// TODO: 어떻게 실행하지?ㅋㅋㅋ
+			return super.execute(identity, resourceid, params);
+		} else if (resourceid == 7) {
 			// TODO: 어떻게 실행하지?ㅋㅋㅋ
 			return super.execute(identity, resourceid, params);
 		}

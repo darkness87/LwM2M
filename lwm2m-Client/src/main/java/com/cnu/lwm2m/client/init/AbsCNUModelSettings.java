@@ -16,6 +16,7 @@ import org.eclipse.leshan.core.request.BindingMode;
 
 import com.cnu.lwm2m.client.models.impl.AccessControlInfo;
 import com.cnu.lwm2m.client.models.impl.ConnectivityMonitoringInfo;
+import com.cnu.lwm2m.client.models.impl.ConnectivityStatisticsInfo;
 import com.cnu.lwm2m.client.models.impl.DeviceInfo;
 import com.cnu.lwm2m.client.models.impl.FirmwareUpdateInfo;
 import com.cnu.lwm2m.client.models.impl.LocationInfo;
@@ -27,7 +28,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo
-											, ConnectivityMonitoringInfo, FirmwareUpdateInfo, LocationInfo {
+											, ConnectivityMonitoringInfo, FirmwareUpdateInfo, LocationInfo
+											, ConnectivityStatisticsInfo{
 	/*******************
 	  [0] SECURITY Info
 	 *******************/
@@ -310,7 +312,6 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 	 * 3 – HTTPS 1.1 (as defined in RFC 7230)
 	 * 추가 값은 향후에 정의할 수 있어야 하며 서버가 인식하지 못하는 값은 무시해야 한다 */
 	@Override public int getFirmwareUpdateProtocolSupport() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -336,4 +337,48 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 
 	/** ID:5 위치 측정이 수행된 시간의 타임스탬프이다. */
 	private Date timestamp;
+
+	/*****************************
+	  [7] Connectivity Statistics
+	 *****************************/
+	/** ID:2 수집 기간 전송된 데이터의 총량을 나타낸다. */
+	public int getTxData() {
+		return 0;
+	}
+
+	/** ID:3 수집 기간 수신된 데이터의 총량을 나타낸다. */
+	public int getRxData() {
+		return 0;
+	}
+
+	/** ID:4 수집 기간 최대 메시지 크기이다 */
+	public int getMaxMessageSize() {
+		return 0;
+	}
+
+	/** ID:5 수집 기간 평균 메시지 크기이다 */
+	public int getAverageMessageSize() {
+		return 0;
+	}
+
+	/** [실행] ID:6 Resource ID 2~5의 값을 초기화한다.
+	 * Resource ID 8 Collection Period 동안 데이터 수집을 시작하는 명령이다.
+	 * Resource ID 8 Collection Period가 0인 경우
+	 * Resource ID 7 Stop 명령이 실행될 때까지 데이터 수집을 계속하며 3초 단위로 Notify 한다. */
+
+	/** [실행] ID:7 Resource ID 8 Collection Period가 0인 경우, Resource 수집 중지 명령이다.
+	 * 정보 수집을 중지하고, resource ID 2-5의 값을 재설정하지 않는다. */
+
+	/** ID:8 Resource ID 2~5의 수집 기간을 나타낸다.
+	 * 값이 0 인 경우 Start / Stop 리소스에 따라 동작한다. */
+	private int collectionPeriod = 0;
+
+
+	/** ID:  */
+	
+
+	/** ID:  */
+	
+
+	/** ID:  */
 }
