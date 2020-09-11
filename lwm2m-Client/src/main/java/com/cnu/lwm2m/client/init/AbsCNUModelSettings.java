@@ -17,6 +17,7 @@ import org.eclipse.leshan.core.request.BindingMode;
 import com.cnu.lwm2m.client.models.impl.AccessControlInfo;
 import com.cnu.lwm2m.client.models.impl.ConnectivityMonitoringInfo;
 import com.cnu.lwm2m.client.models.impl.DeviceInfo;
+import com.cnu.lwm2m.client.models.impl.FirmwareUpdateInfo;
 import com.cnu.lwm2m.client.models.impl.SecurityInfo;
 import com.cnu.lwm2m.client.models.impl.ServerInfo;
 
@@ -25,7 +26,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo
-											, ConnectivityMonitoringInfo {
+											, ConnectivityMonitoringInfo, FirmwareUpdateInfo {
 	/*******************
 	  [0] SECURITY Info
 	 *******************/
@@ -249,6 +250,75 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 	 * 서버에서 값 요청 시 1초 단위로 30초간 값을 전송한다.
 	 * Notify 설정: lt= () / 초기설정값: 통신사에서 정하며 BMT 시 제출하여야 한다 */
 	@Override public int getSignalSNR() {
+		return 0;
+	}
+
+
+
+	/**************************
+	  [5] Firmware Update Info
+	 **************************/
+	/** ID:0 Firmware package Image Next Version (BSP, BIOS, DRIVE 등) */
+	@Override public byte[] getFirmwarePackage() {
+		return null;
+	}
+
+	/** ID:1 펌웨어 패키지를 다운로드할 수 있는 URI (RFC 3986 참조)
+	 * 예) coap://[IPv6]/firmware 또는 coap://[IPv6]/software (IP address는 한전 사설 IPv6 주소) */
+	public String firmwarePackageURI = "";
+
+	/** ID:3 펌웨어 업데이트와 관련된 현재 상태를 나타낸다. 0:Idle (before downloading or after successful updating)
+	 * 1:Downloading (The data sequence is on the way)
+	 * 2:Downloaded
+	 * 3:Updating
+	 * 펌웨어 패키지를 패키지 리소스에 쓰거나 장치가 패키지 URI에서 펌웨어 패키지를 다운로드한
+	 * 경우 “dowloaded“ 상태로 변경된다. 패키지 또는 패키지 URI 리소스에 빈 문자열을 쓰면 업데이트 상태가 재설정되며, 이때 상태
+	 * 리소스 값은 “Idle“ 상태로 설정되고 업데이트 결과 리소스 값은 0으로 설정된다.
+	 * 다운로드 상태에서 실행 리소스 업데이트가 트리거 되면 상태가 “updating”으로 변경된다.
+	 * 리소스 업데이트에 실패하면 “downloaded” 상태로 되돌아간다.
+	 * 업데이트 리소스를 성공적으로 수행한 경우 상태가 “update”에서 “idle” 상태로 변경된다.*/
+	@Override public int getFirmwareUpdateState() {
+		return 0;
+	}
+
+	/** ID:5 Firmware update 결과
+	 * 0: 초기값. 업데이트 프로세스가 시작되면 다운로드/업데이트 단계로 변환된다.
+	 * 1: 업데이트 성공
+	 * 2: 플래시 메모리 부족
+	 * 3. 다운로드 프로세스 중 RAM 부족
+	 * 4: 다운로드 프로세스 중 연결이 끊김
+	 * 5: 다운로드 된 새 패키지에 대한 무결성 검사 실패
+	 * 6: 미지원 패키지 유형
+	 * 7: 잘못된 URI
+	 * 8: 펌웨어 업데이트 실패
+	 * 9: 미지원 프로토콜 */
+	@Override public int getFirmwareUpdateResult() {
+		return 0;
+	}
+
+	/** ID:6 Firmware package Image (Next Version Name) */
+	public String firmwarePackageName = "null";
+
+	/** ID:7 Firmware package Image (Next Version)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” */
+	public String firmwarePackageVersion = "1.0.0";
+
+	/** ID:8 지원되는 프로토콜을 정의한다. 0 – CoAP (as defined in RFC 7252) CoAP 기본 설정, block-wise transfer 지원
+	 * 1 – CoAPS (as defined in RFC 7252) block-wise transfer 지원
+	 * 2 – HTTP 1.1 (as defined in RFC 7230)
+	 * 3 – HTTPS 1.1 (as defined in RFC 7230)
+	 * 추가 값은 향후에 정의할 수 있어야 하며 서버가 인식하지 못하는 값은 무시해야 한다 */
+	@Override public int getFirmwareUpdateProtocolSupport() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/** ID:9 펌웨어 업데이트 파일 전달 방식
+	 * 0 – Pull (Package URI 리소스 사용 시 클라이언트에서 서버를 Pull 하는 방식)
+	 * 1 – Push (Package 리소스 사용 시 서버에서 클라이언트로 Push 하는 방식(일괄 다운로드)
+	 * 2 – both
+	 * Push 방식과 Pull 방식을 모두 지원하여야 한다. */
+	@Override public int getFirmwareUpdateDeliveryMethod() {
 		return 0;
 	}
 }
