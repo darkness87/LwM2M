@@ -18,6 +18,7 @@ import com.cnu.lwm2m.client.models.impl.AccessControlInfo;
 import com.cnu.lwm2m.client.models.impl.ConnectivityMonitoringInfo;
 import com.cnu.lwm2m.client.models.impl.DeviceInfo;
 import com.cnu.lwm2m.client.models.impl.FirmwareUpdateInfo;
+import com.cnu.lwm2m.client.models.impl.LocationInfo;
 import com.cnu.lwm2m.client.models.impl.SecurityInfo;
 import com.cnu.lwm2m.client.models.impl.ServerInfo;
 
@@ -26,7 +27,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo
-											, ConnectivityMonitoringInfo, FirmwareUpdateInfo {
+											, ConnectivityMonitoringInfo, FirmwareUpdateInfo, LocationInfo {
 	/*******************
 	  [0] SECURITY Info
 	 *******************/
@@ -321,4 +322,18 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 	@Override public int getFirmwareUpdateDeliveryMethod() {
 		return 0;
 	}
+
+
+
+	/**************
+	  [6] Location
+	 **************/
+	/** ID:0 위도의 십진 표기 */
+	private float latitude;
+
+	/** ID:1 경도의 십진 표기 */
+	private float longitude;
+
+	/** ID:5 위치 측정이 수행된 시간의 타임스탬프이다. */
+	private Date timestamp;
 }
