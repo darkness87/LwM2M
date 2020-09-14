@@ -1,14 +1,21 @@
 package com.cnu.lwm2m.client.init;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.californium.core.network.config.NetworkConfig;
 import org.eclipse.leshan.client.californium.LeshanClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
 import org.eclipse.leshan.core.LwM2mId;
+import org.eclipse.leshan.core.model.ObjectLoader;
+import org.eclipse.leshan.core.model.ObjectModel;
+import org.eclipse.leshan.core.model.StaticModel;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
@@ -30,15 +37,41 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 	@Autowired
 	public ObjectExcuteTask task;
 
+	@Autowired
+	ResourceLoader resourceLoader;
+
 	private LeshanClient client;
 
 	public void run() {
 		// TODO: endpoint는 DCU_ID가 적정해보인다... 조율필요
 		String endpoint = "CNU0492010001";
 		LeshanClientBuilder builder = new LeshanClientBuilder(endpoint);
+		List<ObjectModel> models = null;
 
-		ObjectsInitializer init = new ObjectsInitializer();
+		Resource resource = resourceLoader.getResource("classpath:models");
+		try {
+			File directory = resource.getFile();
+			log.debug(directory.getAbsolutePath());
+			log.debug("is directory : {}", directory.isDirectory());
+
+			if (directory.isDirectory()) {
+				for (String fileName : directory.list()) {
+					log.debug(fileName);
+				}
+
+				models = ObjectLoader.loadDefault();
+				models.addAll(ObjectLoader.loadDdfResources("/models", directory.list()));
+			} else {
+				log.error("is directory : {}", directory.isDirectory());
+			}
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// Initialize model
+		ObjectsInitializer init = new ObjectsInitializer(new StaticModel(models));
 		init.setInstancesForObject(LwM2mId.SECURITY, CNUSecurity.kepcoKcmvp("coap://leshan.eclipseprojects.io:5683", this));
+//		init.setInstancesForObject(LwM2mId.SECURITY, CNUSecurity.kepcoKcmvp("coap://localhost:5683", this));
 		init.setInstancesForObject(LwM2mId.SERVER, new CNUServer(this, task));
 		init.setInstancesForObject(LwM2mId.DEVICE, new CNUDevice(this, task));
 		init.setInstancesForObject(LwM2mId.ACCESS_CONTROL, new CNUAccessControl(this, task));

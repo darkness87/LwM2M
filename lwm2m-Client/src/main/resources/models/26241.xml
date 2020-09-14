@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>AMI Common Control</Name>
+		<Description1>공통제어부 관리</Description1>
+		<ObjectID>26241</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:26241</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Optional</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>System Title</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>인증서 ID (고유번호: 5 Byte, 제조사 번호: 3 Byte)</Description>
+			</Item>
+			<Item ID="1">
+				<Name>AMI 사업명</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>AMI 사업명</Description>
+			</Item>
+			<Item ID="2">
+				<Name>AMI 설비 장치 타입 (모뎀)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~5</RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>0: ETC, 1: S-Type, 2: G-Type, 3: AE-Type, 5:AMIGO</Description>
+			</Item>
+			<Item ID="3">
+				<Name>AMI 설비 장치타입 (G/W, DCU)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~2</RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>0: ETC, 1: 주상(전주), 2: 지상(지중)</Description>
+			</Item>
+			<Item ID="4">
+				<Name>설비 제조년월</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>AMI 설비 제조 ”년,월“ 표시  예) 2020년 2월의 경우 ”20, 12“ (공백 제거)</Description>
+			</Item>
+			<Item ID="7">
+				<Name>CPU(MCU) 칩 제조회사</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>붙임 8-2) 모뎀 공통제어부 CPU 제조사 코드표 참조 (제조업체 요청 시 추가지정)</Description>
+			</Item>
+			<Item ID="8">
+				<Name>CPU(MCU) 칩 모델번호</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자)</Description>
+			</Item>
+			<Item ID="10">
+				<Name>CPU(MCU) 칩 모델번호</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>%</Units>
+				<Description>칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자)</Description>
+			</Item>
+			<Item ID="11">
+				<Name>CPU 사용률 Observation 및 Notify 설정</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초, %</Units>
+				<Description>CPU 사용률에 대한 최소값, 최대값, 평균값을 관찰 기록한다</Description>
+			</Item>
+			<Item ID="12">
+				<Name>CPU 사용률 실시간 측정</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
+			</Item>
+			<Item ID="13">
+				<Name>RAM 사용률 Read</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>%</Units>
+				<Description>Observation 및 Notify 설정 기간마다 RAM 사용률의 값을 관찰 기록하고 전송한다. 실시간 측정 명령 수신 시 1초 단위로 기록 전송한다.</Description>
+			</Item>
+			<Item ID="14">
+				<Name>RAM 사용률 Observation 및 Notify 설정</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초, %</Units>
+				<Description>RAM 사용률에 대한 최소값, 최대값, 평균값을 관찰 기록한다</Description>
+			</Item>
+			<Item ID="15">
+				<Name>RAM 사용률 실시간 측정</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
+			</Item>
+			<Item ID="17">
+				<Name>Measurement Power Voltage Read</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>mV</Units>
+				<Description>Observation 및 Notify 설정 기간마다 입력전압의 값을 관찰 기록하고 전송한다. 실시간 측정 명령 수신 시 1초 단위로 기록 전송한다.</Description>
+			</Item>
+			<Item ID="18">
+				<Name>Measurement Power Voltage Observation 및 Notify 설정</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초, mV</Units>
+				<Description>입력전압에 대한 최소값, 최대값, 평균값을 관찰 기록한다.</Description>
+			</Item>
+			<Item ID="19">
+				<Name>Measurement Power Voltage 실시간 측정</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
+			</Item>
+			<Item ID="20">
+				<Name>Measurement Consumption Current Read</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>mA</Units>
+				<Description>Observation 및 Notify 설정 기간마다 소모전류의 값을 관찰 기록하고 전송한다. 실시간 측정 명령 수신 시 1초 단위로 기록 전송한다.</Description>
+			</Item>
+			<Item ID="21">
+				<Name>Measurement Consumption Current Observation 및 Notify 설정</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초, mA</Units>
+				<Description>입력전압에 대한 최소값, 최대값, 평균값을 관찰 기록한다.</Description>
+			</Item>
+			<Item ID="22">
+				<Name>Measurement Consumption Current 실시간 측정</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>mA</Units>
+				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
+			</Item>
+			<Item ID="25">
+				<Name>F/W Factory Version　Reboot (공장 버전으로 재기동)</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>공장 초기화 버전을 현재 버전으로 이동 복사 후 재부팅 재등록을 하기 위해서 상호인증 및 Bootstrap 과정을 재실행하여야 한다.</Description>
+			</Item>
+			<Item ID="26">
+				<Name>F/W Last Version　Reboot (최근 성공한 버전으로 재기동)</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>가장 최근에 부팅에 성공한 버전을 현재 버전으로 이동 복사 후 재부팅</Description>
+			</Item>
+			<Item ID="30">
+				<Name>정전 발생시간</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>정전 발생 시 이벤트를 발생하고, 정전 발생 시각을 표시하여 Nofity 한다.</Description>
+			</Item>
+			<Item ID="31">
+				<Name>복전 시간</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>정전 후 복전 시 이벤트를 발생하고, 복전 시각을 표시하여 Nofity 한다.</Description>
+			</Item>
+			<Item ID="35">
+				<Name>H/W Watch Dog Test</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>H/W Watchdog 동작 실행 명령. 이 명령이 수행되면 Watch Dog Kick을 종료하여 Watch Dog Reset이 발생하여야 한다.</Description>
+			</Item>
+			<Item ID="36">
+				<Name>스케줄에 의한 자체 리셋 주기 (Self Reset Period)</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~365</RangeEnumeration>
+				<Units>day</Units>
+				<Description>스케줄에 의한 자체 리셋 주기 설정 (“0”은 자체 리셋 기능 미사용)(예: 30 → 30일 단위로 리소스 ID 37에서 정한 시간(분)에 리셋) / 초기값 (7)</Description>
+			</Item>
+			<Item ID="37">
+				<Name>스케줄에 의한 자체 리셋 시각 (Self Reset Time)</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~1439</RangeEnumeration>
+				<Units>분</Units>
+				<Description>스케줄에 의한 자체 리셋 기능 사용 시 시간 설정(분) (리소스 ID 37이 0 이 아닌 경우), 0 : 00시 00분 ~ 1439 : 23시 59분 / 초기값 (1430 : 23시 50분)</Description>
+			</Item>
+			<Item ID="40">
+				<Name>RS485 DLB(Digital Loop_back) Period</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초</Units>
+				<Description>RS485 Loopback 실행 시간을 설정한다. 0 인 경우 Loopback Stop 명령 시간 동안 유지한다. / 초기값 : 5초</Description>
+			</Item>
+			<Item ID="41">
+				<Name>RS485 DLB(Digital Loop_back) Start</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>RS-485 Port Loop_back 실행 명령</Description>
+			</Item>
+			<Item ID="42">
+				<Name>RS485 DLB(Digital Loop_back) Stop</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>RS-485 Port Loop_back 해제 실행 명령</Description>
+			</Item>
+			<Item ID="43">
+				<Name>RS-485 Loop_back Test 명령 Input Data</Name>
+				<Operations>W</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Res_ID_41 실행될 경우 Loop_back 시험을 위한 data를 서버로부터 수신, 예) “AMI 485 DLB TEST”</Description>
+			</Item>
+			<Item ID="44">
+				<Name>RS-485 Loop_back Test 명령 Output Data</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Res_ID_43의 실행 결과로 리소스 ID 44에 대한 Loop_back 결과 서버로 전송, 예) “AMI 485 DLB TEST”</Description>
+			</Item>
+			<Item ID="47">
+				<Name>LED TEST</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>10초간 모뎀의 모든 LED LAMP를 1초 간격으로 점멸한 후 정상 동작</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>
