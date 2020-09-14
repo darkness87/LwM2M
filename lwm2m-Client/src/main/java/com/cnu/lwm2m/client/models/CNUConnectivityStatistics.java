@@ -13,14 +13,13 @@ import org.eclipse.leshan.core.response.WriteResponse;
 
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
 import com.cnu.lwm2m.client.models.impl.ConnectivityStatisticsInfo;
-import com.cnu.lwm2m.client.models.impl.FirmwareUpdateInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CNUConnectivityStatistics extends BaseInstanceEnabler {
 
-	private static final List<Integer> supportedResources = Arrays.asList(0, 1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 15, 16);
+	private static final List<Integer> supportedResources = Arrays.asList(2, 3, 4, 5, 6, 7, 8);
 
 	ConnectivityStatisticsInfo connectivityStatistics;
 	private long collectionPeriod;
@@ -29,8 +28,9 @@ public class CNUConnectivityStatistics extends BaseInstanceEnabler {
 		// should never be used
 	}
 
-	public CNUConnectivityStatistics(FirmwareUpdateInfo firmwareUpdate, ObjectExcuteTask task) {
+	public CNUConnectivityStatistics(ConnectivityStatisticsInfo connectivityStatistics, ObjectExcuteTask task) {
 		this.collectionPeriod = connectivityStatistics.getCollectionPeriod();
+		this.connectivityStatistics = connectivityStatistics;
 	}
 
 	@Override

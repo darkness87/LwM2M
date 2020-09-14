@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
 import com.cnu.lwm2m.client.models.CNUAccessControl;
 import com.cnu.lwm2m.client.models.CNUConnectivityMonitoring;
+import com.cnu.lwm2m.client.models.CNUConnectivityStatistics;
 import com.cnu.lwm2m.client.models.CNUDevice;
 import com.cnu.lwm2m.client.models.CNUFirmwareUpdate;
+import com.cnu.lwm2m.client.models.CNULocation;
 import com.cnu.lwm2m.client.models.CNUSecurity;
 import com.cnu.lwm2m.client.models.CNUServer;
 
@@ -42,6 +44,8 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 		init.setInstancesForObject(LwM2mId.ACCESS_CONTROL, new CNUAccessControl(this, task));
 		init.setInstancesForObject(LwM2mId.CONNECTIVITY_MONITORING, new CNUConnectivityMonitoring(this, task));
 		init.setInstancesForObject(LwM2mId.FIRMWARE, new CNUFirmwareUpdate(this, task));
+		init.setInstancesForObject(LwM2mId.LOCATION, new CNULocation(this, task));
+		init.setInstancesForObject(LwM2mId.CONNECTIVITY_STATISTICS, new CNUConnectivityStatistics(this, task));
 
 		builder.setObjects(init.createAll());
 		builder.setCoapConfig(createConfig());	// Create CoAP Config

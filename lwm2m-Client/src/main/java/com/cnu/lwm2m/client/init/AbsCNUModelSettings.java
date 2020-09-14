@@ -330,13 +330,13 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 	  [6] Location
 	 **************/
 	/** ID:0 위도의 십진 표기 */
-	private float latitude;
+	private float latitude = 0;
 
 	/** ID:1 경도의 십진 표기 */
-	private float longitude;
+	private float longitude = 0;
 
 	/** ID:5 위치 측정이 수행된 시간의 타임스탬프이다. */
-	private Date timestamp;
+	private Date timestamp = new Date();
 
 	/*****************************
 	  [7] Connectivity Statistics
