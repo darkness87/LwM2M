@@ -7,28 +7,40 @@ import java.net.SocketException;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.CoapServer;
 import org.eclipse.californium.core.network.CoapEndpoint;
+import org.eclipse.californium.core.network.Endpoint;
 import org.eclipse.californium.core.network.config.NetworkConfig;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.eclipse.californium.elements.util.NetworkInterfacesUtil;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Component
 @Slf4j
-public class CNUCoapServer extends CoapServer {
+public class CNUCoapServer extends CoapServer implements DisposableBean {
 
 	private static final int COAP_PORT = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.COAP_PORT);
 //	private static final int TCP_THREADS = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.TCP_WORKER_THREADS);
 //	private static final int TCP_IDLE_TIMEOUT = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.TCP_CONNECTION_IDLE_TIMEOUT);
 
-//	public static void main(String[] args) {
-//		try {
-//			CNUCoapServer server = new CNUCoapServer();
-//			server.addEndpoints();
-//			server.start();
-//		} catch (SocketException e) {
-//			log.error("Failed to initialize server: " + e.getMessage(), e);
-//		}
-//	}
+	public CNUCoapServer() throws SocketException {
+		// provide an instance of a Hello-World resource
+		log.debug("init Construct CNUCoapServer()");
+		add(new HelloWorldResource("cmd"));
+		run();
+	}
+
+	public void run() {
+		addEndpoints();
+		start();
+
+		for (Endpoint endpoint : getEndpoints()) {
+			log.debug("init complete meterCoapserver: {}", endpoint.getUri() + "/" + getRoot().getURI());
+		}
+
+		log.debug("Metering coapServer Started!!");
+	}
 
 	public void addEndpoints() {
 		NetworkConfig config = NetworkConfig.getStandard();
@@ -48,12 +60,6 @@ public class CNUCoapServer extends CoapServer {
 			addEndpoint(builder.build());
 */
 		}
-	}
-
-	public CNUCoapServer() throws SocketException {
-		// provide an instance of a Hello-World resource
-		log.debug("init Construct CNUCoapServer()");
-		add(new HelloWorldResource("cmd"));
 	}
 
 	class HelloWorldResource extends CoapResource {
