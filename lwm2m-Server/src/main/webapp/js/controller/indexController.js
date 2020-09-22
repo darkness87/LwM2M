@@ -30,6 +30,11 @@ $(document).ready(function() {
   });
 
   // 디바이스 등록리스
-  getAllRegistrationsList();
+  getAllRegistrationsList()
+  
+  setInterval(function () {
+      getAllRegistrationsList();
+  }, 10000);
+
 });
 

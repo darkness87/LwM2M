@@ -16,7 +16,7 @@ class Lwm2mServerApplicationTests {
 	 */
 	
 	public static void main(String[] args) throws ConnectorException, IOException {
-	  	CoapClient client = new CoapClient("coap://localhost:25683/cmd");
+	  	CoapClient client = new CoapClient("coap://localhost:50534/1/0");
 
 		CoapResponse response = null;
 		String result = null;

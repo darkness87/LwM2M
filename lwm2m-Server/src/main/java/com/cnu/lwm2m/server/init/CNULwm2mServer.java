@@ -7,10 +7,12 @@ import java.io.IOException;
 import org.eclipse.californium.core.network.config.NetworkConfig;
 import org.eclipse.leshan.server.californium.LeshanServer;
 import org.eclipse.leshan.server.californium.LeshanServerBuilder;
+import org.eclipse.leshan.server.californium.LeshanServer.CoapAPI;
 import org.eclipse.leshan.server.model.LwM2mModelProvider;
 import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.queue.PresenceService;
 import org.eclipse.leshan.server.registration.RegistrationService;
+import org.eclipse.leshan.server.security.SecurityStore;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -93,4 +95,15 @@ public class CNULwm2mServer implements DisposableBean {
 	public LwM2mModelProvider getModelProvider() {
 		return server.getModelProvider();
 	}
+	
+	@Bean
+    public SecurityStore getSecurityStore() {
+        return server.getSecurityStore();
+    }
+	
+	@Bean
+	public CoapAPI coap() {
+        return server.coap();
+    }
+	
 }

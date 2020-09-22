@@ -66,7 +66,7 @@
               <i class="fa fa-bars"></i>
             </button>
           </form>
-          <div><h1>LwM2M 서버</h1></div>
+          <div><h1>LwM2M Server</h1></div>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,8 +84,8 @@
         </nav>
 
         <div class="container-fluid">
-          <h1 class="h3 mb-2 text-gray-800">등록 리스트</h1>
-          <p class="mb-4">Device Reg List</p>
+          <h1 class="h3 mb-2 text-gray-800">Registration Info</h1>
+          <!-- <p class="mb-4">Registration Info</p> -->
 
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -115,44 +115,10 @@
             </div>
           </div>
 
-          <button class="btn btn-primary" type="button" href="#" data-toggle="modal" data-target="#dataModal">상세 Test</button>
-
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Data</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive" id="clickdata">
-
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>object id</th>
-                      <th>object name</th>
-                      <th>omaObject</th>
-                      <th>urn</th>
-                      <th>version</th>
-                      <th>resource id</th>
-                      <th>resource name</th>
-                      <th>operations</th>
-                      <th>rangeEnumeration</th>
-                      <th>type</th>
-                      <th>units</th>
-                    </tr>
-                  </thead>
-                  <tbody id="clicktabledata">
-                    <tr>
-                      <td colspan="11" style="text-align:center">등록리스트를 선택하십시오.</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-              </div>
-            </div>
+          <div id="objectdiv">
           </div>
 
         </div>
-
       </div>
 
       <footer class="sticky-footer bg-white">

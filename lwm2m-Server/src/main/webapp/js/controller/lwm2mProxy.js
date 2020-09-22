@@ -9,9 +9,13 @@ var LWM2M_PROXY = {
 
 	// 메인&로그인
 	getAllRegistrations : "/getAllRegistrations.do",
+	getById : "/getById.do",
+	getByEndpoint : "/getByEndpoint.do",
 	getObservationList : "/getObservationList.do",
 	awakeDevice : "/awakeDevice.do",
 	getObjectModel : "/getObjectModel.do",
+	coapObserve : "/coapObserve.do",
+	coapObserveCancel : "/coapObserveCancel.do",
 
 	prefixUrl : "",
 
