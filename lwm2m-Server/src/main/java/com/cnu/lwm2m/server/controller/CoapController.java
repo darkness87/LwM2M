@@ -28,7 +28,17 @@ public class CoapController {
 	@RequestMapping("/coapObserveCancel.do")
 	public @ResponseBody String sendCoapObserveCancel(@RequestParam String endpoint,@RequestParam String uri) {
 		log.info("=== sendCoapObserve Cancel ===");
-		String result = coapService.sendCoapObserve(endpoint,uri);
+		String result = coapService.sendCoapObserveCancel(endpoint,uri);
+		if(result==null) {
+			result="error";
+		}
+		return result;
+	}
+	
+	@RequestMapping("/coapRead.do")
+	public @ResponseBody String sendCoapRead(@RequestParam String endpoint,@RequestParam String uri) {
+		log.info("=== sendCoapRead ===");
+		String result = coapService.sendCoapRead(endpoint,uri);
 		if(result==null) {
 			result="error";
 		}

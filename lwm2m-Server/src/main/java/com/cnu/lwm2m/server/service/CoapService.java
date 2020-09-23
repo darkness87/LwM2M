@@ -106,4 +106,44 @@ public class CoapService {
 		return result;
 	}
 	
+	public String sendCoapRead(String endpoint,String uri) {
+		
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+
+		String result = null;
+		
+		for (Registration registration : allRegistrations) {
+			if (!registration.getEndpoint().equals(endpoint)) {
+				continue;
+			}
+			Request request = new Request(Code.GET);
+			
+			String uripath = "coap:/"+registration.getAddress()+":"+ registration.getPort()+"/Read" + uri;
+			log.info("=== uripath : {}",uripath);
+			request.setURI(uripath);
+
+			try {
+				log.info("=== registration : {}",registration);
+				log.info("=== request : {}",request);
+				
+				Response response = coapAPI.send(registration, request);
+				log.info("=== send : {}"+response);
+				
+				if (response!=null) {
+					log.info("{}",response.getPayload());
+					result = Utils.prettyPrint(response);
+					log.info("=== result : {}", result);
+				} else {
+					log.info("=== No response received.");
+					result = "No response received.";
+				}
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+		return result;
+	}
+	
 }

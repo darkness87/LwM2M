@@ -122,17 +122,19 @@ function getObjectModel(endpoint) {
 				var uri = "/"+item.id+"/0"+"/"+res.id;
 
 				tmp.push("      <tbody>");
-                tmp.push("			<tr>");
+                tmp.push("			<tr height='30'>");
 				tmp.push("				<td>" + uri + "</td>");
 				tmp.push("				<td>" + res.name + "</td>");
 				if(res.operations=="R"){
-					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>" + "</td>");
+					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapRead(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>" + "</td>");
 				}else if(res.operations=="RW"){
-					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
+					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>"
+							 				+ "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				}else if(res.operations=="W"){
 					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				}else if(res.operations=="E"){
-					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Exec</button>" + "</td>");
+					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Exec</button>"
+											+ "<button class='btn btn-primary' type='button' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>※</button>" + "</td>");
 				}else{
 					tmp.push("				<td>" + res.operations + "</td>");
 				}
@@ -173,6 +175,19 @@ function sendCoapObserveCancel(endpoint,uri) {
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
 	LWM2M_PROXY.invokeOpenAPI("coapObserveCancel", null, param, function(result, _head, _params) {
+		console.log(result);
+		var view = $("#page-top");
+		var listView = view.find("#detaildata");
+		listView.empty();
+		listView.html("<div>"+result+"</div>");
+	});
+}
+
+function sendCoapRead(endpoint,uri) {
+	var param = {};
+	param["endpoint"] = endpoint;
+	param["uri"] = uri;
+	LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function(result, _head, _params) {
 		console.log(result);
 		var view = $("#page-top");
 		var listView = view.find("#detaildata");

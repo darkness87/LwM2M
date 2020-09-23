@@ -29,8 +29,8 @@ $(document).ready(function() {
     }
   });
 
-  // 디바이스 등록리스
-  getAllRegistrationsList()
+  // 디바이스 등록리스트
+  getAllRegistrationsList();
   
   setInterval(function () {
       getAllRegistrationsList();
