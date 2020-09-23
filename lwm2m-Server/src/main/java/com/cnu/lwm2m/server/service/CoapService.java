@@ -43,7 +43,7 @@ public class CoapService {
 			request.setURI(uripath);
 			
 			// TODO 실행하면 오류
-//			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
+			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
 
 			try {
 				log.info("=== registration : {}",registration);
@@ -118,7 +118,7 @@ public class CoapService {
 			}
 			Request request = new Request(Code.GET);
 			
-			String uripath = "coap:/"+registration.getAddress()+":"+ registration.getPort()+"/Read" + uri;
+			String uripath = "coap:/"+registration.getAddress()+":"+ registration.getPort()+uri;
 			log.info("=== uripath : {}",uripath);
 			request.setURI(uripath);
 
