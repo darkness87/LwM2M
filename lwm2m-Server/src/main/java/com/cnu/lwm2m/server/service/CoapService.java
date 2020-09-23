@@ -54,6 +54,10 @@ public class CoapService {
 				
 				if (response!=null) {
 					log.info("{}",response.getPayload());
+					log.info("{}",response.getOptions());
+					log.info("{}",response.getSourceContext());
+					log.info("{}",response.getToken());
+					log.info("{}",response.getType());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
@@ -91,6 +95,10 @@ public class CoapService {
 				
 				if (response!=null) {
 					log.info("{}",response.getPayload());
+					log.info("{}",response.getOptions());
+					log.info("{}",response.getSourceContext());
+					log.info("{}",response.getToken());
+					log.info("{}",response.getType());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
@@ -131,6 +139,16 @@ public class CoapService {
 				
 				if (response!=null) {
 					log.info("{}",response.getPayload());
+					log.info("{}",response.getOptions());
+					log.info("{}",response.getSourceContext());
+					log.info("{}",response.getToken());
+					log.info("{}",response.getType());
+					log.info("{}",response.getCode());
+					log.info("{}",response.getDestinationContext());
+					log.info("{}",response.getEffectiveDestinationContext());
+					log.info("{}",response.getMessageObservers());
+					log.info("{}",response.getReliabilityLayerParameters());
+					
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {

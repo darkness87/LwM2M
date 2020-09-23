@@ -128,7 +128,7 @@ function getObjectModel(endpoint) {
 				if(res.operations=="R"){
 					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapRead(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>" + "</td>");
 				}else if(res.operations=="RW"){
-					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>"
+					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapRead(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Read</button>"
 							 				+ "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				}else if(res.operations=="W"){
 					tmp.push("				<td>" + "<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\""+endpoint+"\",\""+uri+"\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
