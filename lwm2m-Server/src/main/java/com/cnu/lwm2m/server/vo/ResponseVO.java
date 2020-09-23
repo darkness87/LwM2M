@@ -7,7 +7,6 @@ import com.cnu.lwm2m.server.common.PropertyMessage;
 import com.cnu.lwm2m.server.exception.Lwm2mException;
 import com.cnu.lwm2m.server.exception.ExceptionConst;
 
-
 public class ResponseVO {
 	private ResponseHeadVO responseHead;
 	private ResponseDataVO responseData;
@@ -30,7 +29,7 @@ public class ResponseVO {
 		this(new Lwm2mException(resultCode));
 	}
 
-	public ResponseVO(int resultCode, String...values) {
+	public ResponseVO(int resultCode, String... values) {
 		String resultMessage = PropertyMessage.getCodeMessage(resultCode, values);
 		this.responseHead = new ResponseHeadVO(resultCode, resultMessage);
 	}
@@ -72,7 +71,7 @@ public class ResponseVO {
 
 	public ResponseHeadVO getResponseHead() {
 		if (responseHead != null) {
-			return (ResponseHeadVO)responseHead.clone();
+			return (ResponseHeadVO) responseHead.clone();
 		} else {
 			return null;
 		}
@@ -108,14 +107,15 @@ public class ResponseVO {
 				list = new ArrayList<ResponseDataVO>();
 
 				if (!(object.get(0) instanceof ResponseDataVO)) {
-					throw new Lwm2mException(9999, "[" + object + "] 해당 객체는 ResponseDataVO를 상속받지 않은 객체이므로 사용하실 수 없습니다.");
+					throw new Lwm2mException(9999,
+							"[" + object + "] 해당 객체는 ResponseDataVO를 상속받지 않은 객체이므로 사용하실 수 없습니다.");
 				}
 
-				for(int i=0; i<object.size(); i++) {
-					list.add((ResponseDataVO)object.get(i));
+				for (int i = 0; i < object.size(); i++) {
+					list.add((ResponseDataVO) object.get(i));
 				}
 			}
-		} catch(IndexOutOfBoundsException e) {
+		} catch (IndexOutOfBoundsException e) {
 			return new ListVO();
 		} catch (Exception e) {
 			throw new Lwm2mException(9999, "해당 객체는 ResponseDataVO를 상속받지 않은 객체이므로 사용하실 수 없습니다.");

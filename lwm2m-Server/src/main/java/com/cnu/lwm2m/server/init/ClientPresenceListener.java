@@ -6,7 +6,7 @@ import org.eclipse.leshan.server.registration.Registration;
 
 import com.cnu.lwm2m.server.vo.EVENT;
 
-public class ClientPresenceListener extends AbsClientListener implements PresenceListener{
+public class ClientPresenceListener extends AbsClientListener implements PresenceListener {
 	public ClientPresenceListener(LeshanServer server) {
 		super(server);
 	}

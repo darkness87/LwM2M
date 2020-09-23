@@ -22,146 +22,145 @@ public class CoapService {
 
 	@Autowired
 	CoapAPI coapAPI;
-	
+
 	@Autowired
 	RegistrationService regService;
-	
-	public String sendCoapObserve(String endpoint,String uri) {
-		
-		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 
+	public String sendCoapObserve(String endpoint, String uri) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 		String result = null;
-		
+
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
 			}
+
 			Request request = new Request(Code.GET);
-			
-			String uripath = "coap:/"+registration.getAddress()+":"+ registration.getPort() + uri;
-			log.info("=== uripath : {}",uripath);
+			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
+			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
-			
 			// TODO 실행하면 오류
 			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
 
 			try {
-				log.info("=== registration : {}",registration);
-				log.info("=== request : {}",request);
-				
+				log.info("=== registration : {}", registration);
+				log.info("=== request : {}", request);
 				Response response = coapAPI.send(registration, request);
-				log.info("=== send : {}"+response);
-				
-				if (response!=null) {
-					log.info("{}",response.getPayload());
-					log.info("{}",response.getOptions());
-					log.info("{}",response.getSourceContext());
-					log.info("{}",response.getToken());
-					log.info("{}",response.getType());
+				log.info("=== send : {}" + response);
+
+				if (response != null) {
+					log.info("{}", response.getPayload());
+					log.info("{}", response.getOptions());
+					log.info("{}", response.getSourceContext());
+					log.info("{}", response.getToken());
+					log.info("{}", response.getType());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
 					log.info("=== No response received.");
 					result = "No response received.";
 				}
-				
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 			return result;
 		}
+
 		return result;
 	}
-	
-	public String sendCoapObserveCancel(String endpoint,String uri) {
+
+	public String sendCoapObserveCancel(String endpoint, String uri) {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 		String result = null;
+
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
 			}
+
 			Request request = new Request(Code.GET);
-			String uripath = "coap:/"+registration.getAddress()+":"+ registration.getPort() + uri;
-			log.info("=== uripath : {}",uripath);
+			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
+			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
 			request.setObserveCancel(); // observe cancel
 
 			try {
-				log.info("=== registration : {}",registration);
-				log.info("=== request : {}",request);
-				
+				log.info("=== registration : {}", registration);
+				log.info("=== request : {}", request);
 				Response response = coapAPI.send(registration, request);
-				log.info("=== send : {}"+response);
-				
-				if (response!=null) {
-					log.info("{}",response.getPayload());
-					log.info("{}",response.getOptions());
-					log.info("{}",response.getSourceContext());
-					log.info("{}",response.getToken());
-					log.info("{}",response.getType());
+				log.info("=== send : {}" + response);
+
+				if (response != null) {
+					log.info("{}", response.getPayload());
+					log.info("{}", response.getOptions());
+					log.info("{}", response.getSourceContext());
+					log.info("{}", response.getToken());
+					log.info("{}", response.getType());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
 					log.info("=== No response received.");
 					result = "No response received.";
 				}
-				
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 			return result;
 		}
+
 		return result;
 	}
-	
-	public String sendCoapRead(String endpoint,String uri) {
-		
-		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 
+	public String sendCoapRead(String endpoint, String uri) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 		String result = null;
-		
+
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
 			}
+
 			Request request = new Request(Code.GET);
-			
-			String uripath = "coap:/"+registration.getAddress()+":"+ registration.getPort()+uri;
-			log.info("=== uripath : {}",uripath);
+			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
+			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
 
 			try {
-				log.info("=== registration : {}",registration);
-				log.info("=== request : {}",request);
-				
+				log.info("=== registration : {}", registration);
+				log.info("=== request : {}", request);
 				Response response = coapAPI.send(registration, request);
-				log.info("=== send : {}"+response);
-				
-				if (response!=null) {
-					log.info("{}",response.getPayload());
-					log.info("{}",response.getOptions());
-					log.info("{}",response.getSourceContext());
-					log.info("{}",response.getToken());
-					log.info("{}",response.getType());
-					log.info("{}",response.getCode());
-					log.info("{}",response.getDestinationContext());
-					log.info("{}",response.getEffectiveDestinationContext());
-					log.info("{}",response.getMessageObservers());
-					log.info("{}",response.getReliabilityLayerParameters());
-					
+				log.info("=== send : {}" + response);
+
+				if (response != null) {
+					log.info("{}", response.getPayload());
+					log.info("{}", response.getOptions());
+					log.info("{}", response.getSourceContext());
+					log.info("{}", response.getToken());
+					log.info("{}", response.getType());
+					log.info("{}", response.getCode());
+					log.info("{}", response.getDestinationContext());
+					log.info("{}", response.getEffectiveDestinationContext());
+					log.info("{}", response.getMessageObservers());
+					log.info("{}", response.getReliabilityLayerParameters());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
 					log.info("=== No response received.");
 					result = "No response received.";
 				}
-				
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 			return result;
 		}
+
 		return result;
 	}
-	
+
 }

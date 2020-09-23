@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientRegistrationListener extends AbsClientListener implements RegistrationListener{
+public class ClientRegistrationListener extends AbsClientListener implements RegistrationListener {
 	public ClientRegistrationListener(LeshanServer server) {
 		super(server);
 	}
@@ -31,10 +31,10 @@ public class ClientRegistrationListener extends AbsClientListener implements Reg
 //		sendEvent(EVENT.REGISTRATION, jReg, registration.getEndpoint());
 
 		try {
-			ReadResponse response = server.send(registration, new ReadRequest(3,0,13));
+			ReadResponse response = server.send(registration, new ReadRequest(3, 0, 13));
 			if (response.isSuccess()) {
-				log.info("Device time: {}", ((LwM2mResource)response.getContent()).getValue());
-			}else {
+				log.info("Device time: {}", ((LwM2mResource) response.getContent()).getValue());
+			} else {
 				log.info("Failed to read:" + response.getCode() + " " + response.getErrorMessage());
 			}
 		} catch (InterruptedException e) {

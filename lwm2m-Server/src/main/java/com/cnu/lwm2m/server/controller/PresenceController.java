@@ -18,8 +18,8 @@ public class PresenceController {
 	@RequestMapping("/awakeDevice.do")
 	public @ResponseBody boolean awakeDevice() {
 		boolean result = presenceLwService.awakeAllDevice();
-		log.info("=== awakeAllDevice : "+result);
+		log.info("=== awakeAllDevice : " + result);
 		return result;
 	}
-	
+
 }

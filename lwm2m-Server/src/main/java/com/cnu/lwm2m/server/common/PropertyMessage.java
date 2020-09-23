@@ -58,11 +58,11 @@ public class PropertyMessage {
 		}
 	}
 
-	public static String getCodeMessage(int key, String...values) {
+	public static String getCodeMessage(int key, String... values) {
 		try {
 			String message = messageSourceAccessor.getMessage("lwm2m.code.message." + Integer.toString(key));
 
-			for (int i=0; i<values.length; i++) {
+			for (int i = 0; i < values.length; i++) {
 				message = message.replace("{" + i + "}", values[i]);
 			}
 

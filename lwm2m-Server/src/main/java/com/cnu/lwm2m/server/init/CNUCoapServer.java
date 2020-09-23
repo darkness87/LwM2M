@@ -52,14 +52,15 @@ public class CNUCoapServer extends CoapServer implements DisposableBean {
 			builder.setInetSocketAddress(bindToAddress);
 			builder.setNetworkConfig(config);
 			addEndpoint(builder.build());
-/*			TCP 모드일경우
-			TcpServerConnector connector = new TcpServerConnector(bindToAddress, TCP_THREADS, TCP_IDLE_TIMEOUT);
-			CoapEndpoint.Builder builder = new CoapEndpoint.Builder();
-			builder.setConnector(connector);
-			builder.setNetworkConfig(config);
-			addEndpoint(builder.build());
-*/
+			/*
+			 * TCP 모드일경우 TcpServerConnector connector = new
+			 * TcpServerConnector(bindToAddress, TCP_THREADS, TCP_IDLE_TIMEOUT);
+			 * CoapEndpoint.Builder builder = new CoapEndpoint.Builder();
+			 * builder.setConnector(connector); builder.setNetworkConfig(config);
+			 * addEndpoint(builder.build());
+			 */
 		}
+
 	}
 
 	class HelloWorldResource extends CoapResource {
@@ -99,5 +100,7 @@ public class CNUCoapServer extends CoapServer implements DisposableBean {
 			// respond to the request
 			exchange.respond("Hello World! DELETE");
 		}
+
 	}
+
 }

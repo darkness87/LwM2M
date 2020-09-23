@@ -29,12 +29,12 @@ public class AbsClientListener implements EventSource {
 	@Override
 	public void onOpen(Emitter emitter) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onClose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

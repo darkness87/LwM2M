@@ -3,9 +3,7 @@ package com.cnu.lwm2m.server.exception;
 import com.cnu.lwm2m.server.common.PropertyMessage;
 
 public class Lwm2mException extends Exception {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4276715518711291345L;
 
 	protected String faultCode;

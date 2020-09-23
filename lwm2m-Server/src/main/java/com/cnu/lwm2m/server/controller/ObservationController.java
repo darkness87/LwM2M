@@ -23,10 +23,10 @@ public class ObservationController {
 		log.info("");
 		return observationLwService.getObservationList(endpoint);
 	}
-	
+
 	@RequestMapping("/cancelObservations.do")
 	public @ResponseBody int cancelObservations(@RequestParam String endpoint) {
 		return observationLwService.cancelObservations(endpoint);
 	}
-		
+
 }

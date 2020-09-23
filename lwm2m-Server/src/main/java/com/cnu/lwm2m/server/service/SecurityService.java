@@ -18,5 +18,5 @@ public class SecurityService {
 //		return securityStore.getByEndpoint(endpoint);
 		return null;
 	}
-	
+
 }

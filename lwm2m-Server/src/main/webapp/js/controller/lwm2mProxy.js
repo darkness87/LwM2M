@@ -1,26 +1,26 @@
 var LWM2M_PROXY = {
-	xhrPool : [],
+	xhrPool: [],
 	// 공통
-	duplicateAPI : {},
-	loadingbarCode : ["getAllRegistrations", "getObservationList", "awakeDevice", "getObjectModel"],
-	abortCode : ["equipment", "fault"],
-	alertCode : {"0000x":true, "00001x":true},		//alertCode -> boolean형은 사용할지 여부
-	confirmCode : {"0000x":true, "00001x":true},	//confirmCode -> boolean형은 사용할지 여부
+	duplicateAPI: {},
+	loadingbarCode: ["getAllRegistrations", "getObservationList", "awakeDevice", "getObjectModel"],
+	abortCode: ["equipment", "fault"],
+	alertCode: { "0000x": true, "00001x": true },		//alertCode -> boolean형은 사용할지 여부
+	confirmCode: { "0000x": true, "00001x": true },	//confirmCode -> boolean형은 사용할지 여부
 
 	// 메인&로그인
-	getAllRegistrations : "/getAllRegistrations.do",
-	getById : "/getById.do",
-	getByEndpoint : "/getByEndpoint.do",
-	getObservationList : "/getObservationList.do",
-	awakeDevice : "/awakeDevice.do",
-	getObjectModel : "/getObjectModel.do",
-	coapObserve : "/coapObserve.do",
-	coapObserveCancel : "/coapObserveCancel.do",
-	coapRead : "/coapRead.do",
+	getAllRegistrations: "/getAllRegistrations.do",
+	getById: "/getById.do",
+	getByEndpoint: "/getByEndpoint.do",
+	getObservationList: "/getObservationList.do",
+	awakeDevice: "/awakeDevice.do",
+	getObjectModel: "/getObjectModel.do",
+	coapObserve: "/coapObserve.do",
+	coapObserveCancel: "/coapObserveCancel.do",
+	coapRead: "/coapRead.do",
 
-	prefixUrl : "",
+	prefixUrl: "",
 
-	errorSessionExpired : "/error/sessionExpired",
+	errorSessionExpired: "/error/sessionExpired",
 
 	// 메뉴
 
@@ -28,23 +28,23 @@ var LWM2M_PROXY = {
 
 	// 관리자
 
-	invokeDownloadOpenAPI : function (apiCode) {
+	invokeDownloadOpenAPI: function (apiCode) {
 		var url = LWM2M_PROXY.prefixUrl + LWM2M_PROXY[apiCode];
 		window.open(url, "_self");
 	},
-	invokeOpenAPI : function (apiCode, dataType, params, successCallBack, errorCallBack) {
+	invokeOpenAPI: function (apiCode, dataType, params, successCallBack, errorCallBack) {
 		var url = LWM2M_PROXY[apiCode];
 		var ajaxAsync = true;
 		var successCallBack2 = null;
 		var errorCallBack2 = null;
 
 		if (LWM2M_PROXY.loadingbarCode.indexOf(apiCode) > -1
-				&& $("#contentsBody").find(".table").find("tbody").length > 0
-				&& $("#contentsBody").find(".table").find("tbody").children().length == 0) {
+			&& $("#contentsBody").find(".table").find("tbody").length > 0
+			&& $("#contentsBody").find(".table").find("tbody").children().length == 0) {
 			PAGE_CONTROLLER.getTopicPageAppend("loadingbar", "loadingbar", $("#contentsBody").find(".table").find("tbody"));
 		} else if (LWM2M_PROXY.loadingbarCode.indexOf(apiCode) > -1
-				&& $("#contentsBody").find(".table").find("tbody").length > 1) {
-			$("#contentsBody").find(".table").find("tbody").each(function(_i, e) {
+			&& $("#contentsBody").find(".table").find("tbody").length > 1) {
+			$("#contentsBody").find(".table").find("tbody").each(function (_i, e) {
 				var view = $(e);
 
 				if (view.children().length == 0) {
@@ -56,19 +56,19 @@ var LWM2M_PROXY = {
 		if (LWM2M_PROXY[apiCode] == undefined || LWM2M_PROXY[apiCode] == "") {
 			// alert(SQUARE_RES.get("msg_invalid_apicode"));
 			alert("유효하지 않은 API코드 : " + apiCode + " --> " + LWM2M_PROXY[apiCode]);
-			return ;
+			return;
 		}
-		
+
 		//메뉴 클릭하여 그룹의 컨텐츠 처음 호출되는 ajax 콜인 경우, 이미 요청된 ajax가 존재한다면 해당 ajax을 abort 하도록 처리함.
 		if (LWM2M_PROXY.abortCode.indexOf(apiCode) > -1) {
 			LWM2M_PROXY.abortOpenApi();
 		}
 
-		if(dataType == "json") {
+		if (dataType == "json") {
 			params["dataType"] = "json";
 			var d = new Date();
 			var t = new Date(d.getFullYear(), d.getMonth(), d.getDay(), d.getHours(), d.getMinutes(), d.getMilliseconds());
-			var time = Date.parse(t.toISOString()) + ((1000*60*60*24) - 1);
+			var time = Date.parse(t.toISOString()) + ((1000 * 60 * 60 * 24) - 1);
 			params["timestamp"] = time;
 			params["apiCode"] = apiCode;
 			FINAL_TIME_STAMP = time;
@@ -83,14 +83,14 @@ var LWM2M_PROXY = {
 					//alert("잠시후 다시 사용해주세요");
 				}
 
-				return ;
+				return;
 			}
 		}
 
 		LWM2M_PROXY["duplicateAPI"][apiCode] = true;
 
 		// successCallBack이 없을 경우
-		if(successCallBack == undefined || successCallBack == null) {
+		if (successCallBack == undefined || successCallBack == null) {
 			successCallBack2 = function (response, status, request) {
 				LOG("::::::::::SUCCESS START");
 				LOG(response);
@@ -122,17 +122,17 @@ var LWM2M_PROXY = {
 			ajaxAsync = false;
 		}
 
-		$.ajax ({
-			type : "POST",
-			async : ajaxAsync,
-			url : url,
-			dataType : dataType,
-			timeout : TIME_OUT,
-			cache : false,
-			data : params,
+		$.ajax({
+			type: "POST",
+			async: ajaxAsync,
+			url: url,
+			dataType: dataType,
+			timeout: TIME_OUT,
+			cache: false,
+			data: params,
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 
-			error : function (_request, status, _error) {
+			error: function (_request, status, _error) {
 				delete LWM2M_PROXY["duplicateAPI"][apiCode];
 
 				if (LWM2M_PROXY.loadingbarCode.indexOf(apiCode) > -1) {
@@ -146,14 +146,14 @@ var LWM2M_PROXY = {
 				errorCallBack2(_request, status, _error);
 			},
 
-			success : function (response, status, request) {
+			success: function (response, status, request) {
 				delete LWM2M_PROXY["duplicateAPI"][apiCode];
 
 				if (LWM2M_PROXY.loadingbarCode.indexOf(apiCode) > -1) {
 					$("#contentsBody").find("#loadingbar").remove();
 				}
 
-				if(dataType == "json") {
+				if (dataType == "json") {
 					LOG(":::::::::Response:::::::::");
 					LOG(response);
 					if (response.responseHead == null || response.responseHead == undefined) {	// AMI api 콜이 아닌 경우
@@ -195,12 +195,12 @@ var LWM2M_PROXY = {
 				}
 			},
 
-			beforeSend: function(request, _settings) {
+			beforeSend: function (request, _settings) {
 				LWM2M_PROXY.xhrPool.push(request);
 			},
 
-			complete: function(request, _status) {
-				LWM2M_PROXY.xhrPool = $.grep(LWM2M_PROXY.xhrPool, function(xhr) {
+			complete: function (request, _status) {
+				LWM2M_PROXY.xhrPool = $.grep(LWM2M_PROXY.xhrPool, function (xhr) {
 					return xhr != request;
 				});
 
@@ -210,12 +210,12 @@ var LWM2M_PROXY = {
 			}
 		});
 	},
-	abortOpenApi : function () {
-		$.each(LWM2M_PROXY.xhrPool, function(_idx, jqXHR) {
+	abortOpenApi: function () {
+		$.each(LWM2M_PROXY.xhrPool, function (_idx, jqXHR) {
 			jqXHR.abort();
 		});
 	},
-	isAlertCode : function (resultCode) {
+	isAlertCode: function (resultCode) {
 		if (LWM2M_PROXY["alertCode"].hasOwnProperty(resultCode)) {
 			if (LWM2M_PROXY["alertCode"][resultCode]) {
 				return true;
@@ -226,7 +226,7 @@ var LWM2M_PROXY = {
 			return false;
 		}
 	},
-	isConfirmCode : function (resultCode) {
+	isConfirmCode: function (resultCode) {
 		if (LWM2M_PROXY["confirmCode"].hasOwnProperty(resultCode)) {
 			if (LWM2M_PROXY["confirmCode"][resultCode]) {
 				return true;

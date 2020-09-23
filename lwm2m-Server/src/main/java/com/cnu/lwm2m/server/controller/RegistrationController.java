@@ -23,16 +23,16 @@ public class RegistrationController {
 	public @ResponseBody List<Registration> getAllRegistrations() {
 		return registrationLwService.getRegistrationsList();
 	}
-	
+
 	@RequestMapping("/getById.do")
 	public @ResponseBody Registration getById(@RequestParam String id) {
-		log.info("{}",registrationLwService.getById(id));
+		log.info("{}", registrationLwService.getById(id));
 		return registrationLwService.getById(id);
 	}
-	
+
 	@RequestMapping("/getByEndpoint.do")
 	public @ResponseBody Registration getByEndpoint(@RequestParam String endpoint) {
-		log.info("{}",registrationLwService.getByEndpoint(endpoint));
+		log.info("{}", registrationLwService.getByEndpoint(endpoint));
 		return registrationLwService.getByEndpoint(endpoint);
 	}
 
@@ -41,5 +41,5 @@ public class RegistrationController {
 		LwM2mModel model = registrationLwService.getObjectModel(endpoint);
 		return model;
 	}
-	
+
 }

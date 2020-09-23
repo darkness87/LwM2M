@@ -42,7 +42,6 @@ public class CNULwm2mServer implements DisposableBean {
 			log.error(e.getMessage(), e);
 		}
 		server = builder.build();
-
 		server.getRegistrationService().addListener(new ClientRegistrationListener(server));
 		server.getObservationService().addListener(new ClientObservationListener(server));
 		server.getPresenceService().addListener(new ClientPresenceListener(server));
@@ -95,15 +94,15 @@ public class CNULwm2mServer implements DisposableBean {
 	public LwM2mModelProvider getModelProvider() {
 		return server.getModelProvider();
 	}
-	
+
 	@Bean
-    public SecurityStore getSecurityStore() {
-        return server.getSecurityStore();
-    }
-	
+	public SecurityStore getSecurityStore() {
+		return server.getSecurityStore();
+	}
+
 	@Bean
 	public CoapAPI coap() {
-        return server.coap();
-    }
-	
+		return server.coap();
+	}
+
 }

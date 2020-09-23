@@ -25,11 +25,11 @@ public class RegistrationLwService {
 	public List<Registration> getRegistrationsList() {
 		return Lists.newArrayList(regService.getAllRegistrations());
 	}
-	
+
 	public Registration getById(String id) {
 		return regService.getById(id);
 	}
-	
+
 	public Registration getByEndpoint(String endpoint) {
 		return regService.getByEndpoint(endpoint);
 	}
@@ -41,11 +41,13 @@ public class RegistrationLwService {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
 			}
-			log.info("{}",registration);;
+			
+			log.info("{}", registration);
+			
 			return modelProvider.getObjectModel(registration);
 		}
 
 		return null;
 	}
-	
+
 }

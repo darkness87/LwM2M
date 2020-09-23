@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientObservationListener extends AbsClientListener implements ObservationListener{
+public class ClientObservationListener extends AbsClientListener implements ObservationListener {
 	public ClientObservationListener(LeshanServer server) {
 		super(server);
 	}

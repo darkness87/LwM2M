@@ -27,9 +27,10 @@ public class PresenceLwService {
 		boolean result = false;
 		for (Registration registration : allRegistrations) {
 			result = prsenceService.isClientAwake(registration);
-			log.info("{}",result);
+			log.info("{}", result);
 		}
+
 		return result;
 	}
-	
+
 }

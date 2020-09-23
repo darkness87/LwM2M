@@ -39,13 +39,12 @@ public class ResponseHeadVO implements Cloneable {
 	}
 
 	@Override
-	public Object clone()
-	{
+	public Object clone() {
 		try {
 			return super.clone();
 		} catch (CloneNotSupportedException e) {
 			logger.info(e);
 			return null;
 		}
-	}//end clone
+	}// end clone
 }

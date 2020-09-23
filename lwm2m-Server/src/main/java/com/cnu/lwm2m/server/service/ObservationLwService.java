@@ -40,23 +40,25 @@ public class ObservationLwService {
 
 			return list;
 		}
+
 		return null;
 	}
-	
+
 	public int cancelObservations(String endpoint) {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
-
 		int result = 0;
-		
+
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
 			}
+
 			result = observeService.cancelObservations(registration);
-			log.info("{}",result);
+			log.info("{}", result);
 			return result;
 		}
+
 		return result;
 	}
-	
+
 }
