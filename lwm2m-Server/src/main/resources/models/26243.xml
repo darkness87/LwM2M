@@ -93,6 +93,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>하향 CoAP Ping Test는 서버에서 모뎀으로 Ping Test를 별도 수행하고 결과를 표시</Description>
@@ -112,7 +113,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
-				<Type></Type>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>하향 속도 Test는 서버에서 모뎀으로 Test를 수행하고 결과를 표시한다. 상향 속도 Test는 서버에서 모뎀으로 상향 실행 명령을 전송한다.</Description>

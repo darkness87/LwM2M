@@ -92,6 +92,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>Res_ID_10, 11에 대한 실행 명령</Description>
@@ -101,6 +102,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
 				<Description>Res_ID_10, 11 적합성 체크 중지 및 취소, Res_ID_10 상태 값을 ‘0’으로 변경하고, 결과를 서버로 전송하여야 한다.</Description>
@@ -164,6 +166,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>
@@ -175,6 +178,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>
