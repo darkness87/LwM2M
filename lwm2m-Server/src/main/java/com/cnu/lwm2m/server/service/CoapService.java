@@ -3,10 +3,20 @@ package com.cnu.lwm2m.server.service;
 import java.util.List;
 
 import org.eclipse.californium.core.Utils;
+import org.eclipse.californium.core.coap.OptionSet;
 import org.eclipse.californium.core.coap.Request;
 import org.eclipse.californium.core.coap.Response;
 import org.eclipse.californium.core.coap.CoAP.Code;
+import org.eclipse.californium.core.coap.CoAP.Type;
+import org.eclipse.californium.core.coap.MediaTypeRegistry;
+import org.eclipse.leshan.core.node.ObjectLink;
+import org.eclipse.leshan.core.node.codec.LwM2mNodeDecoder;
+import org.eclipse.leshan.core.request.ContentFormat;
+import org.eclipse.leshan.core.tlv.TlvDecoder;
+import org.eclipse.leshan.core.tlv.TlvEncoder;
+import org.eclipse.leshan.core.tlv.TlvException;
 import org.eclipse.leshan.server.californium.LeshanServer.CoapAPI;
+import org.eclipse.leshan.server.californium.LeshanServerBuilder;
 import org.eclipse.leshan.server.registration.Registration;
 import org.eclipse.leshan.server.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +32,10 @@ public class CoapService {
 
 	@Autowired
 	CoapAPI coapAPI;
+
+	/*
+	 * @Autowired LeshanServerBuilder leshanServerBuilder;
+	 */
 
 	@Autowired
 	RegistrationService regService;
@@ -40,7 +54,14 @@ public class CoapService {
 			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
 			// TODO 실행하면 오류
-			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
+//			request.isObserve();
+//			log.info("{}",request.isObserve());
+//			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
+			OptionSet options = new OptionSet();
+			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+																						// APPLICATION_VND_OMA_LWM2M_JSON
+			options.setObserve(0);
+			request.setOptions(options);
 
 			try {
 				log.info("=== registration : {}", registration);
@@ -50,6 +71,7 @@ public class CoapService {
 
 				if (response != null) {
 					log.info("{}", response.getPayload());
+					log.info("{}", response.getPayload().length);
 					log.info("{}", response.getOptions());
 					log.info("{}", response.getSourceContext());
 					log.info("{}", response.getToken());
@@ -85,6 +107,12 @@ public class CoapService {
 			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
 			request.setObserveCancel(); // observe cancel
+
+			OptionSet options = new OptionSet();
+			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+																						// APPLICATION_VND_OMA_LWM2M_JSON
+//			options.setObserve(1);
+			request.setOptions(options);
 
 			try {
 				log.info("=== registration : {}", registration);
@@ -128,6 +156,11 @@ public class CoapService {
 			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
 			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
+			request.setType(Type.CON);
+
+//			OptionSet options = new OptionSet();
+//			options.setContentFormat(MediaTypeRegistry.APPLICATION_JSON); // APPLICATION_JSON or APPLICATION_VND_OMA_LWM2M_JSON
+//			request.setOptions(options);
 
 			try {
 				log.info("=== registration : {}", registration);
@@ -137,23 +170,45 @@ public class CoapService {
 
 				if (response != null) {
 					log.info("{}", response.getPayload());
+					log.info("{}", response.getPayload().hashCode());
+					log.info("{}", response.getPayload().toString());
+					log.info("{}", response.getPayload().clone());
+					log.info("{}", response.getPayload().length);
 					log.info("{}", response.getOptions());
 					log.info("{}", response.getSourceContext());
 					log.info("{}", response.getToken());
 					log.info("{}", response.getType());
 					log.info("{}", response.getCode());
-					log.info("{}", response.getDestinationContext());
-					log.info("{}", response.getEffectiveDestinationContext());
-					log.info("{}", response.getMessageObservers());
-					log.info("{}", response.getReliabilityLayerParameters());
+					// log.info("{}", response.getDestinationContext());
+					// log.info("{}", response.getEffectiveDestinationContext());
+					// log.info("{}", response.getMessageObservers());
+					// log.info("{}", response.getReliabilityLayerParameters());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
+					// log.info("{}",TlvDecoder.decodeInteger(response.getPayload()));
+					// log.info("{}",TlvDecoder.decodeString(response.getPayload()));
+					// log.info("{}",TlvDecoder.decodeFloat(response.getPayload()));
+					// log.info("{}",TlvDecoder.decodeDate(response.getPayload()));
+					// log.info("{}",TlvDecoder.decodeBoolean(response.getPayload()));
+
+					log.info("{}", TlvDecoder.decodeObjlnk(response.getPayload()));
+					ObjectLink objectLink = TlvDecoder.decodeObjlnk(response.getPayload());
+					log.info("{}", objectLink.getObjectId());
+					log.info("{}", objectLink.getObjectInstanceId()); // TODO 들어온 값이긴 한데 모르겠음 int 값은 동일함
+
+//					LwM2mNodeDecoder LwM2mNodeDecoder = new LwM2mNodeDecoder();
+//					leshanServerBuilder.setDecoder(decoder);
+//					LwM2mNodeDecoder decoder;
+//					log.info("{}",LwM2mNodeDecoder.decode(response.getPayload(), ContentFormat.TLV,null,null));
+
 				} else {
 					log.info("=== No response received.");
 					result = "No response received.";
 				}
 
 			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (TlvException e) {
 				e.printStackTrace();
 			}
 

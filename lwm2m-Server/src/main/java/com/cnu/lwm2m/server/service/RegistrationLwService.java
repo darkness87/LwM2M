@@ -37,14 +37,34 @@ public class RegistrationLwService {
 	public LwM2mModel getObjectModel(String endpoint) {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 
+		log.info("=== {}", allRegistrations);
+
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
 			}
-			
-			log.info("{}", registration);
-			
+
+			log.info("=== {}", registration);
+
 			return modelProvider.getObjectModel(registration);
+		}
+
+		return null;
+	}
+
+	public LwM2mModel getResourceModel(String endpoint) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+
+		log.info("=== {}", allRegistrations);
+
+		for (Registration registration : allRegistrations) {
+			if (!registration.getEndpoint().equals(endpoint)) {
+				continue;
+			}
+
+			log.info("=== {}", registration);
+
+//			return modelProvider.getResourceModel(registration);
 		}
 
 		return null;

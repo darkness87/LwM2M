@@ -1,8 +1,12 @@
 package com.cnu.lwm2m.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
+import org.eclipse.leshan.core.model.ObjectLoader;
+import org.eclipse.leshan.core.model.ObjectModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -31,16 +35,38 @@ public class Lwm2mServerApplication implements ApplicationRunner {
 		context = SpringApplication.run(Lwm2mServerApplication.class, args);
 	}
 
+	/*
+	 * @Override public void run(ApplicationArguments args) throws Exception {
+	 * Resource resource = resourceLoader.getResource("classpath:models"); File file
+	 * = resource.getFile();
+	 * 
+	 * if (file.isDirectory() && file.exists()) { modelPaths = file.list();
+	 * log.info("Resources found files : {}", Arrays.toString(modelPaths)); } else {
+	 * log.error("리소스를 찾을 수 없습니다!!"); } }
+	 */
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Resource resource = resourceLoader.getResource("classpath:models");
-		File file = resource.getFile();
+		List<ObjectModel> models = null;
 
-		if (file.isDirectory() && file.exists()) {
-			modelPaths = file.list();
-			log.info("Resources found files : {}", Arrays.toString(modelPaths));
-		} else {
-			log.error("리소스를 찾을 수 없습니다!!");
+		Resource resource = resourceLoader.getResource("classpath:models");
+		try {
+			File directory = resource.getFile();
+			log.debug(directory.getAbsolutePath());
+			log.debug("is directory : {}", directory.isDirectory());
+
+			if (directory.isDirectory()) {
+				for (String fileName : directory.list()) {
+					log.debug(fileName);
+				}
+
+				models = ObjectLoader.loadDefault();
+				models.addAll(ObjectLoader.loadDdfResources("/models", directory.list()));
+			} else {
+				log.error("is directory : {}", directory.isDirectory());
+			}
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
 		}
 	}
 
