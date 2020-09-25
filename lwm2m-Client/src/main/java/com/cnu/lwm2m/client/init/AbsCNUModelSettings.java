@@ -1,8 +1,5 @@
 package com.cnu.lwm2m.client.init;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryUsage;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -27,9 +24,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo, AccessControlInfo
-											, ConnectivityMonitoringInfo, FirmwareUpdateInfo, LocationInfo
-											, ConnectivityStatisticsInfo{
+public class AbsCNUModelSettings extends AbsKepcoModelSettings
+								implements SecurityInfo, ServerInfo, DeviceInfo
+									, AccessControlInfo, ConnectivityMonitoringInfo, FirmwareUpdateInfo
+									, LocationInfo, ConnectivityStatisticsInfo {
 	/*******************
 	  [0] SECURITY Info
 	 *******************/
@@ -173,14 +171,6 @@ public class AbsCNUModelSettings implements SecurityInfo, ServerInfo, DeviceInfo
 	/** ID: 21 데이터 및 소프트웨어를 저장할 수 있는 메모리(ROM) 총 저장공간 */
 	@Override public int getMemoryTotal() {
 		return (int)(Runtime.getRuntime().totalMemory() / 1024);
-	}
-
-	public void getHeapMemory() {
-		MemoryMXBean membean = ManagementFactory.getMemoryMXBean();
-		MemoryUsage heap = membean.getHeapMemoryUsage();
-		MemoryUsage nonheap = membean.getNonHeapMemoryUsage();
-		System.out.println("Heap Memory: " + heap.toString());
-		System.out.println("NonHeap Memory: " + nonheap.toString());
 	}
 
 

@@ -8,7 +8,6 @@ import org.eclipse.californium.core.network.config.NetworkConfig;
 import org.eclipse.leshan.client.californium.LeshanClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
-import org.eclipse.leshan.core.LwM2mId;
 import org.eclipse.leshan.core.model.ObjectLoader;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.StaticModel;
@@ -18,6 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import com.cnu.lwm2m.client.consts.LwM2mID;
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
 import com.cnu.lwm2m.client.models.CNUAccessControl;
 import com.cnu.lwm2m.client.models.CNUConnectivityMonitoring;
@@ -27,6 +27,7 @@ import com.cnu.lwm2m.client.models.CNUFirmwareUpdate;
 import com.cnu.lwm2m.client.models.CNULocation;
 import com.cnu.lwm2m.client.models.CNUSecurity;
 import com.cnu.lwm2m.client.models.CNUServer;
+import com.cnu.lwm2m.client.models.KepcoCommonControl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,15 +71,16 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 
 		// Initialize model
 		ObjectsInitializer init = new ObjectsInitializer(new StaticModel(models));
-		init.setInstancesForObject(LwM2mId.SECURITY, CNUSecurity.kepcoKcmvp("coap://leshan.eclipseprojects.io:5683", this));
-//		init.setInstancesForObject(LwM2mId.SECURITY, CNUSecurity.kepcoKcmvp("coap://localhost:5683", this));
-		init.setInstancesForObject(LwM2mId.SERVER, new CNUServer(this, task));
-		init.setInstancesForObject(LwM2mId.DEVICE, new CNUDevice(this, task));
-		init.setInstancesForObject(LwM2mId.ACCESS_CONTROL, new CNUAccessControl(this, task));
-		init.setInstancesForObject(LwM2mId.CONNECTIVITY_MONITORING, new CNUConnectivityMonitoring(this, task));
-		init.setInstancesForObject(LwM2mId.FIRMWARE, new CNUFirmwareUpdate(this, task));
-		init.setInstancesForObject(LwM2mId.LOCATION, new CNULocation(this, task));
-		init.setInstancesForObject(LwM2mId.CONNECTIVITY_STATISTICS, new CNUConnectivityStatistics(this, task));
+		init.setInstancesForObject(LwM2mID.SECURITY, CNUSecurity.kepcoKcmvp("coap://leshan.eclipseprojects.io:5683", this));
+//		init.setInstancesForObject(LwM2mID.SECURITY, CNUSecurity.kepcoKcmvp("coap://localhost:5683", this));
+		init.setInstancesForObject(LwM2mID.SERVER, new CNUServer(this, task));
+		init.setInstancesForObject(LwM2mID.DEVICE, new CNUDevice(this, task));
+		init.setInstancesForObject(LwM2mID.ACCESS_CONTROL, new CNUAccessControl(this, task));
+		init.setInstancesForObject(LwM2mID.CONNECTIVITY_MONITORING, new CNUConnectivityMonitoring(this, task));
+		init.setInstancesForObject(LwM2mID.FIRMWARE, new CNUFirmwareUpdate(this, task));
+		init.setInstancesForObject(LwM2mID.LOCATION, new CNULocation(this, task));
+		init.setInstancesForObject(LwM2mID.CONNECTIVITY_STATISTICS, new CNUConnectivityStatistics(this, task));
+		init.setInstancesForObject(LwM2mID.KEPCO_COMMON_CONTROL, new KepcoCommonControl(this, task));
 
 		builder.setObjects(init.createAll());
 		builder.setCoapConfig(createConfig());	// Create CoAP Config
@@ -89,7 +91,7 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 	private NetworkConfig createConfig() {
 		NetworkConfig coapConfig;
 		File configFile = new File(NetworkConfig.DEFAULT_FILE_NAME);
-;
+
 		if (configFile.isFile()) {
 			coapConfig = new NetworkConfig();
 			coapConfig.load(configFile);
