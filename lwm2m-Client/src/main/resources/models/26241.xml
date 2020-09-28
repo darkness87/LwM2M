@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M.xsd">
 	<Object ObjectType="MODefinition">
-		<Name>AMI Common Control</Name>
+		<Name>Kepco_Man1</Name>
 		<Description1>공통제어부 관리</Description1>
 		<ObjectID>26241</ObjectID>
 		<ObjectURN>urn:oma:lwm2m:x:26241</ObjectURN>
 		<MultipleInstances>Single</MultipleInstances>
-		<Mandatory>Optional</Mandatory>
+		<Mandatory>Mandatory</Mandatory>
 		<Resources>
 			<Item ID="0">
 				<Name>System Title</Name>
@@ -103,6 +103,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
@@ -132,6 +133,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
@@ -161,6 +163,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
@@ -190,6 +193,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>mA</Units>
 				<Description>서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다.</Description>
@@ -199,6 +203,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>공장 초기화 버전을 현재 버전으로 이동 복사 후 재부팅 재등록을 하기 위해서 상호인증 및 Bootstrap 과정을 재실행하여야 한다.</Description>
@@ -208,6 +213,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>가장 최근에 부팅에 성공한 버전을 현재 버전으로 이동 복사 후 재부팅</Description>
@@ -237,6 +243,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>H/W Watchdog 동작 실행 명령. 이 명령이 수행되면 Watch Dog Kick을 종료하여 Watch Dog Reset이 발생하여야 한다.</Description>
@@ -276,6 +283,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>RS-485 Port Loop_back 실행 명령</Description>
@@ -285,6 +293,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>RS-485 Port Loop_back 해제 실행 명령</Description>
@@ -314,6 +323,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
+				<Type/>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>10초간 모뎀의 모든 LED LAMP를 1초 간격으로 점멸한 후 정상 동작</Description>
