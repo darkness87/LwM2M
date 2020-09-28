@@ -3,23 +3,24 @@ package com.cnu.lwm2m.server.init;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.californium.core.network.config.NetworkConfig;
-import org.eclipse.leshan.core.node.codec.LwM2mNodeDecoder;
+import org.eclipse.leshan.core.model.ObjectLoader;
+import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.server.californium.LeshanServer;
-import org.eclipse.leshan.server.californium.LeshanServerBuilder;
 import org.eclipse.leshan.server.californium.LeshanServer.CoapAPI;
+import org.eclipse.leshan.server.californium.LeshanServerBuilder;
 import org.eclipse.leshan.server.model.LwM2mModelProvider;
+import org.eclipse.leshan.server.model.VersionedModelProvider;
 import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.queue.PresenceService;
 import org.eclipse.leshan.server.registration.RegistrationService;
 import org.eclipse.leshan.server.security.SecurityStore;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,21 +28,24 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class CNULwm2mServer implements DisposableBean {
+	private final String[] KEPCO_MODELS = {"26241.xml", "26243.xml", "26245.xml", "26247.xml"};
 
 	private LeshanServer server;
-
-	@Autowired
-	ResourceLoader resourceLoader;
 
 	private Resource resource = new ClassPathResource("lwm2mServer.properties");
 
 	public CNULwm2mServer() {
 		LeshanServerBuilder builder = new LeshanServerBuilder();
+
 		try {
+			builder.setObjectModelProvider(initModelProviders());
 			builder.setCoapConfig(createConfig());
 		} catch (FileNotFoundException e) {
 			log.error(e.getMessage(), e);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
+
 		server = builder.build();
 		server.getRegistrationService().addListener(new ClientRegistrationListener(server));
 		server.getObservationService().addListener(new ClientObservationListener(server));
@@ -67,6 +71,15 @@ public class CNULwm2mServer implements DisposableBean {
 		coapConfig.load(configFile);
 
 		return coapConfig;
+	}
+
+	private LwM2mModelProvider initModelProviders() {
+		List<ObjectModel> models = ObjectLoader.loadDefault();
+
+		models = ObjectLoader.loadDefault();
+		models.addAll(ObjectLoader.loadDdfResources("/models", KEPCO_MODELS));
+
+		return new VersionedModelProvider(models);
 	}
 
 	@Override
