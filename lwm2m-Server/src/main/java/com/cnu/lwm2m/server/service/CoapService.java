@@ -10,13 +10,9 @@ import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.eclipse.leshan.core.node.ObjectLink;
-import org.eclipse.leshan.core.node.codec.LwM2mNodeDecoder;
-import org.eclipse.leshan.core.request.ContentFormat;
 import org.eclipse.leshan.core.tlv.TlvDecoder;
-import org.eclipse.leshan.core.tlv.TlvEncoder;
 import org.eclipse.leshan.core.tlv.TlvException;
 import org.eclipse.leshan.server.californium.LeshanServer.CoapAPI;
-import org.eclipse.leshan.server.californium.LeshanServerBuilder;
 import org.eclipse.leshan.server.registration.Registration;
 import org.eclipse.leshan.server.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +28,6 @@ public class CoapService {
 
 	@Autowired
 	CoapAPI coapAPI;
-
-	/*
-	 * @Autowired LeshanServerBuilder leshanServerBuilder;
-	 */
 
 	@Autowired
 	RegistrationService regService;
@@ -158,9 +150,10 @@ public class CoapService {
 			request.setURI(uripath);
 			request.setType(Type.CON);
 
-//			OptionSet options = new OptionSet();
-//			options.setContentFormat(MediaTypeRegistry.APPLICATION_JSON); // APPLICATION_JSON or APPLICATION_VND_OMA_LWM2M_JSON
-//			request.setOptions(options);
+			OptionSet options = new OptionSet();
+			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+																						// APPLICATION_VND_OMA_LWM2M_JSON
+			request.setOptions(options);
 
 			try {
 				log.info("=== registration : {}", registration);

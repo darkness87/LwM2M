@@ -2,6 +2,7 @@ package com.cnu.lwm2m.server.controller;
 
 import java.util.List;
 
+import org.eclipse.leshan.core.Link;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.server.registration.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class RegistrationController {
 	}
 
 	@RequestMapping("/getResourceModel.do")
-	public @ResponseBody LwM2mModel getResourceModel(@RequestParam String endpoint) {
+	public @ResponseBody Link[] getResourceModel(@RequestParam String endpoint) {
 		log.info("=== {}", endpoint);
-		LwM2mModel model = registrationLwService.getResourceModel(endpoint);
-		log.info("=== {}", model.getResourceModel(26241, 1));
+		Link[] model = registrationLwService.getResourceModel(endpoint);
+//		log.info("=== {}", model.getResourceModel(26241, 1));
 		return model;
 	}
 
