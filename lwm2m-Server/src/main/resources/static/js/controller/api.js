@@ -6,6 +6,8 @@ function getAllRegistrationsList() {
 		var listView = view.find("#lwm2mserverlist");
 		listView.empty();
 
+		console.log(result);
+
 		if (result == null) {
 			listView.html("<td colspan='8' style='text-align:center'>등록된 디바이스가 없습니다.</td>");
 			return;
@@ -75,6 +77,8 @@ function getObjectModel(endpoint) {
 		var view = $("#page-top");
 		var listView = view.find("#objectdiv");
 		listView.empty();
+
+		console.log(result);
 
 		if (result == null || result == "") {
 			listView.html("<div class='card shadow mb-4'><div class='card-header py-3'><h6 class='m-0 font-weight-bold text-primary'>등록된 디바이스가 없습니다.</h6></div></div>");
