@@ -2,6 +2,7 @@ package com.cnu.lwm2m.server.service;
 
 import java.util.List;
 
+import org.eclipse.leshan.core.Link;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.server.model.LwM2mModelProvider;
 import org.eclipse.leshan.server.registration.Registration;
@@ -52,7 +53,7 @@ public class RegistrationLwService {
 		return null;
 	}
 
-	public LwM2mModel getResourceModel(String endpoint) {
+	public Link[] getResourceModel(String endpoint) {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 
 		log.info("=== {}", allRegistrations);
@@ -63,8 +64,9 @@ public class RegistrationLwService {
 			}
 
 			log.info("=== {}", registration);
+			Link[] link = registration.getObjectLinks();
 
-//			return modelProvider.getResourceModel(registration);
+			return link;
 		}
 
 		return null;

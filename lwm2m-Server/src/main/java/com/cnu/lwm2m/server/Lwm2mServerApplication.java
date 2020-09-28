@@ -29,21 +29,9 @@ public class Lwm2mServerApplication implements ApplicationRunner {
 	@Autowired
 	public ResourceLoader resourceLoader;
 
-	private static String[] modelPaths;
-
 	public static void main(String[] args) {
 		context = SpringApplication.run(Lwm2mServerApplication.class, args);
 	}
-
-	/*
-	 * @Override public void run(ApplicationArguments args) throws Exception {
-	 * Resource resource = resourceLoader.getResource("classpath:models"); File file
-	 * = resource.getFile();
-	 * 
-	 * if (file.isDirectory() && file.exists()) { modelPaths = file.list();
-	 * log.info("Resources found files : {}", Arrays.toString(modelPaths)); } else {
-	 * log.error("리소스를 찾을 수 없습니다!!"); } }
-	 */
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -68,6 +56,7 @@ public class Lwm2mServerApplication implements ApplicationRunner {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
+
 	}
 
 	@Bean
