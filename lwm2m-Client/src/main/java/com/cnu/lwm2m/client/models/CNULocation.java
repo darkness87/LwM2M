@@ -13,7 +13,7 @@ import org.eclipse.leshan.core.response.ReadResponse;
 import org.eclipse.leshan.core.response.WriteResponse;
 
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
-import com.cnu.lwm2m.client.models.impl.LocationInfo;
+import com.cnu.lwm2m.client.models.impl.oma.LocationInfo;
 
 import lombok.extern.slf4j.Slf4j;
 

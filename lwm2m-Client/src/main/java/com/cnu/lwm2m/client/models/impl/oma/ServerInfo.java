@@ -1,4 +1,4 @@
-package com.cnu.lwm2m.client.models.impl;
+package com.cnu.lwm2m.client.models.impl.oma;
 
 import org.eclipse.leshan.core.request.BindingMode;
 

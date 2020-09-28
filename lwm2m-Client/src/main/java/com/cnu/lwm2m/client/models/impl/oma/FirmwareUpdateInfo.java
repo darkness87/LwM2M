@@ -1,4 +1,4 @@
-package com.cnu.lwm2m.client.models.impl;
+package com.cnu.lwm2m.client.models.impl.oma;
 
 public interface FirmwareUpdateInfo {
 	public byte[] getFirmwarePackage();

@@ -2,7 +2,7 @@ package com.cnu.lwm2m.client.models;
 
 import org.eclipse.leshan.client.object.Security;
 
-import com.cnu.lwm2m.client.models.impl.SecurityInfo;
+import com.cnu.lwm2m.client.models.impl.oma.SecurityInfo;
 
 import lombok.extern.slf4j.Slf4j;
 

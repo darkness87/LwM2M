@@ -11,14 +11,14 @@ import java.util.TimeZone;
 
 import org.eclipse.leshan.core.request.BindingMode;
 
-import com.cnu.lwm2m.client.models.impl.AccessControlInfo;
-import com.cnu.lwm2m.client.models.impl.ConnectivityMonitoringInfo;
-import com.cnu.lwm2m.client.models.impl.ConnectivityStatisticsInfo;
-import com.cnu.lwm2m.client.models.impl.DeviceInfo;
-import com.cnu.lwm2m.client.models.impl.FirmwareUpdateInfo;
-import com.cnu.lwm2m.client.models.impl.LocationInfo;
-import com.cnu.lwm2m.client.models.impl.SecurityInfo;
-import com.cnu.lwm2m.client.models.impl.ServerInfo;
+import com.cnu.lwm2m.client.models.impl.oma.AccessControlInfo;
+import com.cnu.lwm2m.client.models.impl.oma.ConnectivityMonitoringInfo;
+import com.cnu.lwm2m.client.models.impl.oma.ConnectivityStatisticsInfo;
+import com.cnu.lwm2m.client.models.impl.oma.DeviceInfo;
+import com.cnu.lwm2m.client.models.impl.oma.FirmwareUpdateInfo;
+import com.cnu.lwm2m.client.models.impl.oma.LocationInfo;
+import com.cnu.lwm2m.client.models.impl.oma.SecurityInfo;
+import com.cnu.lwm2m.client.models.impl.oma.ServerInfo;
 
 import lombok.Getter;
 import lombok.Setter;
