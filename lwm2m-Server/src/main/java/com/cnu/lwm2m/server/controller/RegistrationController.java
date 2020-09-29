@@ -40,13 +40,11 @@ public class RegistrationController {
 	@RequestMapping("/getObjectModel.do")
 	public @ResponseBody LwM2mModel getObjectModel(@RequestParam String endpoint) {
 		LwM2mModel model = registrationLwService.getObjectModel(endpoint);
-		log.info("=== {}", model.getObjectModels());
 		return model;
 	}
 
 	@RequestMapping("/getResourceModel.do")
 	public @ResponseBody Link[] getResourceModel(@RequestParam String endpoint) {
-		log.info("=== {}", endpoint);
 		Link[] model = registrationLwService.getResourceModel(endpoint);
 //		log.info("=== {}", model.getResourceModel(26241, 1));
 		return model;

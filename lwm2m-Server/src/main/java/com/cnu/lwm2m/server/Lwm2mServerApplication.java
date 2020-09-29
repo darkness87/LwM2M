@@ -1,70 +1,13 @@
 package com.cnu.lwm2m.server;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import org.eclipse.leshan.core.model.ObjectLoader;
-import org.eclipse.leshan.core.model.ObjectModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @SpringBootApplication
-public class Lwm2mServerApplication implements ApplicationRunner {
-
-	public static ApplicationContext context;
-
-	@Autowired
-	public ResourceLoader resourceLoader;
+public class Lwm2mServerApplication {
 
 	public static void main(String[] args) {
-		context = SpringApplication.run(Lwm2mServerApplication.class, args);
+		SpringApplication.run(Lwm2mServerApplication.class, args);
 	}
 
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		List<ObjectModel> models = null;
-
-		Resource resource = resourceLoader.getResource("classpath:models");
-		try {
-			File directory = resource.getFile();
-			log.debug(directory.getAbsolutePath());
-			log.debug("is directory : {}", directory.isDirectory());
-
-			if (directory.isDirectory()) {
-				for (String fileName : directory.list()) {
-					log.debug(fileName);
-				}
-
-				models = ObjectLoader.loadDefault();
-				models.addAll(ObjectLoader.loadDdfResources("/models", directory.list()));
-			} else {
-				log.error("is directory : {}", directory.isDirectory());
-			}
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-		}
-
-	}
-
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
-			String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			log.info("Spring bean List : {}", Arrays.toString(beanNames));
-		};
-	}
 }
