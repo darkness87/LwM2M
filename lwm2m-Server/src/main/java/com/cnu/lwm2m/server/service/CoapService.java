@@ -46,14 +46,13 @@ public class CoapService {
 			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
 			// TODO 실행하면 오류
-//			request.isObserve();
-//			log.info("{}",request.isObserve());
-//			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
-			OptionSet options = new OptionSet();
-			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
+			
+			request.setPayload("");
+//			OptionSet options = new OptionSet();
+//			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
 																						// APPLICATION_VND_OMA_LWM2M_JSON
-			options.setObserve(0);
-			request.setOptions(options);
+//			request.setOptions(options);
 
 			try {
 				log.info("=== registration : {}", registration);
@@ -151,8 +150,9 @@ public class CoapService {
 			request.setType(Type.CON);
 
 			OptionSet options = new OptionSet();
-			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+			options.setContentFormat(MediaTypeRegistry.TEXT_PLAIN); // APPLICATION_JSON or
 																						// APPLICATION_VND_OMA_LWM2M_JSON
+																						// TEXT_PLAIN
 			request.setOptions(options);
 
 			try {

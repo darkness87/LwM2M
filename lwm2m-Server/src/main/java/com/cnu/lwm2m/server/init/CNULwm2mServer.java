@@ -60,6 +60,8 @@ public class CNULwm2mServer implements DisposableBean {
 		File configFile;
 
 		try {
+			log.info("{}",resource.getFile());
+			log.info("{}",resource.getURI());
 			configFile = resource.getFile();
 		} catch (IOException e) {
 			throw new FileNotFoundException(resource.getFilename());
