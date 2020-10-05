@@ -17,6 +17,8 @@ var LWM2M_PROXY = {
 	coapObserve: "/coapObserve.do",
 	coapObserveCancel: "/coapObserveCancel.do",
 	coapRead: "/coapRead.do",
+	coapWrite: "/coapWrite.do",
+	coapExec: "/coapExec.do",
 
 	prefixUrl: "",
 

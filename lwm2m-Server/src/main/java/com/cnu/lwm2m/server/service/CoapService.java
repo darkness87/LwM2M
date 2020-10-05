@@ -10,6 +10,7 @@ import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.eclipse.leshan.core.node.ObjectLink;
+import org.eclipse.leshan.core.request.ObserveRequest;
 import org.eclipse.leshan.core.tlv.TlvDecoder;
 import org.eclipse.leshan.core.tlv.TlvException;
 import org.eclipse.leshan.server.californium.LeshanServer.CoapAPI;
@@ -47,11 +48,11 @@ public class CoapService {
 			request.setURI(uripath);
 			// TODO 실행하면 오류
 			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
-			
-			request.setPayload("");
+
+//			request.setPayload("");
 //			OptionSet options = new OptionSet();
 //			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
-																						// APPLICATION_VND_OMA_LWM2M_JSON
+			// APPLICATION_VND_OMA_LWM2M_JSON
 //			request.setOptions(options);
 
 			try {
@@ -61,12 +62,6 @@ public class CoapService {
 				log.info("=== send : {}" + response);
 
 				if (response != null) {
-					log.info("{}", response.getPayload());
-					log.info("{}", response.getPayload().length);
-					log.info("{}", response.getOptions());
-					log.info("{}", response.getSourceContext());
-					log.info("{}", response.getToken());
-					log.info("{}", response.getType());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
@@ -99,24 +94,18 @@ public class CoapService {
 			request.setURI(uripath);
 			request.setObserveCancel(); // observe cancel
 
-			OptionSet options = new OptionSet();
-			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+//			OptionSet options = new OptionSet();
+//			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
 																						// APPLICATION_VND_OMA_LWM2M_JSON
 //			options.setObserve(1);
-			request.setOptions(options);
+//			request.setOptions(options);
 
 			try {
-				log.info("=== registration : {}", registration);
 				log.info("=== request : {}", request);
 				Response response = coapAPI.send(registration, request);
 				log.info("=== send : {}" + response);
 
 				if (response != null) {
-					log.info("{}", response.getPayload());
-					log.info("{}", response.getOptions());
-					log.info("{}", response.getSourceContext());
-					log.info("{}", response.getToken());
-					log.info("{}", response.getType());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
 				} else {
@@ -149,11 +138,11 @@ public class CoapService {
 			request.setURI(uripath);
 			request.setType(Type.CON);
 
-			OptionSet options = new OptionSet();
-			options.setContentFormat(MediaTypeRegistry.TEXT_PLAIN); // APPLICATION_JSON or
-																						// APPLICATION_VND_OMA_LWM2M_JSON
-																						// TEXT_PLAIN
-			request.setOptions(options);
+//			OptionSet options = new OptionSet();
+//			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
+			// APPLICATION_VND_OMA_LWM2M_JSON
+			// TEXT_PLAIN
+//			request.setOptions(options);
 
 			try {
 				log.info("=== registration : {}", registration);
@@ -162,22 +151,10 @@ public class CoapService {
 				log.info("=== send : {}" + response);
 
 				if (response != null) {
-					log.info("{}", response.getPayload());
-					log.info("{}", response.getPayload().hashCode());
-					log.info("{}", response.getPayload().toString());
-					log.info("{}", response.getPayload().clone());
-					log.info("{}", response.getPayload().length);
-					log.info("{}", response.getOptions());
-					log.info("{}", response.getSourceContext());
-					log.info("{}", response.getToken());
-					log.info("{}", response.getType());
-					log.info("{}", response.getCode());
-					// log.info("{}", response.getDestinationContext());
-					// log.info("{}", response.getEffectiveDestinationContext());
-					// log.info("{}", response.getMessageObservers());
-					// log.info("{}", response.getReliabilityLayerParameters());
 					result = Utils.prettyPrint(response);
 					log.info("=== result : {}", result);
+
+					// TLV
 					// log.info("{}",TlvDecoder.decodeInteger(response.getPayload()));
 					// log.info("{}",TlvDecoder.decodeString(response.getPayload()));
 					// log.info("{}",TlvDecoder.decodeFloat(response.getPayload()));
@@ -194,6 +171,8 @@ public class CoapService {
 //					LwM2mNodeDecoder decoder;
 //					log.info("{}",LwM2mNodeDecoder.decode(response.getPayload(), ContentFormat.TLV,null,null));
 
+					result = String.valueOf(objectLink.getObjectInstanceId());
+
 				} else {
 					log.info("=== No response received.");
 					result = "No response received.";
@@ -202,6 +181,63 @@ public class CoapService {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (TlvException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		return result;
+	}
+
+	public String sendCoapWrite(String endpoint, String uri, String data) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		String result = null;
+
+		for (Registration registration : allRegistrations) {
+			if (!registration.getEndpoint().equals(endpoint)) {
+				continue;
+			}
+
+			Request request = new Request(Code.PUT);
+			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
+			log.info("=== uripath : {}", uripath);
+			request.setURI(uripath);
+			request.setType(Type.CON);
+			request.setPayload(data);
+
+			try {
+				Response response = coapAPI.send(registration, request);
+				result = Utils.prettyPrint(response);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		return result;
+	}
+
+	public String sendCoapExec(String endpoint, String uri) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		String result = null;
+
+		for (Registration registration : allRegistrations) {
+			if (!registration.getEndpoint().equals(endpoint)) {
+				continue;
+			}
+
+			Request request = new Request(Code.POST);
+			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
+			log.info("=== uripath : {}", uripath);
+			request.setURI(uripath);
+			request.setType(Type.CON);
+
+			try {
+				Response response = coapAPI.send(registration, request);
+				result = Utils.prettyPrint(response);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 

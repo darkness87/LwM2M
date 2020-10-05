@@ -34,6 +34,6 @@ $(document).ready(function () {
 
   setInterval(function () {
     getAllRegistrationsList();
-  }, 10000);
+  }, 5000);
 
 });

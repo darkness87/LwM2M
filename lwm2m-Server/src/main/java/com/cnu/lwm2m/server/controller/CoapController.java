@@ -19,7 +19,7 @@ public class CoapController {
 	public @ResponseBody String sendCoapObserve(@RequestParam String endpoint, @RequestParam String uri) {
 		log.info("=== sendCoapObserve ===");
 		String result = coapService.sendCoapObserve(endpoint, uri);
-		
+
 		if (result == null) {
 			result = "error";
 		}
@@ -31,7 +31,7 @@ public class CoapController {
 	public @ResponseBody String sendCoapObserveCancel(@RequestParam String endpoint, @RequestParam String uri) {
 		log.info("=== sendCoapObserve Cancel ===");
 		String result = coapService.sendCoapObserveCancel(endpoint, uri);
-		
+
 		if (result == null) {
 			result = "error";
 		}
@@ -43,6 +43,30 @@ public class CoapController {
 	public @ResponseBody String sendCoapRead(@RequestParam String endpoint, @RequestParam String uri) {
 		log.info("=== sendCoapRead ===");
 		String result = coapService.sendCoapRead(endpoint, uri);
+
+		if (result == null) {
+			result = "error";
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/coapWrite.do")
+	public @ResponseBody String sendCoapWrite(@RequestParam String endpoint, @RequestParam String uri, @RequestParam String data) {
+		log.info("=== sendCoapWrite ===");
+		String result = coapService.sendCoapWrite(endpoint, uri, data);
+
+		if (result == null) {
+			result = "error";
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/coapExec.do")
+	public @ResponseBody String sendCoapExec(@RequestParam String endpoint, @RequestParam String uri) {
+		log.info("=== sendCoapExec ===");
+		String result = coapService.sendCoapExec(endpoint, uri);
 
 		if (result == null) {
 			result = "error";
