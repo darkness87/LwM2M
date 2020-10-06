@@ -38,7 +38,7 @@ public class KepcoCommonControl extends BaseInstanceEnabler {
 	private long selfResetPeriod;
 	private long selfResetTime;
 	private long rs485DLBPeriod;
-	@SuppressWarnings("unused") private String rs485DLBInputData;
+	@SuppressWarnings("unused") private String rs485DLBInputData;	// 구현 시 unused 제거
 	private String rs485DLBOutputData;
 
 	AMICommonControlInfo commonControl;
