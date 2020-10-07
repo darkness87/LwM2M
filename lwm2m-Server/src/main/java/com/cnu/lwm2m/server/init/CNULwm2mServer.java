@@ -121,4 +121,9 @@ public class CNULwm2mServer implements DisposableBean {
 		return server.coap();
 	}
 
+	@Bean
+	public LeshanServer server() {
+		return server;
+	}
+
 }
