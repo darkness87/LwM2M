@@ -12,13 +12,18 @@ import org.eclipse.californium.core.coap.OptionSet;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.core.node.LwM2mNode;
 import org.eclipse.leshan.core.node.LwM2mPath;
-import org.eclipse.leshan.core.node.LwM2mSingleResource;
 import org.eclipse.leshan.core.node.ObjectLink;
 import org.eclipse.leshan.core.node.codec.DefaultLwM2mNodeDecoder;
 import org.eclipse.leshan.core.node.codec.DefaultLwM2mNodeEncoder;
 import org.eclipse.leshan.core.request.ContentFormat;
+
+import org.eclipse.leshan.core.node.LwM2mResource;
+import org.eclipse.leshan.core.request.ReadRequest;
+import org.eclipse.leshan.core.response.ReadResponse;
+
 import org.eclipse.leshan.core.tlv.TlvDecoder;
 import org.eclipse.leshan.core.tlv.TlvException;
+import org.eclipse.leshan.server.californium.LeshanServer;
 import org.eclipse.leshan.server.californium.LeshanServer.CoapAPI;
 import org.eclipse.leshan.server.model.LwM2mModelProvider;
 import org.eclipse.leshan.server.registration.Registration;
@@ -35,6 +40,9 @@ public class CoapService {
 
 	@Autowired
 	CoapAPI coapAPI;
+
+	@Autowired
+	private LeshanServer server;
 
 	@Autowired
 	RegistrationService regService;
@@ -130,6 +138,25 @@ public class CoapService {
 		}
 
 		return result;
+	}
+
+	public String sendCoapTLV(String endpoint, String uri) {
+		Registration registration = regService.getByEndpoint(endpoint);
+		ContentFormat contentFormat = ContentFormat.fromName("TLV");
+		// create & process request
+		ReadRequest request = new ReadRequest(contentFormat, uri);
+
+		try {
+			ReadResponse cResponse = server.send(registration, request, 5000L);
+			LwM2mResource content = (LwM2mResource) cResponse.getContent();
+			log.debug("{}", content);
+
+			return (String) content.getValue();
+		} catch (InterruptedException e) {
+			log.error(e.getMessage(), e);
+
+			return null;
+		}
 	}
 
 	public String sendCoapRead(String endpoint, String uri, String type) {
