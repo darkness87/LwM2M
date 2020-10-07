@@ -40,9 +40,10 @@ public class CoapController {
 	}
 
 	@RequestMapping("/coapRead.do")
-	public @ResponseBody String sendCoapRead(@RequestParam String endpoint, @RequestParam String uri) {
+	public @ResponseBody String sendCoapRead(@RequestParam String endpoint, @RequestParam String uri,
+			@RequestParam String type) {
 		log.info("=== sendCoapRead ===");
-		String result = coapService.sendCoapRead(endpoint, uri);
+		String result = coapService.sendCoapRead(endpoint, uri, type);
 
 		if (result == null) {
 			result = "error";
@@ -52,7 +53,8 @@ public class CoapController {
 	}
 
 	@RequestMapping("/coapWrite.do")
-	public @ResponseBody String sendCoapWrite(@RequestParam String endpoint, @RequestParam String uri, @RequestParam String data) {
+	public @ResponseBody String sendCoapWrite(@RequestParam String endpoint, @RequestParam String uri,
+			@RequestParam String data) {
 		log.info("=== sendCoapWrite ===");
 		String result = coapService.sendCoapWrite(endpoint, uri, data);
 

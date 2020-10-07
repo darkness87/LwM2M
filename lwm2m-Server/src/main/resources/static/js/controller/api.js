@@ -118,9 +118,9 @@ function getObjectModel(endpoint) {
 				tmp.push("				<td>" + res.name + "</td>");
 
 				if (res.operations == "R") {
-					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>" + "</td>");
+					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>" + "</td>");
 				} else if (res.operations == "RW") {
-					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>"
+					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>"
 						+ "&nbsp&nbsp<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				} else if (res.operations == "W") {
 					tmp.push("				<td>" + "<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
@@ -169,10 +169,11 @@ function sendCoapObserveCancel(endpoint, uri) {
 	});
 }
 
-function sendCoapRead(endpoint, uri, dataid) {
+function sendCoapRead(endpoint, uri, dataid, type) {
 	var param = {};
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
+	param["type"] = type;
 	LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
 		console.log(result);
 		var view = $("#page-top");
