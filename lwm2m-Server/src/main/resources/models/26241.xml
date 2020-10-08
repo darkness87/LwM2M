@@ -83,7 +83,7 @@
 				<Operations>R</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
-				<Type>String</Type>
+				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>%</Units>
 				<Description>칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자)</Description>

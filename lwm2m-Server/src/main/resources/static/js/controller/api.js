@@ -72,6 +72,7 @@ function getObjectModel(endpoint) {
 	param["endpoint"] = endpoint;
 
 	LWM2M_PROXY.invokeOpenAPI("getObjectModel", "json", param, function (result, _head, _params) {
+		console.log(result);
 		var view = $("#page-top");
 		var listView = view.find("#objectdiv");
 		listView.empty();
