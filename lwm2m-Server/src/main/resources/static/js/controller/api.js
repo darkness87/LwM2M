@@ -84,13 +84,12 @@ function getObjectModel(endpoint) {
 		for (var i = 0; i < result.objectModels.length; i++) {
 			var item = result.objectModels[i];
 			var tmp = [];
-			//var count = Object.keys(result.objectModels[i].resources).length+1;
 			var observeUri = "/" + item.id + "/0";
 
 			tmp.push("<div class='card shadow mb-4'>");
 			tmp.push("	<div class='card-header py-3'>");
 			tmp.push("		<h6 class='m-0 font-weight-bold text-primary'>" + item.id + " : " + item.name + "&nbsp&nbsp&nbsp<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe (" + observeUri + ") ▶</button>"
-				+ "&nbsp&nbsp&nbsp<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserveCancel(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>" + "</h6>");
+				+ "&nbsp&nbsp&nbsp<button class='btn btn-secondary' type='button' onclick='javascript:sendCoapObserveCancel(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>" + "</h6>");
 			tmp.push("	</div>");
 			tmp.push("<div class='card-body'>");
 			tmp.push("  <div class='table-responsive'>");
@@ -154,7 +153,15 @@ function sendCoapObserve(endpoint, uri) {
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
 	LWM2M_PROXY.invokeOpenAPI("coapObserve", null, param, function (result, _head, _params) {
-		console.log(result);
+		var data = eval(result);
+		console.log(data);
+		var view = $("#page-top");
+		var dataView = null;
+		for(var i = 0; i < data.length; i++){
+			dataView = view.find("#" + data[i].tid);
+			dataView.empty();
+			dataView.html(data[i].value);
+		}
 	});
 }
 

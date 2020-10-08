@@ -1,6 +1,10 @@
 package com.cnu.lwm2m.server.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.californium.core.Utils;
 import org.eclipse.californium.core.coap.Request;
@@ -10,13 +14,15 @@ import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.eclipse.californium.core.coap.OptionSet;
 import org.eclipse.leshan.core.ResponseCode;
+import org.eclipse.leshan.core.node.LwM2mObjectInstance;
 import org.eclipse.leshan.core.node.LwM2mPath;
 import org.eclipse.leshan.core.node.ObjectLink;
 import org.eclipse.leshan.core.request.ContentFormat;
-
+import org.eclipse.leshan.core.request.ObserveRequest;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.request.ReadRequest;
 import org.eclipse.leshan.core.request.WriteRequest;
+import org.eclipse.leshan.core.response.ObserveResponse;
 import org.eclipse.leshan.core.response.ReadResponse;
 import org.eclipse.leshan.core.response.WriteResponse;
 import org.eclipse.leshan.core.tlv.TlvDecoder;
@@ -29,6 +35,7 @@ import org.eclipse.leshan.server.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cnu.lwm2m.server.vo.ObserveDataVO;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +55,48 @@ public class CoapService {
 	@Autowired
 	LwM2mModelProvider modelProvider;
 
+	public List<ObserveDataVO> sendCoapTLVObserve(String endpoint, String uri) {
+		Registration registration = regService.getByEndpoint(endpoint);
+		ContentFormat contentFormat = ContentFormat.fromName("TLV");
+		ObserveRequest request = new ObserveRequest(contentFormat, uri);
+
+		log.info("=== registration : {}", registration);
+		log.info("=== request : {}", request);
+
+		try {
+			ObserveResponse cResponse = server.send(registration, request, 5000L); // TODO timeout 설정 필요
+			log.info("=== response : {}", cResponse);
+
+			LwM2mObjectInstance content = (LwM2mObjectInstance) cResponse.getContent();
+			log.debug("=== content : {}", content);
+
+			Map<Integer, LwM2mResource> map = content.getResources();
+			log.debug("=== map : {}", map);
+
+			List<ObserveDataVO> list = new ArrayList<ObserveDataVO>();
+			ObserveDataVO observeDataVO = new ObserveDataVO();
+			LwM2mPath lwM2mPath = new LwM2mPath(uri);
+
+			Iterator<Map.Entry<Integer, LwM2mResource>> entries = map.entrySet().iterator();
+			while (entries.hasNext()) {
+				observeDataVO = new ObserveDataVO();
+				Entry<Integer, LwM2mResource> entry = (Entry<Integer, LwM2mResource>) entries.next();
+				observeDataVO.setId(entry.getKey());
+				observeDataVO.setTid("tid" + lwM2mPath.getObjectId() + "" + lwM2mPath.getObjectInstanceId() + ""
+						+ entry.getKey() + "");
+				observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
+				list.add(observeDataVO);
+			}
+
+			return list;
+		} catch (InterruptedException e) {
+			log.error(e.getMessage(), e);
+
+			return null;
+		}
+	}
+
 	public String sendCoapObserve(String endpoint, String uri) {
-
-		// TODO ObserveRequest 사용
-
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 		String result = null;
 
@@ -64,7 +109,6 @@ public class CoapService {
 			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
 			log.info("=== uripath : {}", uripath);
 			request.setURI(uripath);
-			// TODO 실행하면 오류
 			request.setObserve(); // observe set이 0일 경우 observe 확인, 1일 경우 observe 취소
 
 //			request.setPayload("");
