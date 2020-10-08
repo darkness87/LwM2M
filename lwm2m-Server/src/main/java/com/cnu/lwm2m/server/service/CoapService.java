@@ -9,18 +9,16 @@ import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.eclipse.californium.core.coap.OptionSet;
-import org.eclipse.leshan.core.model.LwM2mModel;
-import org.eclipse.leshan.core.node.LwM2mNode;
+import org.eclipse.leshan.core.ResponseCode;
 import org.eclipse.leshan.core.node.LwM2mPath;
 import org.eclipse.leshan.core.node.ObjectLink;
-import org.eclipse.leshan.core.node.codec.DefaultLwM2mNodeDecoder;
-import org.eclipse.leshan.core.node.codec.DefaultLwM2mNodeEncoder;
 import org.eclipse.leshan.core.request.ContentFormat;
 
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.request.ReadRequest;
+import org.eclipse.leshan.core.request.WriteRequest;
 import org.eclipse.leshan.core.response.ReadResponse;
-
+import org.eclipse.leshan.core.response.WriteResponse;
 import org.eclipse.leshan.core.tlv.TlvDecoder;
 import org.eclipse.leshan.core.tlv.TlvException;
 import org.eclipse.leshan.server.californium.LeshanServer;
@@ -51,6 +49,9 @@ public class CoapService {
 	LwM2mModelProvider modelProvider;
 
 	public String sendCoapObserve(String endpoint, String uri) {
+
+		// TODO ObserveRequest 사용
+
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 		String result = null;
 
@@ -140,22 +141,91 @@ public class CoapService {
 		return result;
 	}
 
-	public String sendCoapTLV(String endpoint, String uri) {
+	public String sendCoapTLVRead(String endpoint, String uri, String type) {
 		Registration registration = regService.getByEndpoint(endpoint);
 		ContentFormat contentFormat = ContentFormat.fromName("TLV");
-		// create & process request
 		ReadRequest request = new ReadRequest(contentFormat, uri);
 
-		try {
-			ReadResponse cResponse = server.send(registration, request, 5000L);
-			LwM2mResource content = (LwM2mResource) cResponse.getContent();
-			log.debug("{}", content);
+		log.info("=== registration : {}", registration);
+		log.info("=== request : {}", request);
 
-			return (String) content.getValue();
+		try {
+			ReadResponse cResponse = server.send(registration, request, 5000L); // TODO timeout 설정 필요
+			log.info("=== response : {}", cResponse);
+
+			LwM2mResource content = (LwM2mResource) cResponse.getContent();
+			log.debug("=== content : {}", content);
+
+			return String.valueOf(content.getValue());
+
 		} catch (InterruptedException e) {
 			log.error(e.getMessage(), e);
 
 			return null;
+		}
+	}
+
+	public boolean sendCoapTLVWrite(String endpoint, String uri, String type, String data) {
+		Registration registration = regService.getByEndpoint(endpoint);
+		ContentFormat contentFormat = ContentFormat.fromName("TLV");
+
+		LwM2mPath lwM2mPath = new LwM2mPath(uri);
+		WriteRequest request = null;
+
+		switch (type) {
+		case "STRING":
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), String.valueOf(data));
+			break;
+		case "INTEGER":
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), Integer.valueOf(data));
+			break;
+		case "FLOAT":
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), Float.valueOf(data));
+			break;
+		case "BOOLEAN":
+			// TODO
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), Boolean.valueOf(data));
+			break;
+		case "TIME":
+			// TODO Time값 넘기는 거 구현 필요
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), data);
+			break;
+		case "OBJLNK":
+			// TODO
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), data);
+			break;
+		case "OPAQUE":
+			// TODO
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), data);
+			break;
+		default:
+			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
+					lwM2mPath.getResourceId(), data);
+		}
+
+		log.info("=== registration : {}", registration);
+		log.info("=== request : {}", request);
+
+		try {
+			WriteResponse cResponse = server.send(registration, request, 5000L);
+			ResponseCode responseCode = cResponse.getCode();
+
+			log.info("=== response : {}", cResponse);
+			log.debug("=== result : {}", responseCode.isSuccess());
+
+			return responseCode.isSuccess();
+
+		} catch (InterruptedException e) {
+			log.error(e.getMessage(), e);
+
+			return false;
 		}
 	}
 
@@ -174,23 +244,12 @@ public class CoapService {
 			request.setURI(uripath);
 			request.setType(Type.CON);
 
-//			OptionSet options = new OptionSet();
-//			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_JSON); // APPLICATION_JSON or
-			// APPLICATION_VND_OMA_LWM2M_JSON
-			// TEXT_PLAIN
-//			request.setOptions(options);
-
 			try {
 				log.info("=== registration : {}", registration);
 				log.info("=== request : {}", request);
 				Response response = coapAPI.send(registration, request);
 				log.info("=== response : {}" + response);
 
-				DefaultLwM2mNodeDecoder defaultLwM2mNodeDecoder = new DefaultLwM2mNodeDecoder();
-				LwM2mPath lwM2mPath = new LwM2mPath(uri);
-				LwM2mNode lw = defaultLwM2mNodeDecoder.decode(response.getPayload(), ContentFormat.TLV, lwM2mPath, null);
-				log.info("=== lwlwlwlw : {}", lw);
-				
 				if (response != null) {
 					log.info("=== result : {}", Utils.prettyPrint(response));
 					result = response.getPayloadString();
@@ -203,24 +262,20 @@ public class CoapService {
 
 						switch (type) {
 						case "STRING":
-							// log.info("{}", TlvDecoder.decodeString(response.getPayload()));
 							result = TlvDecoder.decodeString(response.getPayload());
 							log.info("STRING : {}", result);
 							break;
 						case "INTEGER":
-							// log.info("{}", TlvDecoder.decodeObjlnk(response.getPayload()));
 							objectLink = TlvDecoder.decodeObjlnk(response.getPayload());
 							result = String.valueOf(objectLink.getObjectInstanceId());
 							log.info("INTEGER : {}", result);
 							break;
 						case "FLOAT":
-							// log.info("{}", TlvDecoder.decodeObjlnk(response.getPayload()));
 							objectLink = TlvDecoder.decodeObjlnk(response.getPayload());
 							result = String.valueOf(objectLink.getObjectInstanceId());
 							log.info("FLOAT : {}", result);
 							break;
 						case "BOOLEAN":
-							// log.info("{}", TlvDecoder.decodeBoolean(response.getPayload()));
 							byte[] value = response.getPayload();
 							log.info("{} , {} , {}", value[0], value[1], value[2]);
 
@@ -229,28 +284,23 @@ public class CoapService {
 							} else if (value[2] == 0) {
 								result = "true";
 							}
-							// result = String.valueOf(TlvDecoder.decodeBoolean(response.getPayload()));
 							log.info("BOOLEAN : {}", result);
 							break;
 						case "TIME":
-							// log.info("{}", TlvDecoder.decodeDate(response.getPayload()));
 							result = String.valueOf(TlvDecoder.decodeDate(response.getPayload()));
 							log.info("TIME : {}", result);
 							break;
 						case "OBJLNK":
-							// log.info("{}", TlvDecoder.decodeObjlnk(response.getPayload()));
 							objectLink = TlvDecoder.decodeObjlnk(response.getPayload());
 							result = String.valueOf(objectLink.getObjectInstanceId());
 							log.info("OBJLNK : {}", result);
 							break;
 						case "OPAQUE":
-							// log.info("{}", TlvDecoder.decodeObjlnk(response.getPayload()));
 							objectLink = TlvDecoder.decodeObjlnk(response.getPayload());
 							result = String.valueOf(objectLink.getObjectInstanceId());
 							log.info("OPAQUE : {}", result);
 							break;
 						default:
-							// log.info("{}", TlvDecoder.decodeObjlnk(response.getPayload()));
 							objectLink = TlvDecoder.decodeObjlnk(response.getPayload());
 							result = String.valueOf(objectLink.getObjectInstanceId());
 							log.info("default : {}", result);
@@ -260,9 +310,6 @@ public class CoapService {
 						result = "Payload Null.";
 					}
 
-				} else {
-					log.info("=== No response received.");
-					result = "No response received.";
 				}
 
 			} catch (InterruptedException e) {
@@ -295,12 +342,6 @@ public class CoapService {
 			options.setContentFormat(MediaTypeRegistry.APPLICATION_VND_OMA_LWM2M_TLV);
 			request.setOptions(options);
 
-			LwM2mPath lwM2mPath = new LwM2mPath(uri);
-			DefaultLwM2mNodeEncoder defaultLwM2mNodeEncoder = new DefaultLwM2mNodeEncoder();
-			LwM2mModel model;
-//			byte[] value = defaultLwM2mNodeEncoder.encode(1, ContentFormat.TLV, lwM2mPath, model);
-//			request.setPayload(value);
-			
 			try {
 				log.info("=== request : {}", request);
 				Response response = coapAPI.send(registration, request);
@@ -328,13 +369,14 @@ public class CoapService {
 
 			Request request = new Request(Code.POST);
 			String uripath = "coap:/" + registration.getAddress() + ":" + registration.getPort() + uri;
-			log.info("=== uripath : {}", uripath);
+			log.info("=== uripath Exec.. : {}", uripath);
 			request.setURI(uripath);
 			request.setType(Type.CON);
 
 			try {
 				Response response = coapAPI.send(registration, request);
-				result = Utils.prettyPrint(response);
+				log.info("=== Exec Result : {}", Utils.prettyPrint(response));
+				result = "ExecSuccess";
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -121,9 +121,9 @@ function getObjectModel(endpoint) {
 					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>" + "</td>");
 				} else if (res.operations == "RW") {
 					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>"
-						+ "&nbsp&nbsp<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
+						+ "&nbsp&nbsp<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				} else if (res.operations == "W") {
-					tmp.push("				<td>" + "<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
+					tmp.push("				<td>" + "<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				} else if (res.operations == "E") {
 					tmp.push("				<td>" + "<button class='btn btn-success btn-sm' type='button' onclick='javascript:sendCoapExec(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Exec</button>"
 						+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' style='cursor: pointer;' data-toggle='modal' data-target='#'>※</button>" + "</td>");
@@ -155,7 +155,6 @@ function sendCoapObserve(endpoint, uri) {
 	param["uri"] = uri;
 	LWM2M_PROXY.invokeOpenAPI("coapObserve", null, param, function (result, _head, _params) {
 		console.log(result);
-		alert(result);
 	});
 }
 
@@ -165,7 +164,6 @@ function sendCoapObserveCancel(endpoint, uri) {
 	param["uri"] = uri;
 	LWM2M_PROXY.invokeOpenAPI("coapObserveCancel", null, param, function (result, _head, _params) {
 		console.log(result);
-		alert(result);
 	});
 }
 
@@ -189,7 +187,7 @@ function sendCoapRead(endpoint, uri, dataid, type) {
 	});
 }
 
-function viewWrite(endpoint, uri) {
+function viewWrite(endpoint, uri, dataid, type) {
 	var view = $("#page-top");
 	var titleView = view.find("#titledata");
 	var writeView = view.find("#detaildata");
@@ -199,22 +197,36 @@ function viewWrite(endpoint, uri) {
 	footView.empty();
 
 	titleView.html(endpoint + " : " + uri);
-	writeView.html("<div>Value : <input type='text'/></div>");
+	writeView.html("<div>Value (" + type + ") : <input type='text' id='valuedata'/></div>");
 
 	var data = null;
 
-	footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
+	footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
 		+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
 }
 
-function sendCoapWrite(endpoint, uri, data) {
+function sendCoapWrite(endpoint, uri, dataid, type, data) {
 	var param = {};
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
+	param["type"] = type;
+
+	var view = $("#page-top");
+	data = view.find("#valuedata").val();
 	param["data"] = data;
+
 	LWM2M_PROXY.invokeOpenAPI("coapWrite", null, param, function (result, _head, _params) {
 		console.log(result);
-		alert(result);
+
+		var dataView = view.find("#" + dataid);
+		dataView.empty();
+
+		if (result == null || result == "") {
+			dataView.html("err");
+			return;
+		}
+
+		dataView.html(result);
 	});
 }
 
@@ -222,8 +234,51 @@ function sendCoapExec(endpoint, uri) {
 	var param = {};
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
+
+	var disableData = 10;
+
+/* 	if (uri == '/1/0/4') {
+		param["type"] = 'INTEGER';
+		LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
+			console.log(result);
+			disableData = result;
+		});
+	} */
+
 	LWM2M_PROXY.invokeOpenAPI("coapExec", null, param, function (result, _head, _params) {
 		console.log(result);
-		alert(result);
+
+		if (result == 'ExecSuccess') {
+			if (uri == '/1/0/4') {
+				var view = $("#page-top");
+				var listView = view.find("#objectdiv");
+				listView.empty();
+				listView.html("<div>" + endpoint + " Disable ...</div>");
+
+				setTimeout(function () {
+					getObjectModel(endpoint);
+				}, disableData * 1000 + 1500);
+
+			} else if (uri == '/1/0/8') {
+				getObjectModel(endpoint);
+				alert("Registration Update Trigger Success");
+			} else {
+				alert("구현체가 없습니다.");
+			}
+		} else {
+			alert("Exec Fail...");
+		}
+	});
+}
+
+function sendCoapDisableRead(endpoint, uri, type) {
+	var param = {};
+	param["endpoint"] = endpoint;
+	param["uri"] = uri;
+	param["type"] = type;
+	console.log(param);
+	LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
+		console.log(result);
+		return result;
 	});
 }
