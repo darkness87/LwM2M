@@ -6,6 +6,7 @@ public interface DeviceInfo {
 	public String getManufacturer();
 	public String getModelNumber();
 	public String getSerialNumber();
+	public String getFirmwareVersion();
 	public int getAvailablePowerSources();
 	public int getPowerSourceVoltage();
 	public int getPowerSourceCurrent();

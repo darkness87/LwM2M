@@ -54,8 +54,8 @@ public class KepcoCommonControl extends BaseInstanceEnabler {
 		this.ramUsageRateObserveNotify = commonControl.getRamUsageRateObserveNotify();
 		this.powerVoltageObserveNotify = commonControl.getPowerVoltageObserveNotify();
 		this.CurrentConsumptionObserveNotify = commonControl.getCurrentConsumptionObserveNotify();
-		this.blackout = commonControl.getBlackout();
-		this.recovery = commonControl.getRecovery();
+		this.blackout = new Date();
+		this.recovery = new Date();
 		this.selfResetPeriod = commonControl.getSelfResetPeriod();
 		this.selfResetTime = commonControl.getSelfResetTime();
 		this.rs485DLBPeriod = commonControl.getRs485DLBPeriod();

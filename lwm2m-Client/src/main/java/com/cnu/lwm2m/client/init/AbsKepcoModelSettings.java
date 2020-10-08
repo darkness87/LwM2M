@@ -29,13 +29,11 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	 * 고유번호 (5 Byte): 제조사에서 각각의 기기별로 고유한 번호를 부여하여 납품
 	 * 제조사 번호 (3 Byte): The FLAG Association Ltd.에서 부여받은 코드 </pre>*/
 	@Override public byte[] getSystemTitle() {
-		return null;
+		return new byte[] {0x41, 0x42, 0x43, 97};
 	}
 
 	/**<pre> ID: 1 AMI 사업명 (계약 후 통보 / 예: LTE 5차) </pre>*/
-	@Override public String getAmiBussinessName() {
-		return "";
-	}
+	private String amiBussinessName = "AMI CNU 사업 1차";
 
 	/**<pre> ID: 2 설비 구분은 Ob_ID 3-17에서 정의 (LTE 모뎀이 사용되는 용도 표시)
 	 * 0: ETC, 1: S-Type, 2: E-Type, 3: G-Type
@@ -53,17 +51,17 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	/**<pre> ID: 4 AMI 설비 제조 "년,월" 표시
 	 * 예) 2020년 2월의 경우 "20, 12" (공백 제거) </pre>*/
 	@Override public String getManufacturingDate() {
-		return "";
+		return "20, 12";
 	}
 
 	/**<pre> ID: 7 모뎀 공통제어부 CPU 제조사 코드표 참조 (제조업체 요청 시 추가지정) </pre>*/
 	@Override public String getCpuManufacturer() {
-		return "";
+		return "08";
 	}
 
 	/**<pre> ID: 8 칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자) </pre>*/
 	@Override public String getCpuModelNumber() {
-		return "";
+		return "CNU Micro chipset";
 	}
 
 	/**<pre> ID: 10 Observation 및 Notify 설정 기간마다 CPU 사용률의 값을 관찰 기록하고 전송한다.
@@ -77,7 +75,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	 * Res_ID_10 Observation 주기: Pmin=1(초), Pmax=3,600(초) / 초기설정값: 3,600(초)
 	 * Res_ID_10 Notify 설정: gt= (%) / 초기설정값: 60(%)
 	 * 예) 주기, 알람 = “3600, 60” </pre>*/
-	private String cpuUsageRateObserveNotify;
+	private String cpuUsageRateObserveNotify = "3600,60";
 
 	/** [실행] ID: 12 서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다. */
 
@@ -93,7 +91,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	 * Res_ID_13 Observation 주기: Pmin=1(초), Pmax=3,600(초) / 초기설정값: 3,600(초)
 	 * Res_ID_13 Notify 설정: gt= (%) / 초기설정값: 60(%)
 	 * 예) 주기, 알람 = “3600, 60” (공백 제거) </pre>*/
-	private String ramUsageRateObserveNotify;
+	private String ramUsageRateObserveNotify = "3600,60";
 
 	/** [실행] ID: 15 서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다. */
 
@@ -108,7 +106,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	 * Res_ID_17 Observation 주기: Pmin=1(초), Pmax=3,600(초) / 초기설정값: 3,600(초)
 	 * Res_ID_17 Notify 설정: lt= (mV) / 초기설정값: 10000(mV)
 	 * 예) 주기, 알람 = “3600, 10000” (공백 제거) </pre>*/
-	private String powerVoltageObserveNotify;
+	private String powerVoltageObserveNotify = "3600, 10000";
 
 	/** [실행] ID: 19 서버에서 측정 명령 수신 시 1(초) 단위로 현재값을 측정하고 30초간 서버로 전송한다. */
 
@@ -123,7 +121,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	 * Res_ID_20 Observation 주기: Pmin=1(초), Pmax=3,600(초) / 초기설정값: 3,600(초)
 	 * Res_ID_20 Notify 설정: gt= (%) / 초기설정값: 190(mA)
 	 * 예) 주기, 알람 = “3600, 190” (공백 제거) </pre>*/
-	private String CurrentConsumptionObserveNotify;
+	private String CurrentConsumptionObserveNotify = "3600,190";
 
 	/** [실행] ID: 22 */
 	/** [실행] ID: 25 */
@@ -155,11 +153,11 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 
 	/**<pre> ID: 43 Res_ID_41 실행될 경우 Loop_back 시험을 위한 data를 서버로부터 수신
 	 * 예) “AMI 485 DLB TEST” </pre>*/
-	private String rs485DLBInputData;
+	private String rs485DLBInputData = "CNU DLB Test input";
 
 	/**<pre> ID: 44 Res_ID_43의 실행 결과로 리소스 ID 44에 대한 Loop_back 결과 서버로 전송
 	 * 예) “AMI 485 DLB TEST” </pre>*/
-	private String rs485DLBOutputData;
+	private String rs485DLBOutputData = "CNU DLB Test output";
 
 	/** [실행] ID: 47 10초간 모뎀의 모든 LED LAMP를 1초 간격으로 점멸한 후 정상 동작 */
 
@@ -180,7 +178,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	private int teleCompany;
 
 	/**<pre> ID: 3 LTE 모뎀 전화번호 ex> 01055559999 </pre>*/
-	private String phoneNumber = "";
+	private String phoneNumber = "01055559999";
 
 	/**<pre> ID: 4 모뎀의 사설 IP 주소 (IPv6)
 	 * Ob_ID 4/4의 공인 IP 또는 26243/4의 사설 IP 둘 중 하나는 필수 항목임 </pre>*/
@@ -213,7 +211,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	/**<pre> ID: 17 모뎀은 상향 테스트 결과를 서버로 평균 응답시간(ms)과 성공률(%) 측정결과를 전송한다.
 	 * 예) 응답시간 1,230ms, 99% 성공 → ”1230ms, 99%“ (성공률은 소수점 3자리에서 절사) </pre>*/
 	@Override public String getCoapPingResult() {
-		return "";
+		return "1230ms, 99%";
 	}
 
 	/** [실행] ID: 20 Pay Load 상향 속도테스트 (Throughput Test Start) */
@@ -222,7 +220,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	 * 전송된 DATA 총량을 전송된 시간(초)으로 나눈 초당 평균 전송량을 측정하여 전송한다.
 	 * 예) 초당 평균 전송된 DATA (send: 528 kbytes / 52.8 kbytes/sec) </pre>*/
 	@Override public String getThroughputTestResult() {
-		return "";
+		return "52.8 kbytes/sec";
 	}
 
 	/**<pre> ID: </pre>*/

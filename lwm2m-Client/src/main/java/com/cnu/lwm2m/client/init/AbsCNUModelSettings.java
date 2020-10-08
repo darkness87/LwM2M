@@ -111,6 +111,8 @@ public class AbsCNUModelSettings extends AbsKepcoModelSettings
 	/** ID:2 LTE 모뎀 제조 일련번호 */
 	private String serialNumber = "serialNumber_1";
 
+	private String firmwareVersion = "1.0.0";
+
 	/** [실행] ID:4 오류 발생 시 장치를 복원하기 위한 장치 Rebooting 명령 실행 */
 	/** [실행] ID:5 LwM2M 설정(Observe, Notify)값을 공장 출하 상태의 설정값으로 변경
 		장치는 설정값을 초기화한 후 재등록을 하기 위해서 상호인증 과정을 재실행하여야 한다.

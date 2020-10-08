@@ -29,6 +29,7 @@ public class CNUDevice extends BaseInstanceEnabler {
 	private String manufacturer;
 	private String modelNumber;
 	private String serialNumber;
+	private String firmwareVersion;
 	private int availablePowerSources;
 	private int powerSourceVoltage;
 	String deviceType;
@@ -43,6 +44,7 @@ public class CNUDevice extends BaseInstanceEnabler {
 		this.manufacturer = device.getManufacturer();
 		this.modelNumber = device.getModelNumber();
 		this.serialNumber = device.getSerialNumber();
+		this.firmwareVersion = device.getFirmwareVersion();
 		this.availablePowerSources = device.getAvailablePowerSources();
 		this.powerSourceVoltage = device.getPowerSourceVoltage();
 		this.deviceType = device.getDeviceType();
@@ -65,6 +67,9 @@ public class CNUDevice extends BaseInstanceEnabler {
 
 		case 2: // serial number
 			return ReadResponse.success(resourceid, serialNumber);
+
+		case 3: // firmware version
+			return ReadResponse.success(resourceid, firmwareVersion);
 
 		case 6: // Available Power Sources
 			return ReadResponse.success(resourceid, availablePowerSources);
@@ -128,6 +133,8 @@ public class CNUDevice extends BaseInstanceEnabler {
 		if (resourceid == 4) { // reboot
 			return ExecuteResponse.internalServerError("구현체가 없습니다.");
 		} else if (resourceid == 5) { // remote factory reset
+			return ExecuteResponse.internalServerError("구현체가 없습니다.");
+		} else if (resourceid == 10) { // memory free
 			return ExecuteResponse.internalServerError("구현체가 없습니다.");
 		} else if (resourceid == 12) { // remote factory reset
 			return ExecuteResponse.internalServerError("구현체가 없습니다.");
