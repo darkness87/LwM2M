@@ -14,6 +14,7 @@ import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.eclipse.californium.core.coap.OptionSet;
 import org.eclipse.leshan.core.ResponseCode;
+import org.eclipse.leshan.core.node.LwM2mMultipleResource;
 import org.eclipse.leshan.core.node.LwM2mObjectInstance;
 import org.eclipse.leshan.core.node.LwM2mPath;
 import org.eclipse.leshan.core.node.ObjectLink;
@@ -84,7 +85,14 @@ public class CoapService {
 				observeDataVO.setId(entry.getKey());
 				observeDataVO.setTid("tid" + lwM2mPath.getObjectId() + "" + lwM2mPath.getObjectInstanceId() + ""
 						+ entry.getKey() + "");
-				observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
+				if (entry.getValue().isMultiInstances() == true) {
+					LwM2mMultipleResource val = (LwM2mMultipleResource) entry.getValue();
+					log.debug("=== val : {}", val);
+					observeDataVO.setValue(String.valueOf(val.getValues()));
+				} else {
+					observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
+				}
+
 				list.add(observeDataVO);
 			}
 
@@ -200,7 +208,18 @@ public class CoapService {
 			LwM2mResource content = (LwM2mResource) cResponse.getContent();
 			log.debug("=== content : {}", content);
 
-			return String.valueOf(content.getValue());
+			if (content != null) {
+
+				if (content.isMultiInstances() == true) {
+					LwM2mMultipleResource val = (LwM2mMultipleResource) content;
+					log.debug("=== val : {}", val);
+					return String.valueOf(val.getValues());
+				}
+
+				return String.valueOf(content.getValue());
+			} else {
+				return String.valueOf(cResponse.getCode());
+			}
 
 		} catch (InterruptedException e) {
 			log.error(e.getMessage(), e);
