@@ -28,6 +28,7 @@ import com.cnu.lwm2m.client.models.CNULocation;
 import com.cnu.lwm2m.client.models.CNUSecurity;
 import com.cnu.lwm2m.client.models.CNUServer;
 import com.cnu.lwm2m.client.models.KepcoCommonControl;
+import com.cnu.lwm2m.client.models.KepcoNetwork;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -81,6 +82,7 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 		init.setInstancesForObject(LwM2mID.LOCATION, new CNULocation(this, task));
 		init.setInstancesForObject(LwM2mID.CONNECTIVITY_STATISTICS, new CNUConnectivityStatistics(this, task));
 		init.setInstancesForObject(LwM2mID.KEPCO_COMMON_CONTROL, new KepcoCommonControl(this, task));
+		init.setInstancesForObject(LwM2mID.KEPCO_NETWORK, new KepcoNetwork(this, task));
 
 		builder.setObjects(init.createAll());
 		builder.setCoapConfig(createConfig());	// Create CoAP Config

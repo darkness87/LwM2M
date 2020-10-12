@@ -169,13 +169,13 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	/**<pre> ID: 0 간선망 DCU~서버간 통신방식 분류 코드
 	 * 0: No Wan 1: HFC 2: Optical 3: LTE 4: Ethernet
 	 * No Wan: 간선망 용도가 아닌 LTE 모뎀과 같은 인입망 회선임대의 경우 적용 </pre>*/
-	private int wanCode;
+	private int wanCode = 0;
 
 	/**<pre> ID: 1 Cellular 0~20, Wireless 21~40, Wireline 41~60, 100~120 LTE 간선망 추후 지정 </pre>*/
-	private int commTypeCode;
+	private int commTypeCode = 2;
 
-	/**<pre> ID: 2 None 1: SKT 2: KT 3: LGU+ </pre>*/
-	private int teleCompany;
+	/**<pre> ID: 2 0: None, 1: SKT, 2: KT, 3: LGU+ </pre>*/
+	private int teleCompany = 0;
 
 	/**<pre> ID: 3 LTE 모뎀 전화번호 ex> 01055559999 </pre>*/
 	private String phoneNumber = "01055559999";
