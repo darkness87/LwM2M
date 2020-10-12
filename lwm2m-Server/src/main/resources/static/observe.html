@@ -76,7 +76,7 @@
             </button>
           </form>
           <div>
-            <h1>Registration</h1>
+            <h1>Observe</h1>
           </div>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
@@ -96,38 +96,67 @@
         </nav>
 
         <div class="container-fluid">
-          <!-- <h1 class="h3 mb-2 text-gray-800">Registration Info</h1> -->
-          <!-- <p class="mb-4">Registration Info</p> -->
+
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body" onclick="javascript:getObservationList();" style=" cursor: pointer;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">동작 Observe 수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="observeCount">0</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Annual) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body" onclick="javascript:cancelObservations();" style=" cursor: pointer;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Observe Cancel</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="observeCancel">전체 취소하기</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
 
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Registration List</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Observe List</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr style="background-color: #4e73df; color: #fff; font-weight: bold;">
-                      <th>Endpoint</th>
                       <th>ID</th>
-                      <th>Address</th>
-                      <th>Port</th>
-                      <th>Version</th>
-                      <th>Binding</th>
-                      <th>LifeTime</th>
-                      <th>Registration Date</th>
-                      <th>LastUpdate Date</th>
+                      <th>Registration ID</th>
+                      <th>Path</th>
+                      <th>ContentFormat</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody id="lwm2mserverlist">
+                  <tbody id="observelist">
 
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
-
-          <div id="objectdiv">
           </div>
 
         </div>
@@ -166,24 +195,6 @@
     </div>
   </div>
 
-  <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="titledata">Detail Data</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body" id="detaildata">내용표기</div>
-        <div class="modal-footer" id="footdata">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -194,7 +205,7 @@
   <script src="js/controller/lwm2mConst.js"></script>
   <script src="js/controller/lwm2mProxy.js"></script>
   <script src="js/controller/api.js"></script>
-  <script src="js/controller/indexController.js"></script>
+  <script src="js/controller/observeController.js"></script>
 
 </body>
 
