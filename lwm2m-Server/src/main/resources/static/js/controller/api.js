@@ -49,21 +49,61 @@ function getByEndpoint(endpoint) {
 	});
 }
 
-function getObservationList(endpoint) {
+function getObservationList() {
 	var param = {};
-	param["endpoint"] = endpoint;
 
 	LWM2M_PROXY.invokeOpenAPI("getObservationList", "json", param, function (result, _head, _params) {
+		console.log(result);
 		var view = $("#page-top");
-		var listView = view.find("#clickdata");
+		var listView = view.find("#observelist");
+		var obCountView = view.find("#observeCount");
 		listView.empty();
+		obCountView.empty();
 
 		if (result == null || result == "") {
-			listView.html("등록된 정보가 없습니다.");
+			listView.html("<td colspan='5' style='text-align:center'>Observe가 없습니다.</td>");
+			obCountView.html("Observe가 없습니다.");
 			return;
 		}
 
-		listView.html("<div>" + result + "</div>");
+		for (var i = 0; i < result.length; i++) {
+			var item = result[i];
+			var tmp = [];
+
+			var uri = "/" + item.path.objectId + "/" + item.path.objectInstanceId;
+
+			if (item.path.resource == true) {
+				uri = uri + "/" + item.path.resourceId;
+			}
+
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; style='cursor: pointer;'>");
+			tmp.push("	<td>" + item.id + "</td>");
+			tmp.push("	<td>" + item.registrationId + "</td>");
+			tmp.push("	<td>" + uri + "</td>");
+			tmp.push("	<td>" + item.contentFormat.mediaType + "</td>");
+			tmp.push("	<td>" + "Observe 동작" + "</td>");
+			tmp.push("</tr>");
+
+			listView.append(tmp.join("\n"));
+		}
+
+		obCountView.html(result.length + " Count");
+
+	});
+}
+
+function cancelObservations() {
+	var param = {};
+
+	LWM2M_PROXY.invokeOpenAPI("cancelObservations", "json", param, function (result, _head, _params) {
+		var view = $("#page-top");
+		var obCountView = view.find("#observeCancel");
+		obCountView.empty();
+		if (result == null || result == "") {
+			obCountView.html("0개 취소되었습니다.");
+			return;
+		}
+		obCountView.html(result + "개 취소되었습니다.");
 	});
 }
 
@@ -72,6 +112,7 @@ function getObjectModel(endpoint) {
 	param["endpoint"] = endpoint;
 
 	LWM2M_PROXY.invokeOpenAPI("getObjectModel", "json", param, function (result, _head, _params) {
+		console.log(result);
 		var view = $("#page-top");
 		var listView = view.find("#objectdiv");
 		listView.empty();
@@ -157,7 +198,7 @@ function sendCoapObserve(endpoint, uri) {
 		console.log(data);
 		var view = $("#page-top");
 		var dataView = null;
-		for(var i = 0; i < data.length; i++){
+		for (var i = 0; i < data.length; i++) {
 			dataView = view.find("#" + data[i].tid);
 			dataView.empty();
 			dataView.html(data[i].value);
@@ -244,13 +285,13 @@ function sendCoapExec(endpoint, uri) {
 
 	var disableData = 10;
 
-/* 	if (uri == '/1/0/4') {
-		param["type"] = 'INTEGER';
-		LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
-			console.log(result);
-			disableData = result;
-		});
-	} */
+	/* 	if (uri == '/1/0/4') {
+			param["type"] = 'INTEGER';
+			LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
+				console.log(result);
+				disableData = result;
+			});
+		} */
 
 	LWM2M_PROXY.invokeOpenAPI("coapExec", null, param, function (result, _head, _params) {
 		console.log(result);

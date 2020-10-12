@@ -76,7 +76,7 @@
             </button>
           </form>
           <div>
-            <h1>Registration</h1>
+            <h1>Redis DataBase</h1>
           </div>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
@@ -99,35 +99,42 @@
           <!-- <h1 class="h3 mb-2 text-gray-800">Registration Info</h1> -->
           <!-- <p class="mb-4">Registration Info</p> -->
 
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Registration List</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr style="background-color: #4e73df; color: #fff; font-weight: bold;">
-                      <th>Endpoint</th>
-                      <th>ID</th>
-                      <th>Address</th>
-                      <th>Port</th>
-                      <th>Version</th>
-                      <th>Binding</th>
-                      <th>LifeTime</th>
-                      <th>Registration Date</th>
-                      <th>LastUpdate Date</th>
-                    </tr>
-                  </thead>
-                  <tbody id="lwm2mserverlist">
+          <div class="row">
 
-                  </tbody>
-                </table>
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Redis Key List</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive" style="height:640px">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr style="background-color: #4e73df; color: #fff; font-weight: bold;">
+                          <th>NO.</th>
+                          <th>KEY</th>
+                        </tr>
+                      </thead>
+                      <tbody id="lwm2mserverlist">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div id="objectdiv">
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Key Data</h6>
+                </div>
+                <div class="card-body">
+                  <div style="height: 640px;" id="keydata">data</div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -166,24 +173,6 @@
     </div>
   </div>
 
-  <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="titledata">Detail Data</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body" id="detaildata">내용표기</div>
-        <div class="modal-footer" id="footdata">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -194,7 +183,7 @@
   <script src="js/controller/lwm2mConst.js"></script>
   <script src="js/controller/lwm2mProxy.js"></script>
   <script src="js/controller/api.js"></script>
-  <script src="js/controller/indexController.js"></script>
+  <script src="js/controller/redisController.js"></script>
 
 </body>
 

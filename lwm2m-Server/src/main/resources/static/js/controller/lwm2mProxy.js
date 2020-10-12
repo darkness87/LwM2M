@@ -12,6 +12,7 @@ var LWM2M_PROXY = {
 	getById: "/getById.do",
 	getByEndpoint: "/getByEndpoint.do",
 	getObservationList: "/getObservationList.do",
+	cancelObservations: "/cancelObservations.do",
 	awakeDevice: "/awakeDevice.do",
 	getObjectModel: "/getObjectModel.do",
 	coapObserve: "/coapObserve.do",

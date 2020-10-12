@@ -1,5 +1,6 @@
 package com.cnu.lwm2m.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,38 +24,24 @@ public class ObservationLwService {
 	@Autowired
 	ObservationService observeService;
 
-	public List<Observation> getObservationList(String endpoint) {
+	public List<Observation> getObservationList() {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		List<Observation> list = new ArrayList<Observation>();
 
 		for (Registration registration : allRegistrations) {
-			if (!registration.getEndpoint().equals(endpoint)) {
-				continue;
-			}
-
 			Set<Observation> observations = observeService.getObservations(registration);
-			List<Observation> list = Lists.newArrayList(observations.iterator());
-
-			/*
-			 * for (Observation ob : list) { log.info(ob.getRegistrationId()); }
-			 */
-
-			return list;
+			list.addAll(Lists.newArrayList(observations.iterator()));
 		}
 
-		return null;
+		return list;
 	}
 
-	public int cancelObservations(String endpoint) {
+	public int cancelObservations() {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 		int result = 0;
 
 		for (Registration registration : allRegistrations) {
-			if (!registration.getEndpoint().equals(endpoint)) {
-				continue;
-			}
-
 			result = observeService.cancelObservations(registration);
-			log.info("{}", result);
 			return result;
 		}
 

@@ -1,5 +1,7 @@
 package com.cnu.lwm2m.server.service;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Map.Entry;
 import org.eclipse.californium.core.Utils;
 import org.eclipse.californium.core.coap.Request;
 import org.eclipse.californium.core.coap.Response;
+import org.eclipse.californium.elements.util.Bytes;
 import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
@@ -21,6 +24,7 @@ import org.eclipse.leshan.core.node.ObjectLink;
 import org.eclipse.leshan.core.request.ContentFormat;
 import org.eclipse.leshan.core.request.ObserveRequest;
 import org.eclipse.leshan.core.node.LwM2mResource;
+import org.eclipse.leshan.core.node.LwM2mSingleResource;
 import org.eclipse.leshan.core.request.ReadRequest;
 import org.eclipse.leshan.core.request.WriteRequest;
 import org.eclipse.leshan.core.response.ObserveResponse;
@@ -90,7 +94,16 @@ public class CoapService {
 					log.debug("=== val : {}", val);
 					observeDataVO.setValue(String.valueOf(val.getValues()));
 				} else {
-					observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
+					
+					if (String.valueOf(entry.getValue().getType()).equals("OPAQUE")) {
+						LwM2mSingleResource val = (LwM2mSingleResource) entry.getValue();
+						byte[] data = (byte[]) val.getValue();
+						log.info("OPAQUE Data : {} , {}", data, new String(data));
+						observeDataVO.setValue(new String(data));
+					}else {
+						observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
+					}
+					
 				}
 
 				list.add(observeDataVO);
@@ -214,6 +227,14 @@ public class CoapService {
 					LwM2mMultipleResource val = (LwM2mMultipleResource) content;
 					log.debug("=== val : {}", val);
 					return String.valueOf(val.getValues());
+				}
+
+				if (String.valueOf(content.getType()).equals("OPAQUE")) {
+					LwM2mSingleResource val = (LwM2mSingleResource) content;
+					byte[] data = (byte[]) val.getValue();
+					log.info("OPAQUE Data : {} , {}", data, new String(data));
+
+					return new String(data);
 				}
 
 				return String.valueOf(content.getValue());
