@@ -1,7 +1,5 @@
 package com.cnu.lwm2m.server.service;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Map.Entry;
 import org.eclipse.californium.core.Utils;
 import org.eclipse.californium.core.coap.Request;
 import org.eclipse.californium.core.coap.Response;
-import org.eclipse.californium.elements.util.Bytes;
 import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.californium.core.coap.CoAP.Type;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
@@ -94,16 +91,16 @@ public class CoapService {
 					log.debug("=== val : {}", val);
 					observeDataVO.setValue(String.valueOf(val.getValues()));
 				} else {
-					
+
 					if (String.valueOf(entry.getValue().getType()).equals("OPAQUE")) {
 						LwM2mSingleResource val = (LwM2mSingleResource) entry.getValue();
 						byte[] data = (byte[]) val.getValue();
 						log.info("OPAQUE Data : {} , {}", data, new String(data));
 						observeDataVO.setValue(new String(data));
-					}else {
+					} else {
 						observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
 					}
-					
+
 				}
 
 				list.add(observeDataVO);

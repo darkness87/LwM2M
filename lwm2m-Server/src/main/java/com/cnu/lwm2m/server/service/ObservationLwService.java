@@ -32,6 +32,7 @@ public class ObservationLwService {
 			Set<Observation> observations = observeService.getObservations(registration);
 			list.addAll(Lists.newArrayList(observations.iterator()));
 		}
+		log.info("{}", list);
 
 		return list;
 	}

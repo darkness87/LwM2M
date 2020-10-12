@@ -330,3 +330,47 @@ function sendCoapDisableRead(endpoint, uri, type) {
 		return result;
 	});
 }
+
+function getRedisKeyList() {
+	var param = {};
+	LWM2M_PROXY.invokeOpenAPI("getRedisKeyList", "json", param, function (result, _head, _params) {
+		var view = $("#page-top");
+		var listView = view.find("#keylist");
+		listView.empty();
+
+		if (result == null || result == "") {
+			listView.html("<tr><td colspan='2' style='text-align:center'>KEY 데이터가 없습니다.</td></tr>");
+			return;
+		}
+
+		for (key in result) {
+			var tmp = [];
+			var no = key;
+			var keyData = result[key];
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onclick='javascript:getRedisKeyData(\"" + keyData + "\");' style='cursor: pointer;' height='40'>");
+			tmp.push("	<td>" + no + "</td>");
+			tmp.push("	<td>" + keyData + "</td>");
+			tmp.push("</tr>");
+
+			listView.append(tmp.join("\n"));
+		}
+
+	});
+}
+
+function getRedisKeyData(key) {
+	var param = {};
+	param["key"] = key;
+	LWM2M_PROXY.invokeOpenAPI("getRedisKeyData", "json", param, function (result, _head, _params) {
+		var view = $("#page-top");
+		var dataView = view.find("#keydata");
+		dataView.empty();
+
+		if (result == null || result == "") {
+			dataView.html("Data가 없습니다.");
+			return;
+		}
+
+		dataView.html("KEY = " + key + "<br><br> DATA = <br>" + JSON.stringify(result, null, 2));
+	});
+}
