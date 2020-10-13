@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.eclipse.leshan.server.californium.LeshanServer;
 
+import com.cnu.lwm2m.server.service.RedisService;
 import com.cnu.lwm2m.server.vo.EVENT;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,15 @@ public class AbsClientListener implements EventSource {
 
 	public synchronized void sendEvent(EVENT event, String data, String endpoint) {
 		log.debug("Dispatching {} event from endpoint {}", event, endpoint);
+
+		if (event == EVENT.REGISTRATION) {
+			RedisService redisService = new RedisService();
+			try {
+				redisService.setHistory(endpoint, "REG", data);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 //		for (LeshanEventSource eventSource : eventSources) {
 //			if (eventSource.getEndpoint() == null || eventSource.getEndpoint().equals(endpoint)) {

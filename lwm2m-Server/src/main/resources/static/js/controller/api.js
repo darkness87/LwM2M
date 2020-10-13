@@ -15,7 +15,7 @@ function getAllRegistrationsList() {
 			var item = result[i];
 			var tmp = [];
 
-			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onclick='javascript:getObjectModel(\"" + item.endpoint + "\");' style='cursor: pointer;'>");
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; onclick='javascript:getObjectModel(\"" + item.endpoint + "\");' style='cursor: pointer;'>");
 			tmp.push("	<td>" + item.endpoint + "</td>");
 			tmp.push("	<td>" + item.id + "</td>");
 			tmp.push("	<td>" + item.address + "</td>");
@@ -76,7 +76,7 @@ function getObservationList() {
 				uri = uri + "/" + item.path.resourceId;
 			}
 
-			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; style='cursor: pointer;'>");
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; style='cursor: pointer;'>");
 			tmp.push("	<td>" + item.id + "</td>");
 			tmp.push("	<td>" + item.registrationId + "</td>");
 			tmp.push("	<td>" + uri + "</td>");
@@ -121,6 +121,10 @@ function getObjectModel(endpoint) {
 			listView.html("<div class='card shadow mb-4'><div class='card-header py-3'><h6 class='m-0 font-weight-bold text-primary'>등록된 디바이스가 없습니다.</h6></div></div>");
 			return;
 		}
+
+		result.objectModels.sort(function (a,b){
+			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+		});
 
 		for (var i = 0; i < result.objectModels.length; i++) {
 			var item = result.objectModels[i];
@@ -347,7 +351,7 @@ function getRedisKeyList() {
 			var tmp = [];
 			var no = key;
 			var keyData = result[key];
-			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onclick='javascript:getRedisKeyData(\"" + keyData + "\");' style='cursor: pointer;' height='40'>");
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; onclick='javascript:getRedisKeyData(\"" + keyData + "\");' style='cursor: pointer;' height='40'>");
 			tmp.push("	<td>" + no + "</td>");
 			tmp.push("	<td>" + keyData + "</td>");
 			tmp.push("</tr>");

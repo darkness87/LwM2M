@@ -28,7 +28,7 @@ public class ClientRegistrationListener extends AbsClientListener implements Reg
 		log.info("new device: {}", registration.getEndpoint());
 		String jReg = new Gson().toJson(registration);
 		log.info("jReg : {}", jReg);
-//		sendEvent(EVENT.REGISTRATION, jReg, registration.getEndpoint());
+		// sendEvent(EVENT.REGISTRATION, jReg, registration.getEndpoint());
 
 		try {
 			ReadResponse response = server.send(registration, new ReadRequest(3, 0, 13));

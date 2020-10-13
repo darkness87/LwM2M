@@ -1,6 +1,8 @@
 package com.cnu.lwm2m.server.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -32,5 +34,18 @@ public class RedisService {
 	public String getRedisKeyData(String key) throws Exception {
 		String strKey = redisDao.getRedisStringData(key);
 		return strKey;
+	}
+
+	public void setHistory(String keyValue, String type, String data) throws Exception {
+		Date date = new Date();
+		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String idate = baseFormat.format(date);
+
+		String key = "HIS:" + type + ":" + keyValue + ":" + idate;
+		String setString = data;
+		log.info("{},{}", key, setString);
+
+		int result = redisDao.setRedisStringData(key, setString);
+		log.info("result : {}", result);
 	}
 }

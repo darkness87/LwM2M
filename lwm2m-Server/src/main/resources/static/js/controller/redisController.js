@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $('#keyTable').DataTable({
     "pageLength": 10,
-    "displayLength": 10,
+    "displayLength": 5,
     "searching": false,
     "lengthChange": false,
     "bInfo": false,
@@ -13,10 +13,7 @@ $(document).ready(function () {
         'orderable': false
       }
     ],
-    "dom": "Bfrtip",
-    "select": {
-      style: 'single'
-    }
+    "dom": "Bfrtip"
   });
 
   // Redis Key 리스트
