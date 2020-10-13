@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Man5</Name>
+		<Description1>보안 관리</Description1>
+		<ObjectID>26245</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:26245</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>암호화 모듈 제조회사</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>00 None, 01 한국전력, 02 조폐공사, 03 키페어, 05 드림시큐리티, 06 펜타시큐리티</Description>
+			</Item>
+			<Item ID="1">
+				<Name>암호화 모듈 모델번호</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>암호화 모듈 제조업체 모델명 (최대 20글자)</Description>
+			</Item>
+			<Item ID="2">
+				<Name>암호화 모듈 일련번호</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>H/W 모듈 일련번호 또는 S/W 모듈 일련번호</Description>
+			</Item>
+			<Item ID="3">
+				<Name>암호화 모듈 타입</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description><![CDATA[00 None, 01 USIM, 02 Chip, 03 Module, 06 F/W 버전, 07 O/S 버전, 08 커널 버전]]></Description>
+			</Item>
+			<Item ID="5">
+				<Name>암호화 모듈 버전</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>암호화 모듈 S/W 버전, 소수점 두 자리로 표현 (Major Number, Minor Number, Revision Number) 예) “1.0.1”</Description>
+			</Item>
+			<Item ID="10">
+				<Name>보안 모듈 적합성 검사 구분</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~7</RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>
+					<![CDATA[0 적합성 검사 없음 또는 취소상태
+							1 인증서 적합성 체크
+							2 암호화 ARIA-GCM-128 알고리즘 체크 테스트 벡터 필요
+							3 복호화 ARIA-GCM-128 알고리즘 체크 테스트 벡터 필요
+							4 전자서명 ECDSA with P256 알고리즘 체크 테스트 벡터 필요
+							5 키 설정 ECDH with P256 알고리즘 체크 테스트 벡터 필요
+							6 해시함수 SHA-256 알고리즘 체크 테스트 벡터 필요
+							7 F/W 무결성 ECDSA-SHA256 알고리즘 체크 테스트 벡터 필요]]>
+				</Description>
+			</Item>
+			<Item ID="11">
+				<Name>보안 모듈 테스트 벡터</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>테스트 종류에 따른 테스트 벡터 포맷은 다음과 같으며 서버에서 모뎀으로 전송한다.</Description>
+			</Item>
+			<Item ID="12">
+				<Name>보안 모듈 적합성 체크 시작</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type/>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Res_ID_10, 11에 대한 실행 명령</Description>
+			</Item>
+			<Item ID="13">
+				<Name>보안 모듈 적합성 체크 중지 및 취소</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type/>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>Res_ID_10, 11 적합성 체크 중지 및 취소, Res_ID_10 상태 값을 ‘0’으로 변경하고, 결과를 서버로 전송하여야 한다.</Description>
+			</Item>
+			<Item ID="14">
+				<Name>보안 모듈 적합성 체크 결과 응답</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Res_ID_10 테스트 항목별 적합성 체크 결과를 저장하고, 결과를 서버로 전송하여야 하며 Res_ID_10 상태 값을 ‘0’으로 변경하여야 한다.</Description>
+			</Item>
+			<Item ID="20">
+				<Name>F/W 이미지 무결성 검사 주기설정 (Health Period)</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~365</RangeEnumeration>
+				<Units>Day</Units>
+				<Description>하향 속도 Test는 서버에서 모뎀으로 Test를 수행하고 결과를 표시한다. 상향 속도 Test는 서버에서 모뎀으로 상향 실행 명령을 전송한다.</Description>
+			</Item>
+			<Item ID="21">
+				<Name>무결성 검사항목 구분</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[0 무결성 검사 없음 또는 취소상태
+							1 F/W Factory Version
+							2 F/W Last Version
+							3 F/W Current Version
+							4 F/W Next Version
+							5 O/S SHELL
+							6 M/W (JVM 등)
+							7 Security Agent
+							8 LwM2M Agent Factory
+							9 LwM2M Agent Current
+							10 DLMS Agent]]>
+				</Description>
+			</Item>
+			<Item ID="22">
+				<Name>무결성 검사를 위한 토큰 전송</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[Health Request 시 사용할 32bit 검사토큰(난수)을 서버에서 생성하여 모뎀으로 전송한다.]]>
+				</Description>
+			</Item>
+			<Item ID="25">
+				<Name>무결성 검사 요청 (Health Request)</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type/>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[F/W 무결성 검사 요구 서버에서 전송한 32bit 검사토큰(난수)을 사용하여 무결성을 검사한다.]]>
+				</Description>
+			</Item>
+			<Item ID="26">
+				<Name>무결성 검사 중지 및 취소 (Health Request Cancel</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type/>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[Res_ID_25 무결성 검사 중지 및 취소 Res_ID_21 상태 값을 ‘0’으로 변경하고, 결과를 서버로 전송하여야 한다.]]>
+				</Description>
+			</Item>
+			<Item ID="27">
+				<Name>F/W 이미지 무결성 검사 응답 (Health Response)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[Res_ID_25 무결성 검사 중지 및 취소 Res_ID_21 상태 값을 ‘0’으로 변경하고, 결과를 서버로 전송하여야 한다.]]>
+				</Description>
+			</Item>
+			<Item ID="28">
+				<Name>Public Key for F/W 무결성 검사키</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[F/W 무결성 검사에 사용할 장치 인증서의 공개키를 저장한다. 모뎀에서 보내온 DS를 복호화하여 메시지 검증 및 HASH 값 추출용]]>
+				</Description>
+			</Item>
+			<Item ID="30">
+				<Name>Secure boot 성공 여부</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Boolean</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[성공 시: “true, current”, 실패 시: "false, factory", "false, last"]]>
+				</Description>
+			</Item>
+			<Item ID="31">
+				<Name>Secure Boot 성공시간</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>
+					<![CDATA[성공 시: “true, current”, 실패 시: "false, factory", "false, last"]]>
+				</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

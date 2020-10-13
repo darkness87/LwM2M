@@ -7,12 +7,14 @@ import java.util.Date;
 
 import com.cnu.lwm2m.client.models.impl.kepco.AMICommonControlInfo;
 import com.cnu.lwm2m.client.models.impl.kepco.AMINetworkInfo;
+import com.cnu.lwm2m.client.models.impl.kepco.AMISecurityInfo;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkInfo {
+public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkInfo
+									, AMISecurityInfo {
 
 	public void getHeapMemory() {
 		MemoryMXBean membean = ManagementFactory.getMemoryMXBean();
@@ -223,5 +225,83 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 		return "52.8 kbytes/sec";
 	}
 
-	/**<pre> ID: </pre>*/
+	/**********************************
+	  [26245] AMI SECURITY Object Info
+	 **********************************/
+	/**<pre> ID: 0 국정원 검증 KCMVP 보안 모듈 제조회사
+	 * 00 None 01 한국전력 02 조폐공사 03 키페어 05 드림시큐리티 06 펜타시큐리티 </pre>*/
+	private int encryptModuleCompany = 5;
+
+	/**<pre> ID: 1 암호화 모듈 제조업체 모델명 (최대 20글자) </pre>*/
+	private String encryptModuleModelNumber = "Dream Security";
+
+	/**<pre> ID: 2 H/W 모듈 일련번호 또는 S/W 모듈 일련번호 </pre>*/
+	private String encryptModuleSerialNumber = "ABCDEFGH";
+
+	/**<pre> ID: 3 암호화 모듈 타입
+	 * 00 None 01 USIM 06 F/W 버전 02 Chip 07 O/S 버전 03 Module 08 커널 버전 </pre>*/
+	private int encryptModuleType = 0;
+
+	/**<pre> ID: 5 암호화 모듈 S/W 버전
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String encryptModuleVersion = "1.0.1";
+
+	/**<pre> ID: 10 보안 모듈 적합성 검사 구분
+	 * 0 적합성 검사 없음 또는 취소상태
+	 * 1 인증서 적합성 체크
+	 * 2 암호화 ARIA-GCM-128 알고리즘 체크 테스트 벡터 필요
+	 * 3 복호화 ARIA-GCM-128 알고리즘 체크 테스트 벡터 필요
+	 * 4 전자서명 ECDSA with P256 알고리즘 체크 테스트 벡터 필요
+	 * 5 키 설정 ECDH with P256 알고리즘 체크 테스트 벡터 필요
+	 * 6 해시함수 SHA-256 알고리즘 체크 테스트 벡터 필요
+	 * 7 F/W 무결성 ECDSA-SHA256 알고리즘 체크 테스트 벡터 필요 </pre>*/
+	private int securityModuleCompatible = 0;
+
+	/**<pre> ID: 11 보안 모듈 테스트 벡터  </pre>*/
+	private byte[] securityModuleTestVector = new byte[] {0x41, 0x42};
+
+	/** [실행] ID: 12 보안 모듈 적합성 체크 시작  (Res_ID_10, 11에 대한 실행 명령) */
+	/** [실행] ID: 13 보안 모듈 적합성 체크 중지 및 취소 */
+
+	/**<pre> ID: 14 보안 모듈 적합성 체크 결과 응답 </pre>*/
+	private byte[] securityModuleCompatibleResult = new byte[] {0x41, 0x42};
+
+	/**<pre> ID: 20 F/W 무결성 검사 주기: 0~365
+	 * “0”인 경우 주기적으로 무결성 검사 미수행 (초기설정값: 0) </pre>*/
+	private int FWImageIntegrityCheckPeriod = 0;
+
+	/**<pre> ID: 21 무결성 검사항목 구분 </pre>*/
+	private int integrityCheckStatus = 0;
+
+	/**<pre> ID: 22 Health Request 시 사용할 32bit 검사토큰(난수)을 서버에서 생성하여 모뎀으로 전송한다. </pre>*/
+	private byte[] integrityCheckToken = new byte[] {0x41, 0x42};
+
+	/** [실행] ID: 25 무결성 검사 요청 (Health Request) */
+	/** [실행] ID: 26 무결성 검사 중지 및 취소 (Health Request Cancel) */
+
+	/**<pre> ID: 27 요청 항목에 대한 검사 결과를 저장하고, 결과를 서버로 전송하여야 하며
+	 * Res_ID_21 상태 값을 ‘0’으로 변경하여야 한다.
+	 * Health_Rep (N, State, uptime, DS)
+	 * N = F/W Image의 상태정보를 요청하는 난수값(검사토큰)
+	 * State = H | BS
+	 *  H : SHA-256(F/W Image), 부트 시점에 저장한 값
+	 *  BS : Boot Seed, 부트 시점마다 변경되는 값
+	 * uptime = 동작정보, 부트 이후 동작 시간(단위:초)
+	 * DS = SignF/W Image 검사용 키(N | State | uptime)</pre>*/
+	private byte[] FWImageIntegrityCheckResult = new byte[] {0x41, 0x42};
+
+	/**<pre> ID: 28 F/W 무결성 검사에 사용할 장치 인증서의 공개키를 저장한다.
+	 * 모뎀에서 보내온 DS를 복호화하여 메시지 검증 및 HASH 값 추출용 </pre>*/
+	private byte[] FWImageIntegrityCheckKey = new byte[] {0x41, 0x42};
+
+	/**<pre> ID: 30 현재 버전 Secure 부팅 결과 → 성공: true / 실패: false
+	 * 현재 버전 부팅 성공 시: “true, current”
+	 * 현재 버전 부팅 실패 시 LAST 또는 FACTORY 버전으로 부팅 후 “false” 결과 전송
+	 *  - “false, factory” 또는 “false, last”
+	 * 부팅 시 부팅 결과를 Notify 하여야 한다. </pre>*/
+	private boolean secureBootSuccess = true;
+
+	/**<pre> ID: 31 가장 최근에 성공한 Secure boot 성공시간 표시 : “년, 월, 일, 시, 분”
+	 * Res ID 30과 함께 Notify 한다. </pre>*/
+	private Date secureBootSuccessDate = new Date();
 }
