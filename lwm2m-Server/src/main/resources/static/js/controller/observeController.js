@@ -7,7 +7,7 @@ $(document).ready(function () {
     "bInfo": false,
     "ordering": false,
     //    "order": [ [ 0, "asc" ], [ 1, "desc"] ],
-    "paging": true,
+    "paging": false,
     "columnDefs": [
       {
         'targets': [2, 3],
@@ -35,7 +35,7 @@ $(document).ready(function () {
   setInterval(function () {
     getObservationList();
     var view = $("#page-top");
-		var obCountView = view.find("#observeCancel");
+    var obCountView = view.find("#observeCancel");
     obCountView.empty();
     obCountView.html("전체 취소하기");
   }, 5000);
