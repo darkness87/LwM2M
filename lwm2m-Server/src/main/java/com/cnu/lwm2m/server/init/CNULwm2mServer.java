@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class CNULwm2mServer implements DisposableBean {
-	private final String[] KEPCO_MODELS = {"26241.xml", "26243.xml", "26245.xml", "26247.xml"};
+	private final String[] KEPCO_MODELS = {"26241.xml", "26243.xml", "26245.xml", "26247.xml", "LWM2M_Device_3_Custom.xml"};
 
 	private LeshanServer server;
 

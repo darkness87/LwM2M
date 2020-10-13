@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Device</Name>
+		<Description1>다양한 장치정보와 재부팅 등의 기능 관리</Description1>
+		<ObjectID>3</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:oma:3</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>Manufacturer</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀 제조사 코드표 참조</Description>
+			</Item>
+			<Item ID="1">
+				<Name>Model Number</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>제조업체별 제품모델 이름</Description>
+			</Item>
+			<Item ID="2">
+				<Name>Serial Number</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>LTE 모뎀 제조 일련번호</Description>
+			</Item>
+			<Item ID="4">
+				<Name>Reboot</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>오류 발생 시 장치를 복원하기 위한 장치 Rebooting 명령</Description>
+			</Item>
+			<Item ID="5">
+				<Name>Factory Reset</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>공장 초기화 설정</Description>
+			</Item>
+			<Item ID="6">
+				<Name>Available Power Sources</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Available Power Sources</Description>
+			</Item>
+			<Item ID="7">
+				<Name>Power Source Voltage</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>mV</Units>
+				<Description>장치가 동작하는 정격전압</Description>
+			</Item>
+			<Item ID="8">
+				<Name>Power Source Current</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>제조사가 계기 30대 연결 환경에서 24시간 측정한 최소값,최대값,평균값 기록한다.</Description>
+			</Item>
+			<Item ID="10">
+				<Name>Memory Free</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>KB</Units>
+				<Description>가용 저장공간</Description>
+			</Item>
+			<Item ID="11">
+				<Name>Error Code</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Error Code</Description>
+			</Item>
+			<Item ID="12">
+				<Name>Reset Error Code</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Error Code를 Reset 하여 오류가 없음을 의미하는 "0" 값으로 설정</Description>
+			</Item>
+			<Item ID="13">
+				<Name>Current Time</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초</Units>
+				<Description>모뎀의 시간 설정 및 시간 확인</Description>
+			</Item>
+			<Item ID="15">
+				<Name>Timezone</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>LwM2M 장치가 위치한 표준 시간대를 나타낸다.</Description>
+			</Item>
+			<Item ID="17">
+				<Name>Device Type</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>설비의 종류를 구분한다.</Description>
+			</Item>
+			<Item ID="18">
+				<Name>Hardware Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀의 현재 H/W 버전</Description>
+			</Item>
+			<Item ID="21">
+				<Name>Memory Total</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Kbyte</Units>
+				<Description>데이터 및 소프트웨어를 저장할 수 있는 메모리(ROM) 총 저장공간</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>
