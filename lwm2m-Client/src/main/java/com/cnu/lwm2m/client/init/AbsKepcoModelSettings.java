@@ -9,13 +9,14 @@ import com.cnu.lwm2m.client.models.impl.kepco.AMICommonControlInfo;
 import com.cnu.lwm2m.client.models.impl.kepco.AMINetworkInfo;
 import com.cnu.lwm2m.client.models.impl.kepco.AMISecurityInfo;
 import com.cnu.lwm2m.client.models.impl.kepco.AMIServerInfo;
+import com.cnu.lwm2m.client.models.impl.kepco.AMISoftwareInfo;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkInfo
-									, AMISecurityInfo, AMIServerInfo {
+									, AMISecurityInfo, AMIServerInfo, AMISoftwareInfo {
 
 	public void getHeapMemory() {
 		MemoryMXBean membean = ManagementFactory.getMemoryMXBean();
@@ -351,4 +352,96 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 
 	/**<pre> ID: 36 DLMS Manager Port Number (G/W 또는 DCU 적용)</pre>*/
 	private int dlmsManagerPort = 245;
+
+
+
+	/**********************************
+	  [26249] AMI SOFTWARE Object Info
+	 **********************************/
+	/**<pre> ID: 0 Download 및 Update 상태 값
+	 * 0: 초기상태 (업데이트 프로세스가 시작되면 다운로드 단계로 전환)
+	 * 1: 다운로드 중
+	 * 2: 다운로드 실패 (전송실패)
+	 * 3: 다운로드 실패 (파일명세 불일치 : 일과 또는 개별 다운로드 시)
+	 * 4: 다운로드 실패 (무결성 검사 실패)
+	 * 5: 다운로드 성공
+	 * 6: 업데이트 대기 (일정 업데이트 또는 업데이트 명령 대기 시)
+	 * 7: 업데이트 취소
+	 * 8: 업데이트 실패
+	 * 9: 업데이트 성공 (업데이트 성공 시 값 전송 성공 후 초기 상태로 전환)  </pre>*/
+	private int downloadUpdateStatus = 0;
+
+	/** [쓰기] ID: 1 서버가 단말장치로 개별 다운로드를 수행하여 파일을 전송하면 장치는 이를 저장한다.
+	 * 장치는 개별 다운로드 실패한 경우 확인 다운로드 절차를 진행한다. */
+	/** [쓰기] ID: 2 서버가 모뎀으로 일괄 다운로드를 수행하여 파일을 전송하면 장치는 이를 저장하여야 한다.
+	 * 서버는 일괄 다운로드 실패한 장치에 대하여 개별 다운로드 단계를 진행하여야 한다. */
+
+	/**<pre> ID: 3 다운로드 파일 확인주기 설정 (“0”은 확인 다운로드 기능 미사용) / 초기설정값: “1” </pre>*/
+	private int checkDownloadPeriod = 0;
+
+	/**<pre> ID: 5 파일 다운로드 시작한 일시를 기록하고 Notify 하여야 한다.  </pre>*/
+	private Date downloadStartDate = new Date();
+
+	/**<pre> ID: 6 파일이 다운로드 완료되고 무결성 검사를 통과한 일시를 기록하고 Notify 하여야 한다.
+	 * 다운로드 결과(Res_0) 전송 및 다운로드 실패 시 다운로드 재실행 </pre>*/
+	private Date downloadCompleteDate = new Date();
+
+	/** [실행] ID: 10 S/W 업데이트 방법이 명령 업데이트 즉 일정이 “FF, FF, FF, FF, FF”일 경우 명령 수행 */
+	/** [실행] ID: 11 다운로드 완료 후 일정/명령 업데이트 대기 시 “취소” 명령 수신 시 다운로드 파일 삭제
+	 * 다운로드 및 업데이트 결과(Res_0) 전송 및 상태 초기화하고 Notify 하여야 한다. */
+
+	/**<pre> ID: 12 S/W 업데이트 완료 일시를 기록하고 Notify 하여야 한다. </pre>*/
+	private Date updateCompleteDate = new Date(0);
+
+	/**<pre> ID: 13 S/W 업데이트 예약 일시를 기록하고 Notify 하여야 한다. 패키지 명에 포함된 일정 분리 표시 </pre>*/
+	private Date updateReservationDate = new Date(0);
+
+	/**<pre> ID: 15 펌웨어 공장 출하 버전
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String fwFactoryVersion = "1.0.0";
+
+	/**<pre> ID: 16 가장 최근 부팅에 성공한 현재 운용 중인 버전 바로 이전의 펌웨어 버전
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String fwLastVersion = "1.0.0";
+
+	/**<pre> ID: 17 현재 운용 중인 펌웨어 버전
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1 </pre>*/
+	private String fwCurrentVersion = "1.0.1";
+
+	/**<pre> ID: 20 모뎀 공통제어부에 탑재되어 운영되는 OS 명 </pre>*/
+	private String commonControlOSName = "FEDORA LINUX";
+
+	/**<pre> ID: 21 모뎀에서 현재 운영 중인 O/S의 KERNEL 버전 / 예) 4.19.1 </pre>*/
+	private String commonControlOSVersion = "10.2.1";
+
+	/**<pre> ID: 25 현재 운영 중인 M/W(예:JVM): 공급사, 구분(명칭)
+	 * 예) 오라클 제공 JVM: “Oracle, SE” / Open Source일 경우: “open, SE”  </pre>*/
+	private String mwSystem = "Oracle, SE";
+
+	/**<pre> ID: 26 현재 운영 중인 JVM 버전 : 각 사에서 제공하는 버전 형식을 따른다. </pre>*/
+	private String mwVersion = "8.2.1";
+
+	/**<pre> ID: 30 상호인증 및 키 관리 등을 수행하고 관리하는 보안관리 프로그램 버전 (단말장치 적용)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1 </pre>*/
+	private String securityAgentVersion = "1.0.0";
+
+	/**<pre> ID: 31 상호인증 및 키 관리 등을 중계하는 Proxy Server S/W 버전 (G/W 또는 DCU 적용)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String securityProxyVersion = "1.0.0";
+
+	/**<pre> ID: 35 현재 운영 중인 LwM2M Agent S/W 버전 (단말장치 적용)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String lwm2mAgentVersion = "1.0.0";
+
+	/**<pre> ID: 36 현재 운영 중인 LwM2M Proxy S/W 버전 (G/W 또는 DCU 적용)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String lwm2mProxyVersion = "1.0.0";
+
+	/**<pre> ID: 40 현재 운영 중인 DLMS Agent S/W 버전 (단말장치 적용)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String dlmsAgentVersion = "1.0.0";
+
+	/**<pre> ID: 41 현재 운영 중인 DLMS Manager S/W 버전 (G/W 또는 DCU 적용)
+	 * 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” </pre>*/
+	private String dlmsManagerVersion = "1.0.0";
 }
