@@ -293,36 +293,37 @@ function sendCoapExec(endpoint, uri) {
 	var param = {};
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
-
 	var disableData = 10;
-
-	/* 	if (uri == '/1/0/4') {
-			param["type"] = 'INTEGER';
-			LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
-				console.log(result);
-				disableData = result;
-			});
-		} */
+	var view = $("#page-top");
+	param["contentType"] = view.find("#typeData").val();
+	param["timeout"] = view.find("#timeOut").val();
+	param["type"] = null;
+	if (uri == '/1/0/4') {
+		param["type"] = "INTEGER";
+	}
 
 	LWM2M_PROXY.invokeOpenAPI("coapExec", null, param, function (result, _head, _params) {
 		console.log(result);
 
 		if (result == 'ExecSuccess') {
+			if (uri == '/1/0/8') {
+				getObjectModel(endpoint);
+				alert("Registration Update Trigger Success");
+			} else {
+				alert("구현체가 없습니다.");
+			}
+		} else if(result != 'ExecSuccess' && result != null){
 			if (uri == '/1/0/4') {
 				var view = $("#page-top");
 				var listView = view.find("#objectdiv");
 				listView.empty();
 				listView.html("<div>" + endpoint + " Disable ...</div>");
-
+				disableData = result;
 				setTimeout(function () {
 					getObjectModel(endpoint);
 				}, disableData * 1000 + 1500);
-
-			} else if (uri == '/1/0/8') {
-				getObjectModel(endpoint);
-				alert("Registration Update Trigger Success");
 			} else {
-				alert("구현체가 없습니다.");
+				alert("데이터를 알 수 없습니다.");
 			}
 		} else {
 			alert("Exec Fail...");

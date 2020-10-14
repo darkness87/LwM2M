@@ -6,43 +6,33 @@
 		<ObjectID>26247</ObjectID>
 		<ObjectURN>urn:oma:lwm2m:x:26247</ObjectURN>
 		<MultipleInstances>Single</MultipleInstances>
-		<Mandatory>Mandatory</Mandatory>
+		<Mandatory>Optional</Mandatory>
 		<Resources>
 			<Item ID="0">
 				<Name>LwM2M Bootstrap Server IP Address</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
 				<Description>LwM2M Bootstrap Server IP 주소 : 미사용</Description>
 			</Item>
 			<Item ID="1">
-				<Name>암호화 모듈 모델번호</Name>
+				<Name>LwM2M Bootstrap Server Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
 				<Description>LwM2M Bootstrap Server Port Number : 미사용</Description>
 			</Item>
-			<Item ID="2">
-				<Name>암호화 모듈 일련번호</Name>
-				<Operations>R</Operations>
-				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
-				<Type>String</Type>
-				<RangeEnumeration></RangeEnumeration>
-				<Units>Defined by “Units” resource.</Units>
-				<Description>H/W 모듈 일련번호 또는 S/W 모듈 일련번호</Description>
-			</Item>
 			<Item ID="10">
-				<Name>보안 Server IP Addres</Name>
+				<Name>보안 Server IP Address</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -52,7 +42,7 @@
 				<Name>보안 Server Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -72,7 +62,7 @@
 				<Name>보안 Proxy Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -82,7 +72,7 @@
 				<Name>LwM2M Server IP Address</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -92,17 +82,17 @@
 				<Name>LwM2M Server Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>LwM2M Server Port Number</Description>
 			</Item>
 			<Item ID="25">
-				<Name>LwM2M Proxy IP Addres</Name>
+				<Name>LwM2M Proxy IP Address</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -112,7 +102,7 @@
 				<Name>LwM2M Proxy Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
@@ -122,7 +112,7 @@
 				<Name>DLMS Master IP</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -132,7 +122,7 @@
 				<Name>DLMS Master Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
@@ -142,7 +132,7 @@
 				<Name>DLMS Manager IP</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
@@ -152,7 +142,7 @@
 				<Name>DLMS Manager Port Number</Name>
 				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
-				<Mandatory>Mandatory</Mandatory>
+				<Mandatory>Optional</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>

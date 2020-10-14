@@ -87,12 +87,24 @@ public class CoapController {
 	}
 
 	@RequestMapping("/coapExec.do")
-	public @ResponseBody String sendCoapExec(@RequestParam String endpoint, @RequestParam String uri) {
+	public @ResponseBody String sendCoapExec(@RequestParam String endpoint, @RequestParam String uri,
+			@RequestParam String type, @RequestParam String contentType, @RequestParam int timeout) {
 		log.info("=== sendCoapExec ===");
+		String execValue = null;
+		log.info("exec uri : {}", uri);
+		if (uri.equals("/1/0/4")) {
+			execValue = coapService.sendCoapTLVRead(endpoint, "/1/0/5", type, contentType, timeout);
+			log.info("execValue : {}", execValue);
+		}
+
 		String result = coapService.sendCoapExec(endpoint, uri);
 
 		if (result == null) {
 			result = "error";
+		}
+
+		if (uri.equals("/1/0/4")) {
+			result = execValue;
 		}
 
 		return result;
