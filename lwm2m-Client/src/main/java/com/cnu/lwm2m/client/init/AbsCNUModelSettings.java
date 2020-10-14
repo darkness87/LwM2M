@@ -163,7 +163,7 @@ public class AbsCNUModelSettings extends AbsKepcoModelSettings
 	}
 
 	/** ID: 17 설비의 종류를 구분한다. 0: ETC, 1: SERVER, 2: G/W, 3: DCU, 4: K-DCU, 5: MODEM */
-	private String deviceType = "3";
+	private int deviceType = 3;
 
 	/** ID: 18 모뎀의 현재 H/W 버전 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1” */
 	@Override public String getHardwareVersion() {

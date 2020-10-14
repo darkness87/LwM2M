@@ -32,7 +32,7 @@ public class CNUDevice extends BaseInstanceEnabler {
 	private String firmwareVersion;
 	private int availablePowerSources;
 	private int powerSourceVoltage;
-	String deviceType;
+	private int deviceType;
 
 	private String timezone;
 

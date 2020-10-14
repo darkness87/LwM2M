@@ -14,7 +14,7 @@ public interface DeviceInfo {
 	public int getErrorCode();
 	public Date getCurrentTime();
 	public String getTimezone();
-	public String getDeviceType();
+	public int getDeviceType();
 	public String getHardwareVersion();
 	public int getMemoryTotal();
 }
