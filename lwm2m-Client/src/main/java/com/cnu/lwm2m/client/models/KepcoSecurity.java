@@ -77,7 +77,6 @@ public class KepcoSecurity extends BaseInstanceEnabler {
 			return ReadResponse.success(resourceid, encryptModuleCompany);
 
 		case 1:
-			log.debug("resourceid : 1  !!!!");
 			return ReadResponse.success(resourceid, encryptModuleModelNumber);
 
 		case 2:

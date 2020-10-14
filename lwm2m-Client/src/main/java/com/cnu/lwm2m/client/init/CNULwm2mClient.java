@@ -30,6 +30,7 @@ import com.cnu.lwm2m.client.models.CNUServer;
 import com.cnu.lwm2m.client.models.KepcoCommonControl;
 import com.cnu.lwm2m.client.models.KepcoNetwork;
 import com.cnu.lwm2m.client.models.KepcoSecurity;
+import com.cnu.lwm2m.client.models.KepcoServer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,7 +75,6 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 		// Initialize model
 		ObjectsInitializer init = new ObjectsInitializer(new StaticModel(models));
 		init.setInstancesForObject(LwM2mID.SECURITY, CNUSecurity.kepcoKcmvp("coap://leshan.eclipseprojects.io:5683", this));
-//		init.setInstancesForObject(LwM2mID.SECURITY, CNUSecurity.kepcoKcmvp("coap://localhost:5683", this));
 		init.setInstancesForObject(LwM2mID.SERVER, new CNUServer(this, task));
 		init.setInstancesForObject(LwM2mID.DEVICE, new CNUDevice(this, task));
 		init.setInstancesForObject(LwM2mID.ACCESS_CONTROL, new CNUAccessControl(this, task));
@@ -85,6 +85,7 @@ public class CNULwm2mClient extends AbsCNUModelSettings implements DisposableBea
 		init.setInstancesForObject(LwM2mID.KEPCO_COMMON_CONTROL, new KepcoCommonControl(this, task));
 		init.setInstancesForObject(LwM2mID.KEPCO_NETWORK, new KepcoNetwork(this, task));
 		init.setInstancesForObject(LwM2mID.KEPCO_SECURITY, new KepcoSecurity(this, task));
+		init.setInstancesForObject(LwM2mID.KEPCO_SERVER, new KepcoServer(this, task));
 
 		builder.setObjects(init.createAll());
 		builder.setCoapConfig(createConfig());	// Create CoAP Config

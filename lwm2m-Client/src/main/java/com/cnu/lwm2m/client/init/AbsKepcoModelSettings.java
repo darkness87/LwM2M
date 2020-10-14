@@ -8,13 +8,14 @@ import java.util.Date;
 import com.cnu.lwm2m.client.models.impl.kepco.AMICommonControlInfo;
 import com.cnu.lwm2m.client.models.impl.kepco.AMINetworkInfo;
 import com.cnu.lwm2m.client.models.impl.kepco.AMISecurityInfo;
+import com.cnu.lwm2m.client.models.impl.kepco.AMIServerInfo;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkInfo
-									, AMISecurityInfo {
+									, AMISecurityInfo, AMIServerInfo {
 
 	public void getHeapMemory() {
 		MemoryMXBean membean = ManagementFactory.getMemoryMXBean();
@@ -304,4 +305,50 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	/**<pre> ID: 31 가장 최근에 성공한 Secure boot 성공시간 표시 : “년, 월, 일, 시, 분”
 	 * Res ID 30과 함께 Notify 한다. </pre>*/
 	private Date secureBootSuccessDate = new Date();
+
+
+	/********************************
+	  [26247] AMI SERVER Object Info
+	 ********************************/
+	/**<pre> ID: 0 LwM2M Bootstrap Server IP 주소 : 미사용</pre>*/
+	private String bootstrapIp = "127.0.0.1";
+
+	/**<pre> ID: 1 LwM2M Bootstrap Server Port Number : 미사용</pre>*/
+	private int bootstrapPort = 5523;
+
+	/**<pre> ID: 10 보안 Server IP 주소</pre>*/
+	private String securityIp = "127.0.0.1";
+
+	/**<pre> ID: 11 보안 Server Port Number</pre>*/
+	private int securityPort = 5524;
+
+	/**<pre> ID: 15 보안 Proxy Server IP 주소 (G/W 또는 DCU 에서 하위 장치로 자동 적용되어야 한다.)</pre>*/
+	private String securityProxyIp = "127.0.0.1";
+
+	/**<pre> ID: 16 보안 Proxy Server Port Number (G/W 또는 DCU 적용)</pre>*/
+	private int securityProxyPort = 4423;
+
+	/**<pre> ID: 20 LwM2M Server IP 주소</pre>*/
+	private String serverIp = "127.0.0.1";
+
+	/**<pre> ID: 21 LwM2M Server Port Number</pre>*/
+	private int serverPort = 4424;
+
+	/**<pre> ID: 25 LwM2M Proxy Server IP 주소 (G/W 또는 DCU 에서 하위 장치로 자동 적용되어야 한다.)</pre>*/
+	private String proxyServerIp = "127.0.0.1";
+
+	/**<pre> ID: 26 LwM2M Proxy Server Port Number (G/W 또는 DCU 적용)</pre>*/
+	private int proxyServerPort = 144;
+
+	/**<pre> ID: 30 DLMS Master IP Address</pre>*/
+	private String dlmsMasterIp = "127.0.0.1";
+
+	/**<pre> ID: 31 DLMS Master Port Number</pre>*/
+	private int dlmsMasterPort = 244;
+
+	/**<pre> ID: 35 DLMS Manager IP Address (G/W 또는 DCU 에서 하위 장치로 자동 적용되어야 한다.)</pre>*/
+	private String dlmsManagerIp = "127.0.0.1";
+
+	/**<pre> ID: 36 DLMS Manager Port Number (G/W 또는 DCU 적용)</pre>*/
+	private int dlmsManagerPort = 245;
 }
