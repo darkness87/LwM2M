@@ -101,7 +101,17 @@
 
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Registration List</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Registration List &nbsp;&nbsp;
+                  <select style="text-align: right;" id="typeData">
+                    <option value="TLV">TLV</option>
+                    <option value="JSON">JSON</option>
+                  </select>
+                  <select style="text-align: right;" id="timeOut">
+                    <option value="1000">1s</option>
+                    <option selected value="5000">5s</option>
+                    <option value="10000">10s</option>
+                  </select>
+              </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">

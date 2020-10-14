@@ -122,7 +122,7 @@ function getObjectModel(endpoint) {
 			return;
 		}
 
-		result.objectModels.sort(function (a,b){
+		result.objectModels.sort(function (a, b) {
 			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 		});
 
@@ -197,10 +197,12 @@ function sendCoapObserve(endpoint, uri) {
 	var param = {};
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
+	var view = $("#page-top");
+	param["contentType"] = view.find("#typeData").val();
+	param["timeout"] = view.find("#timeOut").val();
 	LWM2M_PROXY.invokeOpenAPI("coapObserve", null, param, function (result, _head, _params) {
 		var data = eval(result);
 		console.log(data);
-		var view = $("#page-top");
 		var dataView = null;
 		for (var i = 0; i < data.length; i++) {
 			dataView = view.find("#" + data[i].tid);
@@ -224,9 +226,12 @@ function sendCoapRead(endpoint, uri, dataid, type) {
 	param["endpoint"] = endpoint;
 	param["uri"] = uri;
 	param["type"] = type;
+	var view = $("#page-top");
+	param["contentType"] = view.find("#typeData").val();
+	param["timeout"] = view.find("#timeOut").val();
+
 	LWM2M_PROXY.invokeOpenAPI("coapRead", null, param, function (result, _head, _params) {
 		console.log(result);
-		var view = $("#page-top");
 		var dataView = view.find("#" + dataid);
 		dataView.empty();
 
@@ -266,6 +271,8 @@ function sendCoapWrite(endpoint, uri, dataid, type, data) {
 	var view = $("#page-top");
 	data = view.find("#valuedata").val();
 	param["data"] = data;
+	param["contentType"] = view.find("#typeData").val();
+	param["timeout"] = view.find("#timeOut").val();
 
 	LWM2M_PROXY.invokeOpenAPI("coapWrite", null, param, function (result, _head, _params) {
 		console.log(result);

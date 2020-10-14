@@ -25,9 +25,10 @@ public class CoapController {
 	RedisService redisService;
 
 	@RequestMapping("/coapObserve.do")
-	public @ResponseBody String sendCoapObserve(@RequestParam String endpoint, @RequestParam String uri) {
+	public @ResponseBody String sendCoapObserve(@RequestParam String endpoint, @RequestParam String uri,
+			@RequestParam String contentType, @RequestParam int timeout) {
 		log.info("=== sendCoapObserve ===");
-		List<ObserveDataVO> result = coapService.sendCoapTLVObserve(endpoint, uri);
+		List<ObserveDataVO> result = coapService.sendCoapTLVObserve(endpoint, uri, contentType, timeout);
 		ObjectMapper mapper = new ObjectMapper();
 		String setString = null;
 
@@ -57,9 +58,9 @@ public class CoapController {
 
 	@RequestMapping("/coapRead.do")
 	public @ResponseBody String sendCoapRead(@RequestParam String endpoint, @RequestParam String uri,
-			@RequestParam String type) {
+			@RequestParam String type, @RequestParam String contentType, @RequestParam int timeout) {
 		log.info("=== sendCoapRead ===");
-		String result = coapService.sendCoapTLVRead(endpoint, uri, type);
+		String result = coapService.sendCoapTLVRead(endpoint, uri, type, contentType, timeout);
 
 		if (result == null) {
 			result = "error";
@@ -70,15 +71,16 @@ public class CoapController {
 
 	@RequestMapping("/coapWrite.do")
 	public @ResponseBody String sendCoapWrite(@RequestParam String endpoint, @RequestParam String uri,
-			@RequestParam String type, @RequestParam String data) {
+			@RequestParam String type, @RequestParam String data, @RequestParam String contentType,
+			@RequestParam int timeout) {
 		log.info("=== sendCoapWrite ===");
-		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, data);
+		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, data, contentType, timeout);
 
 		String result = null;
 		if (code == false) {
 			result = "Write False : Error Check";
 		} else if (code == true) {
-			result = coapService.sendCoapTLVRead(endpoint, uri, type);
+			result = coapService.sendCoapTLVRead(endpoint, uri, type, contentType, timeout);
 		}
 
 		return result;

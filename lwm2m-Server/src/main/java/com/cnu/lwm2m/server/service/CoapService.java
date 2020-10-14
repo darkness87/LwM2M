@@ -57,16 +57,16 @@ public class CoapService {
 	@Autowired
 	LwM2mModelProvider modelProvider;
 
-	public List<ObserveDataVO> sendCoapTLVObserve(String endpoint, String uri) {
+	public List<ObserveDataVO> sendCoapTLVObserve(String endpoint, String uri, String contentType, int timeout) {
 		Registration registration = regService.getByEndpoint(endpoint);
-		ContentFormat contentFormat = ContentFormat.fromName("TLV");
+		ContentFormat contentFormat = ContentFormat.fromName(contentType);
 		ObserveRequest request = new ObserveRequest(contentFormat, uri);
 
 		log.info("=== registration : {}", registration);
 		log.info("=== request : {}", request);
 
 		try {
-			ObserveResponse cResponse = server.send(registration, request, 5000L); // TODO timeout 설정 필요
+			ObserveResponse cResponse = server.send(registration, request, timeout); // TODO timeout 설정 필요
 			log.info("=== response : {}", cResponse);
 
 			LwM2mObjectInstance content = (LwM2mObjectInstance) cResponse.getContent();
@@ -203,16 +203,16 @@ public class CoapService {
 		return result;
 	}
 
-	public String sendCoapTLVRead(String endpoint, String uri, String type) {
+	public String sendCoapTLVRead(String endpoint, String uri, String type, String contentType, int timeout) {
 		Registration registration = regService.getByEndpoint(endpoint);
-		ContentFormat contentFormat = ContentFormat.fromName("TLV");
+		ContentFormat contentFormat = ContentFormat.fromName(contentType);
 		ReadRequest request = new ReadRequest(contentFormat, uri);
 
 		log.info("=== registration : {}", registration);
 		log.info("=== request : {}", request);
 
 		try {
-			ReadResponse cResponse = server.send(registration, request, 5000L); // TODO timeout 설정 필요
+			ReadResponse cResponse = server.send(registration, request, timeout); // TODO timeout 설정 필요
 			log.info("=== response : {}", cResponse);
 
 			LwM2mResource content = (LwM2mResource) cResponse.getContent();
@@ -246,9 +246,10 @@ public class CoapService {
 		}
 	}
 
-	public boolean sendCoapTLVWrite(String endpoint, String uri, String type, String data) {
+	public boolean sendCoapTLVWrite(String endpoint, String uri, String type, String data, String contentType,
+			int timeout) {
 		Registration registration = regService.getByEndpoint(endpoint);
-		ContentFormat contentFormat = ContentFormat.fromName("TLV");
+		ContentFormat contentFormat = ContentFormat.fromName(contentType);
 
 		LwM2mPath lwM2mPath = new LwM2mPath(uri);
 		WriteRequest request = null;
@@ -295,7 +296,7 @@ public class CoapService {
 		log.info("=== request : {}", request);
 
 		try {
-			WriteResponse cResponse = server.send(registration, request, 5000L);
+			WriteResponse cResponse = server.send(registration, request, timeout);
 			ResponseCode responseCode = cResponse.getCode();
 
 			log.info("=== response : {}", cResponse);
