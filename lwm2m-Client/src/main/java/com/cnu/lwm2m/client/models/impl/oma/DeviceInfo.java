@@ -9,7 +9,7 @@ public interface DeviceInfo {
 	public String getFirmwareVersion();
 	public int getAvailablePowerSources();
 	public int getPowerSourceVoltage();
-	public int getPowerSourceCurrent();
+	public String getPowerSourceCurrent();
 	public int getMemoryFree();
 	public int getErrorCode();
 	public Date getCurrentTime();
