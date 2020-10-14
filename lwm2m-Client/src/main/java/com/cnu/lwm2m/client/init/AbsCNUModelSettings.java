@@ -125,8 +125,8 @@ public class AbsCNUModelSettings extends AbsKepcoModelSettings
 	private int powerSourceVoltage = 12000;
 
 	/** ID:8 제조사가 계기 30대 연결 환경에서 24시간 측정한 최소값, 최대값, 평균값 기록한다. 예) 최소갑, 최대값, 평균값 : “50, 200, 150” */
-	@Override public int getPowerSourceCurrent() {	// OMA 규격 불량
-		return 50;
+	@Override public String getPowerSourceCurrent() {	// OMA 규격 불량
+		return "50, 200, 150";
 	}
 
 	/** ID:10 Res ID 21의 저장 메모리에 대한 가용 공간 또는 File 시스템의 남은 가용 영역 크기 Notify 설정: lt= (KB) / 초기설정값: 2,000 */
