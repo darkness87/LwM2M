@@ -5,21 +5,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.client.servers.ServerIdentity;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel.Type;
 import org.eclipse.leshan.core.node.LwM2mResource;
-import org.eclipse.leshan.core.request.BindingMode;
 import org.eclipse.leshan.core.response.ExecuteResponse;
 import org.eclipse.leshan.core.response.ReadResponse;
 import org.eclipse.leshan.core.response.WriteResponse;
 
 import com.cnu.lwm2m.client.init.task.ObjectExcuteTask;
 import com.cnu.lwm2m.client.models.impl.kepco.AMISoftwareInfo;
-import com.cnu.lwm2m.client.models.impl.oma.ServerInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +37,6 @@ public class KepcoSoftware extends BaseInstanceEnabler {
 	private Date updateCompleteDate;
 	private Date updateReservationDate;
 	private String fwFactoryVersion;
-	private String fwLastVersion;
 	private String fwCurrentVersion;
 	private String commonControlOSName;
 	private String commonControlOSVersion;
@@ -76,7 +72,6 @@ public class KepcoSoftware extends BaseInstanceEnabler {
 		this.updateCompleteDate = software.getUpdateCompleteDate();
 		this.updateReservationDate = software.getUpdateReservationDate();
 		this.fwFactoryVersion = software.getFwFactoryVersion();
-		this.fwLastVersion = software.getFwLastVersion();
 		this.fwCurrentVersion = software.getFwCurrentVersion();
 		this.commonControlOSName = software.getCommonControlOSName();
 		this.commonControlOSVersion = software.getCommonControlOSVersion();
@@ -113,7 +108,7 @@ public class KepcoSoftware extends BaseInstanceEnabler {
 		case 15:
 			return ReadResponse.success(resourceid, fwFactoryVersion);
 		case 16:
-			return ReadResponse.success(resourceid, fwLastVersion);
+			return ReadResponse.success(resourceid, software.getFwLastVersion());
 		case 17:
 			return ReadResponse.success(resourceid, fwCurrentVersion);
 		case 20:
