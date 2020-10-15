@@ -131,7 +131,7 @@
 					 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
 			</Item>
 			<Item ID="16">
-				<Name>) Firmware LAST Version</Name>
+				<Name>Firmware LAST Version</Name>
 				<Operations>R</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
