@@ -2,6 +2,7 @@ package com.cnu.lwm2m.server.init;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +34,6 @@ public class CNULwm2mServer implements DisposableBean {
 			"26241.xml", "26243.xml", "26245.xml", "26247.xml", "26249.xml"};
 
 	private LeshanServer server;
-
 	private Resource resource = new ClassPathResource("lwm2mServer.properties");
 
 	public CNULwm2mServer() {
@@ -56,18 +57,27 @@ public class CNULwm2mServer implements DisposableBean {
 		log.info("LeshanServer started!!");
 	}
 
+	private File getFileProperties() {
+		try {
+			byte[] b = FileCopyUtils.copyToByteArray(resource.getInputStream());
+			File file = File.createTempFile("LWM2M", "");
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(b);
+			fos.close();
+
+			return file;
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+			return null;
+		}
+	}
+
 	private NetworkConfig createConfig() throws FileNotFoundException {
 		NetworkConfig coapConfig;
-		File configFile;
+		File configFile = getFileProperties();
 
-		try {
-			log.info("{}",resource.getFile());
-			log.info("{}",resource.getURI());
-			configFile = resource.getFile();
-		} catch (IOException e) {
+		if (configFile == null) {
 			throw new FileNotFoundException(resource.getFilename());
-		} catch (Exception e) {
-			throw new FileNotFoundException(e.getMessage());
 		}
 
 		coapConfig = new NetworkConfig();
