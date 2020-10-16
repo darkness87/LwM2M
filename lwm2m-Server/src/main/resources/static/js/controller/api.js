@@ -312,7 +312,7 @@ function sendCoapExec(endpoint, uri) {
 			} else {
 				alert("구현체가 없습니다.");
 			}
-		} else if(result != 'ExecSuccess' && result != null){
+		} else if (result != 'ExecSuccess' && result != null) {
 			if (uri == '/1/0/4') {
 				var view = $("#page-top");
 				var listView = view.find("#objectdiv");
@@ -385,4 +385,8 @@ function getRedisKeyData(key) {
 
 		dataView.html("KEY = " + key + "<br><br> DATA = <br>" + JSON.stringify(result, null, 2));
 	});
+}
+
+function sseTest() {
+	console.log("SSE TEST");
 }
