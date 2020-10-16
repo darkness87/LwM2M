@@ -17,6 +17,6 @@ $(document).ready(function () {
   });
 
   // Redis Key 리스트
-  getRedisKeyList();
+//  getRedisKeyList();
 
 });

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.cnu.lwm2m.server.service.CoapService;
-import com.cnu.lwm2m.server.service.RedisService;
 import com.cnu.lwm2m.server.vo.ObserveDataVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,9 +20,6 @@ public class CoapController {
 	@Autowired
 	CoapService coapService;
 
-	@Autowired
-	RedisService redisService;
-
 	@RequestMapping("/coapObserve.do")
 	public @ResponseBody String sendCoapObserve(@RequestParam String endpoint, @RequestParam String uri,
 			@RequestParam String contentType, @RequestParam int timeout) {
@@ -34,10 +30,7 @@ public class CoapController {
 
 		try {
 			setString = mapper.writeValueAsString(result);
-			redisService.setHistory(endpoint, "OBS", setString);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
