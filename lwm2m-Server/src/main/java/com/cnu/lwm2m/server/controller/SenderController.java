@@ -21,12 +21,15 @@ public class SenderController {
 	@Autowired
 	SenderService senderService;
 
-	@RequestMapping("/users")
+	@RequestMapping("/sender.do")
 	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public ResponseBodyEmitter users() {
 		SseEmitter emitter = new SseEmitter();
 		log.info("{}", emitter);
 		senderService.add(emitter);
+		
+		log.info("{}",emitter.toString());
+		
 		return emitter;
 	}
 

@@ -99,16 +99,16 @@
 			<artifactId>logback-classic</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
-		<!-- redis user lib systemPath dependency-->
-<!-- 		<dependency>
+
+		<!-- redis user lib systemPath dependency -->
+		<dependency>
 			<groupId>com.cnu.lwm2m.redis</groupId>
 			<artifactId>api</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/cnuRedis.jar</systemPath>
-		</dependency> -->
-		
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -147,9 +147,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-<!-- 				<configuration>
+				<configuration>
 					<skip>true</skip>
-				</configuration> -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -38,7 +38,9 @@ public class SenderService {
 					count);
 
 			ResponseBodyEmitter emitter = entry.getKey();
+
 			try {
+				log.info("{}", user);
 				emitter.send(user);
 			} catch (IOException e) {
 				log.error(e.getMessage(), e);
