@@ -70,12 +70,6 @@
 			<version>2.3.0</version>
 		</dependency>
 
-		<dependency><!-- https://mvnrepository.com/artifact/org.eclipse.californium/element-connector-tcp-netty -->
-			<groupId>org.eclipse.californium</groupId>
-			<artifactId>element-connector-tcp-netty</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

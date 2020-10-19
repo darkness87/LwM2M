@@ -1,8 +1,6 @@
 package com.cnu.lwm2m.server.init;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.FileCopyUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,33 +54,18 @@ public class CNULwm2mServer implements DisposableBean {
 		log.info("LeshanServer started!!");
 	}
 
-	private File getFileProperties() {
+	private NetworkConfig createConfig() throws FileNotFoundException {
 		try {
-			byte[] b = FileCopyUtils.copyToByteArray(resource.getInputStream());
-			File file = File.createTempFile("LWM2M", "");
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.write(b);
-			fos.close();
+			NetworkConfig coapConfig;
+			coapConfig = new NetworkConfig();
+			coapConfig.load(resource.getInputStream());
 
-			return file;
+			return coapConfig;
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
+
 			return null;
 		}
-	}
-
-	private NetworkConfig createConfig() throws FileNotFoundException {
-		NetworkConfig coapConfig;
-		File configFile = getFileProperties();
-
-		if (configFile == null) {
-			throw new FileNotFoundException(resource.getFilename());
-		}
-
-		coapConfig = new NetworkConfig();
-		coapConfig.load(configFile);
-
-		return coapConfig;
 	}
 
 	private LwM2mModelProvider initModelProviders() {
