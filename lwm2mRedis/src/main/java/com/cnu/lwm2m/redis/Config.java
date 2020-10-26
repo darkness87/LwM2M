@@ -26,14 +26,14 @@ public class Config{
 		properties = new Properties();
 		FileInputStream file = null;
 		try {
-			file = new FileInputStream("src/main/resources/RedisConfig.properties"); //파일 위치
+			file = new FileInputStream("RedisConfig.properties"); //파일 위치
 			properties.load(file);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			
 			// 파일이 없을 경우 config.properties 파일을 생성
-			File profile = new File("src/main/resources/RedisConfig.properties");
+			File profile = new File("RedisConfig.properties");
 			FileOutputStream upfile = null;
 			try {
 				upfile = new FileOutputStream(profile);
@@ -123,7 +123,7 @@ public class Config{
 	
 	public void propertiesAdd(String pro, String val) {
 		
-		File profile = new File("src/main/resources/RedisConfig.properties");
+		File profile = new File("RedisConfig.properties");
 		FileOutputStream upfile = null;
 		try {
 			upfile = new FileOutputStream(profile);
