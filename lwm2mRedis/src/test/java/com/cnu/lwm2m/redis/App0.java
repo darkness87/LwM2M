@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.cnu.lwm2m.redis.api.RedisObjectData;
 import com.cnu.lwm2m.redis.vo.MeterVo;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class App0 {
@@ -48,7 +47,7 @@ public class App0 {
 		
 		// Json 정렬
 		String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist);
-//		System.out.println(data);
+		System.out.println(data);
 		
 		
 		// meter 정보 get 2
@@ -62,7 +61,7 @@ public class App0 {
 		
 		MeterVo meterlist2 = objectData.getRedisObjectData(key2,MeterVo.class);
 		String data2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterlist2);
-//		System.out.println(data2);
+		System.out.println(data2);
 
 
 		System.out.println("===== 종료");

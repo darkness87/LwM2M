@@ -29,11 +29,11 @@ public class App3 {
 
 		List<MeterVo> meter = redisTest.getRedisListData("Meter:Info:List"); // List화된 Object 가져올시
 		String dataList = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meter);
-//		log.info(dataList);
+		log.info(dataList);
 		
 		MeterVo meterOne = redisTest.getRedisData("Meter:Info:One",MeterVo.class); // Object 가져올시
 		String dataOne = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meterOne);
-//		log.info(dataOne);
+		log.info(dataOne);
 		
 		log.info("=== end test ===");
 		

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import com.cnu.lwm2m.redis.api.RedisObjectData;
 import com.cnu.lwm2m.redis.api.RedisConnect;
 import com.cnu.lwm2m.redis.vo.LpLoadProfileVo;
 import com.cnu.lwm2m.redis.vo.MeterVo;
