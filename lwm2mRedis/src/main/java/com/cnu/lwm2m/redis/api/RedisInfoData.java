@@ -201,7 +201,6 @@ public class RedisInfoData {
 			redisConnect.close();
 			return 2; // 중복 키 , object 형태 맞음
 		}
-		;
 		redisConnect.close();
 		return 0; // 이상 없을 시
 	}
@@ -232,9 +231,51 @@ public class RedisInfoData {
 			redisConnect.close();
 			return 2; // 중복 키 , object 형태 맞음
 		}
-		;
 		redisConnect.close();
 		return 0; // 이상 없을 시
+	}
+
+	/**
+	 * hset KEY, Field 삭제
+	 * 
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public int hdelKeyField(String key, String field) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if (jedis == null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return 1;
+		}
+		long value = jedis.hdel(key, field); // 리턴값 : 삭제된 수
+		if (value == 0) {
+			log.info("=== Redis hdel null");
+			redisConnect.close();
+			return 1;
+		}
+		redisConnect.close();
+		return 0;
+	}
+
+	/**
+	 * Hkey의 Field 정보 가져오기
+	 * 
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public Set<String> getHkeyField(String key) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if (jedis == null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return null;
+		}
+		Set<String> setString = jedis.hkeys(key);
+		redisConnect.close();
+		return setString;
 	}
 
 }
