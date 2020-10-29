@@ -113,7 +113,7 @@
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
-				<Type>String</Type>
+				<Type></Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units></Units>
 				<Description>Error Code를 Reset 하여 오류가 없음을 의미하는 "0" 값으로 설정</Description>

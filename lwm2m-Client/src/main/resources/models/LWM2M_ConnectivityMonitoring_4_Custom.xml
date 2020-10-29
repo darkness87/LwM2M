@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Connectivity Monitoring</Name>
+		<Description1>네트워크 관련 설정 및 모니터링</Description1>
+		<ObjectID>4</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:oma:4</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="2">
+				<Name>Radio Signal Strength</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>dBm</Units>
+				<Description>RF 수신 세기</Description>
+			</Item>
+			<Item ID="3">
+				<Name>Link Quality</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>수신된 신호의 링크품질</Description>
+			</Item>
+			<Item ID="4">
+				<Name>IP Addresses</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀의 IP 주소 (IPv6)</Description>
+			</Item>
+			<Item ID="5">
+				<Name>Router IP Addresses</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>라우터 IP 주소</Description>
+			</Item>
+			<Item ID="8">
+				<Name>Cell ID</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Cell ID</Description>
+			</Item>
+			<Item ID="9">
+				<Name>SMNC</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Serving Mobile Network Code를 나타낸다.</Description>
+			</Item>
+			<Item ID="10">
+				<Name>SMCC</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Serving Mobile Country Code</Description>
+			</Item>
+			<Item ID="11">
+				<Name>Signal SNR</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>dB</Units>
+				<Description>신호대 잡음 비</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>
