@@ -1,7 +1,12 @@
 package com.cnu.lwm2m.server.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,8 +79,10 @@ public class CoapController {
 			@RequestParam String type, @RequestParam String data, @RequestParam String contentType,
 			@RequestParam int timeout) {
 		log.info("=== sendCoapWrite ===");
+		log.info(data);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, data, contentType, timeout);
 
+		log.info("{}",code);
 		String result = null;
 		if (code == false) {
 			result = "Write False : Error Check";
@@ -84,6 +91,48 @@ public class CoapController {
 		}
 
 		return result;
+	}
+
+	@RequestMapping("/coapWriteFile.do")
+	public @ResponseBody boolean sendCoapWriteFile(@RequestParam String endpoint, @RequestParam String uri,
+			@RequestParam String type, @RequestParam String data, @RequestParam String contentType,
+			@RequestParam int timeout) {
+		log.info("=== sendCoapWrite File ===");
+		log.info("{}",data);
+		
+		String fileString = new String();
+		FileInputStream inputStream = null;
+		ByteArrayOutputStream byteOutStream = null;
+
+		try {
+			inputStream = new FileInputStream("C:\\Users\\sookwon\\Desktop\\LwM2M 개발.txt"); // TODO 주소 가져오는거 체크 필요
+			//inputStream = new FileInputStream(data);
+			byteOutStream = new ByteArrayOutputStream();
+			int len = 0;
+			byte[] buf = new byte[1024];
+			while ((len = inputStream.read(buf)) != -1) {
+				byteOutStream.write(buf, 0, len);
+			}
+
+			byte[] fileArray = byteOutStream.toByteArray();
+			fileString = new String(Base64.encodeBase64(fileArray));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				inputStream.close();
+				byteOutStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		log.info("{}",fileString);
+		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, fileString, contentType, timeout);
+		log.info("{}",code);
+
+		return code;
 	}
 
 	@RequestMapping("/coapExec.do")

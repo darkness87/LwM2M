@@ -283,9 +283,10 @@ public class CoapService {
 					lwM2mPath.getResourceId(), data);
 			break;
 		case "OPAQUE":
-			// TODO
+			byte[] bdata = data.getBytes(); // byte값 전달
+			log.info("{}",bdata);
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
-					lwM2mPath.getResourceId(), data);
+					lwM2mPath.getResourceId(), bdata);
 			break;
 		default:
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),

@@ -134,11 +134,12 @@ function getObjectModel(endpoint) {
 			tmp.push("<div class='card shadow mb-4'>");
 			tmp.push("	<div class='card-header py-3'>");
 			tmp.push("		<h6 class='m-0 font-weight-bold text-primary'>" + item.id + " : " + item.name + "&nbsp&nbsp&nbsp<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe (" + observeUri + ") ▶</button>"
-				+ "&nbsp&nbsp&nbsp<button class='btn btn-secondary' type='button' onclick='javascript:sendCoapObserveCancel(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>" + "</h6>");
+				+ "&nbsp&nbsp&nbsp<button class='btn btn-secondary' type='button' onclick='javascript:sendCoapObserveCancel(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>"
+				+ "<button style='float:right; outline: 0; border:0; background-color:#fff' href='#card" + item.id + "' data-toggle='collapse' role='button' aria-expanded='true' aria-controls='card" + item.id + "'>▼</button></h6>");
 			tmp.push("	</div>");
-			tmp.push("<div class='card-body'>");
+			tmp.push("<div class='card-body' id='card" + item.id + "'>");
 			tmp.push("  <div class='table-responsive'>");
-			tmp.push("    <table id='dataTable' width='100%' cellspacing='0'>");
+			tmp.push("    <table id='dataTable" + item.id + "' width='100%' cellspacing='0'>");
 			tmp.push("      <thead>");
 			tmp.push("        <tr style='color: #000;'>");
 			tmp.push("          <th>id</th>");
@@ -254,12 +255,19 @@ function viewWrite(endpoint, uri, dataid, type) {
 	footView.empty();
 
 	titleView.html(endpoint + " : " + uri);
-	writeView.html("<div>Value (" + type + ") : <input type='text' id='valuedata'/></div>");
-
 	var data = null;
-
-	footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
-		+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
+	
+	// TODO
+	if(type=="OPAQUE"&&uri=="/5/0/0"){
+		writeView.html("<div>Value (" + type + ") : <input id='valuedata' type='file' onchange='this.select(); document.getElementById('file_path').value=document.selection.createRange().text.toString();' file-model='resource.fileValue' ng-disabled='resource.stringValue'></div>"+"<br>"
+				+"" +"<input type='text' id='file_path' name='file_path'>");
+		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWriteFile(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
+				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
+	}else{
+		writeView.html("<div>Value (" + type + ") : <input type='text' id='valuedata'/></div>");
+		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
+				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
+	}
 }
 
 function sendCoapWrite(endpoint, uri, dataid, type, data) {
@@ -285,6 +293,26 @@ function sendCoapWrite(endpoint, uri, dataid, type, data) {
 			return;
 		}
 
+		dataView.html(result);
+	});
+}
+
+function sendCoapWriteFile(endpoint, uri, dataid, type, data) {
+	var param = {};
+	param["endpoint"] = endpoint;
+	param["uri"] = uri;
+	param["type"] = type;
+
+	var view = $("#page-top");
+	data = view.find("#valuedata").val();
+	param["data"] = data;
+	param["contentType"] = view.find("#typeData").val();
+	param["timeout"] = view.find("#timeOut").val();
+
+	LWM2M_PROXY.invokeOpenAPI("coapWriteFile", null, param, function (result, _head, _params) {
+		console.log(result);
+		var dataView = view.find("#" + dataid);
+		dataView.empty();
 		dataView.html(result);
 	});
 }
@@ -351,17 +379,20 @@ function getRedisKeyList() {
 		listView.empty();
 
 		if (result == null || result == "") {
-			listView.html("<tr><td colspan='2' style='text-align:center'>KEY 데이터가 없습니다.</td></tr>");
+			listView.html("<tr><td colspan='3' style='text-align:center'>KEY 데이터가 없습니다.</td></tr>");
 			return;
 		}
 
 		for (key in result) {
 			var tmp = [];
 			var no = key;
-			var keyData = result[key];
-			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; onclick='javascript:getRedisKeyData(\"" + keyData + "\");' style='cursor: pointer;' height='40'>");
+			var strArray = result[key].split('|');
+			var keyData = strArray[0];
+			var keyType = strArray[1];
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; onclick='javascript:getRedisKeyData(\"" + keyData + "\",\"" + keyType + "\");' style='cursor: pointer;' height='40'>");
 			tmp.push("	<td>" + no + "</td>");
 			tmp.push("	<td>" + keyData + "</td>");
+			tmp.push("	<td>" + keyType + "</td>");
 			tmp.push("</tr>");
 
 			listView.append(tmp.join("\n"));
@@ -370,10 +401,12 @@ function getRedisKeyList() {
 	});
 }
 
-function getRedisKeyData(key) {
+function getRedisKeyData(key,keyType) {
 	var param = {};
 	param["key"] = key;
+	param["keyType"] = keyType;
 	LWM2M_PROXY.invokeOpenAPI("getRedisKeyData", "json", param, function (result, _head, _params) {
+		console.log(result);
 		var view = $("#page-top");
 		var dataView = view.find("#keydata");
 		dataView.empty();

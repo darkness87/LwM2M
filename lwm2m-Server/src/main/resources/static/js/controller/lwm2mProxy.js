@@ -22,6 +22,7 @@ var LWM2M_PROXY = {
 	coapExec: "/coapExec.do",
 	getRedisKeyList: "getRedisKeyList.do",
 	getRedisKeyData: "getRedisKeyData.do",
+	coapWriteFile : "coapWriteFile.do",
 
 	prefixUrl: "",
 
