@@ -12,7 +12,20 @@
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <maxHistory>30</maxHistory>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yy-MM-dd HH:mm:ss.SSS} %-5level %-4relative - [ %thread{10} ] %logger{20}.%M:%L : %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:\logs\sys-log-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>%d{yy-MM-dd HH:mm:ss.SSS} %-5level %-4relative - [ %thread{10} ] %logger{20}.%M:%L : %msg%n</pattern>
@@ -23,6 +36,10 @@
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ROLLING" />
 	</root>
+	
+	<logger name="com.cnu.lwm2m.server.scheduler" additivity="false">
+        <appender-ref ref="SYSTEMLOG"/>
+    </logger>
 
 	<logger name="com.cnu" level="DEBUG"/>
 	<logger name="org.eclipse.californium" level="INFO"/>
