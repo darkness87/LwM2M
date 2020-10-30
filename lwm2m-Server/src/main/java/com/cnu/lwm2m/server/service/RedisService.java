@@ -25,10 +25,20 @@ public class RedisService {
 
 	public List<String> getKeyList() throws Exception {
 		Set<String> strKey = redisDao.getAllKey();
+
 		List<String> targetList = new ArrayList<String>(strKey);
 		log.info("{}", targetList);
 
-		return targetList;
+		List<String> tList = new ArrayList<String>();
+		String targetKey = null;
+		String keyType = null;
+		for (int i = 0; i < targetList.size(); i++) {
+			targetKey = targetList.get(i);
+			keyType = redisDao.getKeyType(targetKey);
+			tList.add(targetKey + "|" + keyType);
+		}
+
+		return tList;
 	}
 
 	public String getRedisKeyData(String key) throws Exception {
@@ -47,5 +57,10 @@ public class RedisService {
 
 		int result = redisDao.setRedisStringData(key, setString);
 		log.info("result : {}", result);
+	}
+
+	public String getHgetAllData(String key) throws Exception {
+		String result = redisDao.hgetAllData(key);
+		return result;
 	}
 }

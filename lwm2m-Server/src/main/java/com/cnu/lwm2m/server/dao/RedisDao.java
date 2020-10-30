@@ -79,4 +79,44 @@ public class RedisDao {
 		return redisInfo;
 	}
 
+	public String hgetData(String key, String field) throws Exception {
+		String hget = redisObjectData.hgetRedisHashesData(key, field);
+		return hget;
+	}
+
+	public <T> T hgetData(String key, String field, Class<T> T) throws Exception {
+		T object = redisObjectData.hgetRedisHashesData(key, field, T);
+		return object;
+	}
+
+	public String hgetAllData(String key) throws Exception {
+		String hget = redisObjectData.hgetRedisHashesAllData(key);
+		return hget;
+	}
+
+	public int hsetData(String key, String field, String data) throws Exception {
+		int result = redisObjectData.hsetRedisHashesData(key, field, data);
+		return result;
+	}
+
+	public <T> int hsetData(String key, String field, Class<T> T) throws Exception {
+		int result = redisObjectData.hsetRedisHashesData(key, field, T);
+		return result;
+	}
+
+	public Set<String> getHkeyField(String key) throws Exception {
+		Set<String> fields = redisInfoData.getHkeyField(key);
+		return fields;
+	}
+
+	public int hdelKeyField(String key, String field) throws Exception {
+		int result = redisInfoData.hdelKeyField(key, field);
+		return result;
+	}
+	
+	public String getKeyType(String key) throws Exception {
+		String keyType = redisInfoData.getKeyType(key);
+		return keyType;
+	}
+
 }

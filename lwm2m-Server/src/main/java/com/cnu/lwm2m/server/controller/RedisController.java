@@ -25,9 +25,24 @@ public class RedisController {
 	}
 
 	@RequestMapping("/getRedisKeyData.do")
-	public @ResponseBody String getRedisKeyData(String key) throws Exception {
+	public @ResponseBody String getRedisKeyData(String key, String keyType) throws Exception {
 		log.info("=== getRedisKeyData ===");
-		return redisService.getRedisKeyData(key);
+		log.info(keyType);
+		if (keyType.equals("hash")) { // TODO 타입별 나누기
+			String data = redisService.getHgetAllData(key); // HASH 타입
+			log.info(data);
+			return data.toString();
+		} else {
+			String data = redisService.getRedisKeyData(key); // String 타입
+			log.info(data);
+			return data;
+		}
+	}
+
+	@RequestMapping("/getHgetAllData.do")
+	public @ResponseBody String getHgetAllData(String key) throws Exception {
+		log.info("=== getHgetAllData ===");
+		return redisService.getHgetAllData(key);
 	}
 
 }
