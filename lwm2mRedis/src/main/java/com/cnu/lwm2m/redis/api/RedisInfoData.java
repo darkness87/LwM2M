@@ -278,4 +278,22 @@ public class RedisInfoData {
 		return setString;
 	}
 
+	/**
+	 * key 타입 가져오기
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public String getKeyType(String key) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if (jedis == null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return null;
+		}
+		String keyType = jedis.type(key);
+		redisConnect.close();
+		return keyType;
+	}
+
 }

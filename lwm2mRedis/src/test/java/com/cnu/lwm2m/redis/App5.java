@@ -34,16 +34,16 @@ public class App5 {
 		meterVo.setMeterType("AE-type");
 		meterVo.setInfo("data");
 		meterVo.setrDt("2020-10-28");
-		
+
 		LpDataVo lpDataVo = new LpDataVo();
 		lpDataVo.setmId("id123");
-		
+
 		String setString = mapper.writeValueAsString(meterVo);
 		String setLPString = mapper.writeValueAsString(lpDataVo);
-		
+
 		/* Hashes 형태 입출력 */
 		System.out.println("<< redis Hashes start >>");
-		
+
 		jedis.hset("meter:001", "lpdata", setLPString);
 		jedis.hset("meter:001", "reginfo", setString);
 		jedis.hset("meter:001", "monthdata", "data");
@@ -56,13 +56,13 @@ public class App5 {
 
 		System.out.println("fields : " + fields);
 		System.out.println(fields.get("monthdata"));
-		
+
 		String jsondata = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(fields).replaceAll("\\\\\"", "\"");
-		
-		System.out.println("jsondata : "+jsondata);
-		
+
+		System.out.println("jsondata : " + jsondata);
+
 		System.out.println(jedis.hdel("meter:001", "lpdata"));
-		
+
 		System.out.println("<< redis Hashes end >>");
 
 		redisConnect.close();

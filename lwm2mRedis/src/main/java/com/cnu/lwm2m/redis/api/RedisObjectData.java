@@ -200,7 +200,7 @@ public class RedisObjectData {
 		redisConnect.close();
 		return object;
 	}
-	
+
 	/**
 	 * Hashes 형태 hget (Object)
 	 * 
@@ -218,7 +218,7 @@ public class RedisObjectData {
 			redisConnect.close();
 			return null;
 		}
-		T object = (T) mapper.readValue(jedis.hget(key,field), T);
+		T object = (T) mapper.readValue(jedis.hget(key, field), T);
 		if (object == null) {
 			log.info("=== Redis Data Null");
 			redisConnect.close();
@@ -227,7 +227,7 @@ public class RedisObjectData {
 		redisConnect.close();
 		return object;
 	}
-	
+
 	/**
 	 * Hashes 형태 hget (String)
 	 * 
@@ -243,7 +243,7 @@ public class RedisObjectData {
 			redisConnect.close();
 			return null;
 		}
-		String data = jedis.hget(key,field);
+		String data = jedis.hget(key, field);
 		if (data == null) {
 			log.info("=== Redis Data Null");
 			redisConnect.close();
@@ -252,7 +252,7 @@ public class RedisObjectData {
 		redisConnect.close();
 		return data;
 	}
-	
+
 	/**
 	 * Hashes 형태 hgetAll (전체값 String)
 	 * 
@@ -268,17 +268,17 @@ public class RedisObjectData {
 			return null;
 		}
 		Map<String, String> fields = jedis.hgetAll(key);
-		
+
 		if (fields == null) {
 			log.info("=== Redis Data Null");
 			redisConnect.close();
 			return null;
 		}
-		String jsondata = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(fields).replaceAll("\\\\\"", "\"");
+		String jsondata = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(fields); //.replaceAll("\\\\\"", "\"");
 		redisConnect.close();
 		return jsondata;
 	}
-	
+
 	/**
 	 * Hashes 형태 hset (Object)
 	 * 
@@ -301,7 +301,7 @@ public class RedisObjectData {
 		redisConnect.close();
 		return 0;
 	}
-	
+
 	/**
 	 * Hashes 형태 hset (String)
 	 * 
