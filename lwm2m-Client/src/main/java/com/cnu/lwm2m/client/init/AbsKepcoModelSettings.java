@@ -3,6 +3,7 @@ package com.cnu.lwm2m.client.init;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import com.cnu.lwm2m.client.models.impl.kepco.AMICommonControlInfo;
@@ -13,10 +14,29 @@ import com.cnu.lwm2m.client.models.impl.kepco.AMISoftwareInfo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter @Setter
 public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkInfo
 									, AMISecurityInfo, AMIServerInfo, AMISoftwareInfo {
+
+	public int getJVMUsedMemory() {
+		DecimalFormat f1 = new DecimalFormat("#,###KB");
+		DecimalFormat f2 = new DecimalFormat("##.#");
+		long free = Runtime.getRuntime().freeMemory() / 1024;
+		long total = Runtime.getRuntime().totalMemory() / 1024;
+		long max = Runtime.getRuntime().maxMemory() / 1024;
+		long used = total - free;
+		double ratio = (used * 100 / (double)total);
+		log.debug("Java Memory 총합 = {}", f1.format(total));
+		log.debug("Java Memory 사용 = {}", f1.format(used));
+		log.debug("Java Memory 사용률 = {}%", f2.format(ratio));
+		log.debug("Java Memory 사용가능 = {}", f1.format(max));
+		getHeapMemory();
+
+		return (int)ratio;
+	}
 
 	public void getHeapMemory() {
 		MemoryMXBean membean = ManagementFactory.getMemoryMXBean();
@@ -86,8 +106,7 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	/**<pre> ID: 13 Observation 및 Notify 설정 기간마다 RAM 사용률의 값을 관찰 기록하고 전송한다.
 	 * 실시간 측정 명령 수신 시 1초 단위로 기록 전송한다. </pre>*/
 	@Override public int getRamUsageRate() {
-		getHeapMemory();
-		return 0;
+		return getJVMUsedMemory();
 	}
 
 	/**<pre> ID: 14 RAM 사용률에 대한 최소값, 최대값, 평균값을 관찰 기록한다.
@@ -409,10 +428,10 @@ public class AbsKepcoModelSettings implements AMICommonControlInfo, AMINetworkIn
 	private String fwCurrentVersion = "1.0.1";
 
 	/**<pre> ID: 20 모뎀 공통제어부에 탑재되어 운영되는 OS 명 </pre>*/
-	private String commonControlOSName = "FEDORA LINUX";
+	private String commonControlOSName = System.getProperty("os.name");
 
 	/**<pre> ID: 21 모뎀에서 현재 운영 중인 O/S의 KERNEL 버전 / 예) 4.19.1 </pre>*/
-	private String commonControlOSVersion = "10.2.1";
+	private String commonControlOSVersion = System.getProperty("os.arch") + ", " + System.getProperty("os.version");
 
 	/**<pre> ID: 25 현재 운영 중인 M/W(예:JVM): 공급사, 구분(명칭)
 	 * 예) 오라클 제공 JVM: “Oracle, SE” / Open Source일 경우: “open, SE”  </pre>*/

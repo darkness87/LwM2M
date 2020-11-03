@@ -79,7 +79,6 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/cnuJni.jar</systemPath>
 		</dependency>
-		
 	</dependencies>
 
 	<build>
@@ -91,6 +90,24 @@
 				<configuration>
 					<includeSystemScope>true</includeSystemScope>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<copy file="startup.sh" tofile="target/startup.sh" />
+								<copy file="shutdown.sh" tofile="target/shutdown.sh" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
