@@ -110,7 +110,7 @@
 			</Item>
 			<Item ID="13">
 				<Name>RAM 사용률 Read</Name>
-				<Operations>R</Operations>
+				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
 				<Type>Integer</Type>
