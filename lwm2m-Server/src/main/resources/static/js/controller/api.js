@@ -259,8 +259,8 @@ function viewWrite(endpoint, uri, dataid, type) {
 	
 	// TODO
 	if(type=="OPAQUE"&&uri=="/5/0/0"){
-		writeView.html("<div>Value (" + type + ") : <input id='valuedata' type='file' onchange='this.select(); document.getElementById('file_path').value=document.selection.createRange().text.toString();' file-model='resource.fileValue' ng-disabled='resource.stringValue'></div>"+"<br>"
-				+"" +"<input type='text' id='file_path' name='file_path'>");
+		writeView.html("<div>Value (" + type + ") : <input id='valuedata' type='file' file-model='resource.fileValue' ng-disabled='resource.stringValue'></div>"+"<br>"
+				+"" +"<input type='text' id='file_path'>");
 		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWriteFile(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
 				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
 	}else{
@@ -268,6 +268,12 @@ function viewWrite(endpoint, uri, dataid, type) {
 		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
 				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
 	}
+}
+
+// TODO
+function fileinfo(){
+	var input = document.getElementById('file_path').value;
+	var data = document.selection.createRange().text.toString()
 }
 
 function sendCoapWrite(endpoint, uri, dataid, type, data) {

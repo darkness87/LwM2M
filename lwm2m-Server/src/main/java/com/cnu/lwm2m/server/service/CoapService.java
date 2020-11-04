@@ -284,7 +284,7 @@ public class CoapService {
 			break;
 		case "OPAQUE":
 			byte[] bdata = data.getBytes(); // byte값 전달
-			log.info("{}",bdata);
+			log.info("Opaque Byte : {}",bdata);
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
 					lwM2mPath.getResourceId(), bdata);
 			break;

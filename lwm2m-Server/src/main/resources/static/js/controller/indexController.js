@@ -35,5 +35,7 @@ $(document).ready(function () {
   setInterval(function () {
     getAllRegistrationsList();
   }, 2000);
+  
+  $("#valuedata").change(function() { $("#file_path").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
 
 });

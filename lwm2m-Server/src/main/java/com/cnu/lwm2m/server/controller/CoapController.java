@@ -1,7 +1,6 @@
 package com.cnu.lwm2m.server.controller;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -98,7 +97,7 @@ public class CoapController {
 			@RequestParam String type, @RequestParam String data, @RequestParam String contentType,
 			@RequestParam int timeout) {
 		log.info("=== sendCoapWrite File ===");
-		log.info("{}",data);
+		log.info("File Url : {}",data);
 		
 		String fileString = new String();
 		FileInputStream inputStream = null;
@@ -128,7 +127,7 @@ public class CoapController {
 			}
 		}
 
-		log.info("{}",fileString);
+		log.info("Opaque FileString : {}",fileString);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, fileString, contentType, timeout);
 		log.info("{}",code);
 

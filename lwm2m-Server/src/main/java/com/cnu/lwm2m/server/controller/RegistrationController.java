@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.cnu.lwm2m.server.service.RegistrationLwService;
+import com.cnu.lwm2m.server.vo.RegistrationDataVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +22,7 @@ public class RegistrationController {
 	RegistrationLwService registrationLwService;
 
 	@RequestMapping("/getAllRegistrations.do")
-	public @ResponseBody List<Registration> getAllRegistrations() {
+	public @ResponseBody List<RegistrationDataVO> getAllRegistrations() {
 		return registrationLwService.getRegistrationsList();
 	}
 
