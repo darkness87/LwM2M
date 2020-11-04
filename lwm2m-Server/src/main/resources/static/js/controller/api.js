@@ -163,15 +163,18 @@ function getObjectModel(endpoint) {
 				tmp.push("				<td>" + res.name + "</td>");
 
 				if (res.operations == "R") {
-					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>" + "</td>");
+					tmp.push("				<td>" + "<button class='btn btn-secondary btn-sm' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe</button>"
+						+ "&nbsp&nbsp<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>" + "</td>");
 				} else if (res.operations == "RW") {
-					tmp.push("				<td>" + "<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>"
+					tmp.push("				<td>" + "<button class='btn btn-secondary btn-sm' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe</button>"
+						+ "&nbsp&nbsp<button class='btn btn-primary btn-sm' type='button' onclick='javascript:sendCoapRead(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Read</button>"
 						+ "&nbsp&nbsp<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				} else if (res.operations == "W") {
 					tmp.push("				<td>" + "<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				} else if (res.operations == "E") {
 					tmp.push("				<td>" + "<button class='btn btn-success btn-sm' type='button' onclick='javascript:sendCoapExec(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Exec</button>"
-						+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' style='cursor: pointer;' data-toggle='modal' data-target='#'>※</button>" + "</td>");
+						/*+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' style='cursor: pointer;' data-toggle='modal' data-target='#'>※</button>"*/
+						+ "</td>");
 				} else {
 					tmp.push("				<td>" + res.operations + "</td>");
 				}
@@ -426,6 +429,63 @@ function getRedisKeyData(key,keyType) {
 	});
 }
 
+// TODO
 function sseTest() {
 	console.log("SSE TEST");
+}
+
+function getUsage() {
+	var param = {};
+	LWM2M_PROXY.invokeOpenAPI("getUsage", "json", param, function (result, _head, _params) {
+		myLineChart.data.labels.unshift(result.date);
+		myLineChart.data.datasets[0].data.unshift(result.osCpu);
+		myLineChart.data.datasets[1].data.unshift(result.osMemory);
+
+		if (myLineChart.data.labels.length > 10 && myLineChart.data.datasets[0].data.length > 10) {
+			myLineChart.data.labels.splice(10, myLineChart.data.labels.length - 10);
+			myLineChart.data.datasets[0].data.splice(10, myLineChart.data.datasets[0].data.length - 10);
+			myLineChart.data.datasets[0].data.splice(10, myLineChart.data.datasets[1].data.length - 10);
+		}
+
+		myLineChart.update();
+
+		var view = $("#page-top");
+		var listView = view.find("#usageInfo");
+		listView.empty();
+		var tmp = [];
+
+        tmp.push("<h4 class='small font-weight-bold'>OS CPU 사용률 <span class='float-right'>"+result.osCpu+"%</span></h4>");
+        tmp.push("<div class='progress mb-4'>");
+        tmp.push("  <div class='progress-bar bg-danger' role='progressbar' style='width: "+result.osCpu+"%' aria-valuenow='"+result.osCpu+"' aria-valuemin='0' aria-valuemax='100'></div>");
+        tmp.push("</div>");
+        tmp.push("<h4 class='small font-weight-bold'>OS 메모리 사용률 <span class='float-right'>"+result.osMemory+"%</span></h4>");
+        tmp.push("<div class='progress mb-4'>");
+        tmp.push("  <div class='progress-bar bg-primary' role='progressbar' style='width: "+result.osMemory+"%' aria-valuenow='"+result.osMemory+"' aria-valuemin='0' aria-valuemax='100'></div>");
+        tmp.push("</div>");
+        tmp.push("<br>");
+        tmp.push("<div class='row no-gutters align-items-center'>");
+        tmp.push("  <div class='col mr-2'>");
+        tmp.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>jvmUsed</div>");
+        tmp.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result.jvmUsed+"</div>");
+        tmp.push("  </div>");
+        tmp.push("  <div class='col mr-2'>");
+        tmp.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>jvmFree</div>");
+        tmp.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result.jvmFree+"</div>");
+        tmp.push("  </div>");
+        tmp.push("  <div class='col mr-2'>");
+        tmp.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>jvmTotal</div>");
+        tmp.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result.jvmTotal+"</div>");
+        tmp.push("  </div>");
+        tmp.push("  <div class='col mr-2'>");
+        tmp.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>jvmMax</div>");
+        tmp.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result.jvmMax+"</div>");
+        tmp.push("  </div>");
+        tmp.push("  <div class='col-auto'>");
+        tmp.push("    <i class='fas fa-clipboard-list fa-2x text-gray-300'></i>");
+        tmp.push("  </div>");
+        tmp.push("</div>");
+
+        listView.append(tmp.join("\n"));
+        
+	});
 }

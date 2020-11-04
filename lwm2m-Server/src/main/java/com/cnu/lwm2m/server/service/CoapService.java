@@ -69,41 +69,55 @@ public class CoapService {
 			ObserveResponse cResponse = server.send(registration, request, timeout); // TODO timeout 설정 필요
 			log.info("=== response : {}", cResponse);
 
-			LwM2mObjectInstance content = (LwM2mObjectInstance) cResponse.getContent();
-			log.debug("=== content : {}", content);
-
-			Map<Integer, LwM2mResource> map = content.getResources();
-			log.debug("=== map : {}", map);
-
 			List<ObserveDataVO> list = new ArrayList<ObserveDataVO>();
 			ObserveDataVO observeDataVO = new ObserveDataVO();
 			LwM2mPath lwM2mPath = new LwM2mPath(uri);
 
-			Iterator<Map.Entry<Integer, LwM2mResource>> entries = map.entrySet().iterator();
-			while (entries.hasNext()) {
-				observeDataVO = new ObserveDataVO();
-				Entry<Integer, LwM2mResource> entry = (Entry<Integer, LwM2mResource>) entries.next();
-				observeDataVO.setId(entry.getKey());
+			if (cResponse.getContent().getClass() == LwM2mSingleResource.class) {
+				LwM2mSingleResource content = (LwM2mSingleResource) cResponse.getContent();
+				log.debug("=== content : {}", content);
+
+				observeDataVO.setId(content.getId());
 				observeDataVO.setTid("tid" + lwM2mPath.getObjectId() + "" + lwM2mPath.getObjectInstanceId() + ""
-						+ entry.getKey() + "");
-				if (entry.getValue().isMultiInstances() == true) {
-					LwM2mMultipleResource val = (LwM2mMultipleResource) entry.getValue();
-					log.debug("=== val : {}", val);
-					observeDataVO.setValue(String.valueOf(val.getValues()));
-				} else {
-
-					if (String.valueOf(entry.getValue().getType()).equals("OPAQUE")) {
-						LwM2mSingleResource val = (LwM2mSingleResource) entry.getValue();
-						byte[] data = (byte[]) val.getValue();
-						log.info("OPAQUE Data : {} , {}", data, new String(data));
-						observeDataVO.setValue(new String(data));
-					} else {
-						observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
-					}
-
-				}
+						+ lwM2mPath.getResourceId() + "");
+				observeDataVO.setValue(String.valueOf(content.getValue()));
 
 				list.add(observeDataVO);
+
+			} else if (cResponse.getContent().getClass() == LwM2mObjectInstance.class) {
+				LwM2mObjectInstance content = (LwM2mObjectInstance) cResponse.getContent();
+				log.debug("=== content : {}", content);
+
+				Map<Integer, LwM2mResource> map = content.getResources();
+				log.debug("=== map : {}", map);
+
+				Iterator<Map.Entry<Integer, LwM2mResource>> entries = map.entrySet().iterator();
+				while (entries.hasNext()) {
+					observeDataVO = new ObserveDataVO();
+					Entry<Integer, LwM2mResource> entry = (Entry<Integer, LwM2mResource>) entries.next();
+					observeDataVO.setId(entry.getKey());
+					observeDataVO.setTid("tid" + lwM2mPath.getObjectId() + "" + lwM2mPath.getObjectInstanceId() + ""
+							+ entry.getKey() + "");
+					if (entry.getValue().isMultiInstances() == true) {
+						LwM2mMultipleResource val = (LwM2mMultipleResource) entry.getValue();
+						log.debug("=== val : {}", val);
+						observeDataVO.setValue(String.valueOf(val.getValues()));
+					} else {
+
+						if (String.valueOf(entry.getValue().getType()).equals("OPAQUE")) {
+							LwM2mSingleResource val = (LwM2mSingleResource) entry.getValue();
+							byte[] data = (byte[]) val.getValue();
+							log.info("OPAQUE Data : {} , {}", data, new String(data));
+							observeDataVO.setValue(new String(data));
+						} else {
+							observeDataVO.setValue(String.valueOf(entry.getValue().getValue()));
+						}
+
+					}
+
+					list.add(observeDataVO);
+				}
+
 			}
 
 			return list;
@@ -284,7 +298,7 @@ public class CoapService {
 			break;
 		case "OPAQUE":
 			byte[] bdata = data.getBytes(); // byte값 전달
-			log.info("Opaque Byte : {}",bdata);
+			log.info("Opaque Byte : {}", bdata);
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
 					lwM2mPath.getResourceId(), bdata);
 			break;

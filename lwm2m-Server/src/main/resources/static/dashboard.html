@@ -106,13 +106,37 @@
 
         <div class="container-fluid">
 
-          <!-- 404 Error Text -->
-          <div class="text-center">
-            <div class="error mx-auto" data-text="404">404</div>
-            <p class="lead text-gray-800 mb-5">Page Not Found</p>
-            <p class="text-gray-500 mb-0">화면 준비중...</p>
-            <a href="index.html">&larr; Back to Dashboard</a>
-          </div>
+<!-- Content Row -->
+          <div class="row">
+
+            <div class="col-xl-8 col-lg-7">
+
+              <!-- Area Chart -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">자원 Chart</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-xl-4 col-lg-5">
+              <!-- Project Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">System 자원정보</h6>
+                </div>
+                <div class="card-body" id="usageInfo">
+
+                </div>
+              </div>
+			</div>
+		</div>
 
         </div>
 
@@ -158,10 +182,13 @@
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <script src="js/controller/chart-area.js"></script>
+
   <script src="js/controller/lwm2mConst.js"></script>
   <script src="js/controller/lwm2mProxy.js"></script>
   <script src="js/controller/api.js"></script>
-  <!-- <script src="js/controller/indexController.js"></script> -->
+  <script src="js/controller/mainController.js"></script>
 
 </body>
 

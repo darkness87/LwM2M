@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings("restriction")
 @Slf4j
 @Component
 public class batch {
 
-	@SuppressWarnings("restriction")
 	@Scheduled(fixedDelay = 1000 * 60)
 	public void task() {
 		log.info("===================================================================================");
