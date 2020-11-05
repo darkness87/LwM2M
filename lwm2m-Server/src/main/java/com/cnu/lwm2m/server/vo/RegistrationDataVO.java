@@ -1,8 +1,6 @@
 package com.cnu.lwm2m.server.vo;
 
 import java.net.InetAddress;
-import java.util.Date;
-
 import org.eclipse.leshan.core.request.BindingMode;
 
 import lombok.Getter;

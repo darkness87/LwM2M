@@ -142,13 +142,13 @@ function getObjectModel(endpoint) {
 			tmp.push("    <table id='dataTable" + item.id + "' width='100%' cellspacing='0'>");
 			tmp.push("      <thead>");
 			tmp.push("        <tr style='color: #000;'>");
-			tmp.push("          <th>id</th>");
-			tmp.push("          <th>resource name</th>");
-			tmp.push("          <th>operations</th>");
-			tmp.push("          <th>rangeEnumeration</th>");
-			tmp.push("          <th>type</th>");
-			tmp.push("          <th>units</th>");
-			tmp.push("          <th width='20%'>data</th>");
+			tmp.push("          <th>ID</th>");
+			tmp.push("          <th>Resource Name</th>");
+			tmp.push("          <th>Operations</th>");
+			tmp.push("          <th>RangeEnumeration</th>");
+			tmp.push("          <th>Type</th>");
+			tmp.push("          <th>Units</th>");
+			tmp.push("          <th width='20%'>Data</th>");
 			tmp.push("        </tr>");
 			tmp.push("      </thead>");
 
@@ -160,7 +160,7 @@ function getObjectModel(endpoint) {
 				tmp.push("      <tbody>");
 				tmp.push("			<tr height='40'>");
 				tmp.push("				<td>" + uri + "</td>");
-				tmp.push("				<td>" + res.name + "</td>");
+				tmp.push("				<td title='" + res.description + "'>" + res.name + "</td>");
 
 				if (res.operations == "R") {
 					tmp.push("				<td>" + "<button class='btn btn-secondary btn-sm' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe</button>"
@@ -462,7 +462,6 @@ function getUsage() {
         tmp.push("<div class='progress mb-4'>");
         tmp.push("  <div class='progress-bar bg-primary' role='progressbar' style='width: "+result.osMemory+"%' aria-valuenow='"+result.osMemory+"' aria-valuemin='0' aria-valuemax='100'></div>");
         tmp.push("</div>");
-        tmp.push("<br>");
         tmp.push("<div class='row no-gutters align-items-center'>");
         tmp.push("  <div class='col mr-2'>");
         tmp.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>jvmUsed</div>");
@@ -487,5 +486,25 @@ function getUsage() {
 
         listView.append(tmp.join("\n"));
         
+		var dataView = view.find("#regInfo");
+		dataView.empty();
+		var tmpl = [];
+
+		tmpl.push("<div class='row no-gutters align-items-center'>");
+		tmpl.push("  <div class='col mr-2'>");
+		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>등록 장비수</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result.registrationCount+"개</div>");
+		tmpl.push("  </div>");
+		tmpl.push("  <div class='col mr-2'>");
+		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>Observe 동작수</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result.observeCount+"개</div>");
+		tmpl.push("  </div>");
+		tmpl.push("  <div class='col-auto'>");
+		tmpl.push("    <i class='fas fa-clipboard-list fa-2x text-gray-300'></i>");
+		tmpl.push("  </div>");
+		tmpl.push("</div>");
+
+		dataView.append(tmpl.join("\n"));
+
 	});
 }

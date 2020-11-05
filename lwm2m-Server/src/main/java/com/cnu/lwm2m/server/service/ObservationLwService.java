@@ -49,4 +49,16 @@ public class ObservationLwService {
 		return result;
 	}
 
+	public int getObservationListCount() {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		List<Observation> list = new ArrayList<Observation>();
+
+		for (Registration registration : allRegistrations) {
+			Set<Observation> observations = observeService.getObservations(registration);
+			list.addAll(Lists.newArrayList(observations.iterator()));
+		}
+
+		return list.size();
+	}
+
 }

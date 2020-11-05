@@ -54,6 +54,10 @@ public class RegistrationLwService {
 		return Lists.newArrayList(regService.getAllRegistrations());
 	}
 
+	public int getAllRegistrationsListCount() {
+		return Lists.newArrayList(regService.getAllRegistrations()).size();
+	}
+
 	public Registration getById(String id) {
 		return regService.getById(id);
 	}

@@ -14,5 +14,7 @@ public class MainUsageVO {
 	private String jvmFree;
 	private String jvmTotal;
 	private String jvmMax;
+	private int observeCount;
+	private int registrationCount;
 
 }
