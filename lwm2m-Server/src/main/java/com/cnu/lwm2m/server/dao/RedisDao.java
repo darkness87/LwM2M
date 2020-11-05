@@ -113,7 +113,7 @@ public class RedisDao {
 		int result = redisInfoData.hdelKeyField(key, field);
 		return result;
 	}
-	
+
 	public String getKeyType(String key) throws Exception {
 		String keyType = redisInfoData.getKeyType(key);
 		return keyType;

@@ -66,7 +66,7 @@ public class CoapService {
 		log.info("=== request : {}", request);
 
 		try {
-			ObserveResponse cResponse = server.send(registration, request, timeout); // TODO timeout 설정 필요
+			ObserveResponse cResponse = server.send(registration, request, timeout);
 			log.info("=== response : {}", cResponse);
 
 			List<ObserveDataVO> list = new ArrayList<ObserveDataVO>();
@@ -80,7 +80,14 @@ public class CoapService {
 				observeDataVO.setId(content.getId());
 				observeDataVO.setTid("tid" + lwM2mPath.getObjectId() + "" + lwM2mPath.getObjectInstanceId() + ""
 						+ lwM2mPath.getResourceId() + "");
-				observeDataVO.setValue(String.valueOf(content.getValue()));
+
+				if (String.valueOf(content.getType()).equals("OPAQUE")) {
+					byte[] data = (byte[]) content.getValue();
+					log.info("OPAQUE Data : {} , {}", data, new String(data));
+					observeDataVO.setValue(new String(data));
+				} else {
+					observeDataVO.setValue(String.valueOf(content.getValue()));
+				}
 
 				list.add(observeDataVO);
 
@@ -226,7 +233,7 @@ public class CoapService {
 		log.info("=== request : {}", request);
 
 		try {
-			ReadResponse cResponse = server.send(registration, request, timeout); // TODO timeout 설정 필요
+			ReadResponse cResponse = server.send(registration, request, timeout);
 			log.info("=== response : {}", cResponse);
 
 			LwM2mResource content = (LwM2mResource) cResponse.getContent();

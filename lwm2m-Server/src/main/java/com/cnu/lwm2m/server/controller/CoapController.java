@@ -24,9 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 public class CoapController {
 	@Autowired
 	CoapService coapService;
-	
-    @Autowired
-    RedisService redisService;
+
+	@Autowired
+	RedisService redisService;
 
 	@RequestMapping("/coapObserve.do")
 	public @ResponseBody String sendCoapObserve(@RequestParam String endpoint, @RequestParam String uri,
@@ -38,11 +38,11 @@ public class CoapController {
 
 		try {
 			setString = mapper.writeValueAsString(result);
-            redisService.setHistory(endpoint, "OBS", setString);
+			redisService.setHistory(endpoint, "OBS", setString);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return setString;
@@ -81,7 +81,7 @@ public class CoapController {
 		log.info(data);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, data, contentType, timeout);
 
-		log.info("{}",code);
+		log.info("{}", code);
 		String result = null;
 		if (code == false) {
 			result = "Write False : Error Check";
@@ -97,15 +97,15 @@ public class CoapController {
 			@RequestParam String type, @RequestParam String data, @RequestParam String contentType,
 			@RequestParam int timeout) {
 		log.info("=== sendCoapWrite File ===");
-		log.info("File Url : {}",data);
-		
+		log.info("File Url : {}", data);
+
 		String fileString = new String();
 		FileInputStream inputStream = null;
 		ByteArrayOutputStream byteOutStream = null;
 
 		try {
 			inputStream = new FileInputStream("C:\\Users\\sookwon\\Desktop\\LwM2M 개발.txt"); // TODO 주소 가져오는거 체크 필요
-			//inputStream = new FileInputStream(data);
+			// inputStream = new FileInputStream(data);
 			byteOutStream = new ByteArrayOutputStream();
 			int len = 0;
 			byte[] buf = new byte[1024];
@@ -127,9 +127,9 @@ public class CoapController {
 			}
 		}
 
-		log.info("Opaque FileString : {}",fileString);
+		log.info("Opaque FileString : {}", fileString);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, fileString, contentType, timeout);
-		log.info("{}",code);
+		log.info("{}", code);
 
 		return code;
 	}

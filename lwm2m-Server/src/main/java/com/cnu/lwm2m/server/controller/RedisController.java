@@ -28,7 +28,7 @@ public class RedisController {
 	public @ResponseBody String getRedisKeyData(String key, String keyType) throws Exception {
 		log.info("=== getRedisKeyData ===");
 		log.info(keyType);
-		if (keyType.equals("hash")) { // TODO 타입별 나누기
+		if (keyType.equals("hash")) { // 타입별 나누기
 			String data = redisService.getHgetAllData(key); // HASH 타입
 			log.info(data);
 			return data.toString();

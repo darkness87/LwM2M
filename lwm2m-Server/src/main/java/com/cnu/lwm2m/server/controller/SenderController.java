@@ -27,9 +27,9 @@ public class SenderController {
 		SseEmitter emitter = new SseEmitter();
 		log.info("{}", emitter);
 		senderService.add(emitter);
-		
-		log.info("{}",emitter.toString());
-		
+
+		log.info("{}", emitter.toString());
+
 		return emitter;
 	}
 
