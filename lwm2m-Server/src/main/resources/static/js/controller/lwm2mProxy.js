@@ -26,6 +26,7 @@ var LWM2M_PROXY = {
 	getUsage : "getUsage.do",
 	getExternalIP : "getExternalIP.do",
 	getLocationInfo : "getLocationInfo.do",
+	getProperty : "getProperty.do",
 
 	prefixUrl: "",
 

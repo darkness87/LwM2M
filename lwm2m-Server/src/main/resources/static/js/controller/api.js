@@ -508,3 +508,32 @@ function getUsage() {
 
 	});
 }
+
+function getProperty(fileName) {
+	var param = {};
+	param["fileName"] = fileName+".properties";
+	LWM2M_PROXY.invokeOpenAPI("getProperty", "json", param, function (result, _head, _params) {
+		console.log(result);
+		var view = $("#page-top");
+		var listView = view.find("#"+fileName);
+		listView.empty();
+
+		if (result == null) {
+			listView.html("<td colspan='2' style='text-align:center'>등록된 Properties 정보가 없습니다.</td>");
+			return;
+		}
+
+		for (var i = 0; i < result.length; i++) {
+			var item = result[i];
+			var tmp = [];
+
+			tmp.push("<tr>");
+			tmp.push("	<td>" + item.key + "</td>");
+			tmp.push("	<td>" + item.value + "</td>");
+			tmp.push("</tr>");
+
+			listView.append(tmp.join("\n"));
+		}
+		
+	});
+}
