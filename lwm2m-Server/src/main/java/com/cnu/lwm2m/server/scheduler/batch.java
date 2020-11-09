@@ -34,6 +34,8 @@ public class batch {
 		log.info("OS CPU Usage : {}%", String.format("%.3f", osBean.getSystemCpuLoad() * 100));
 		log.info("OS Memory Free Space : {}GB",
 				String.format("%.3f", (double) osBean.getFreePhysicalMemorySize() / gb));
+		log.info("OS Memory Used Space : {}GB",
+				String.format("%.3f", (double) (osBean.getTotalPhysicalMemorySize()-osBean.getFreePhysicalMemorySize()) / gb));
 		log.info("OS Memory Total Space : {}GB",
 				String.format("%.3f", (double) osBean.getTotalPhysicalMemorySize() / gb));
 

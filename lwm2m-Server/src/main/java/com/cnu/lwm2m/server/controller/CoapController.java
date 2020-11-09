@@ -80,9 +80,8 @@ public class CoapController {
 		log.info("=== sendCoapWrite ===");
 		log.info(data);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, data, contentType, timeout);
-
-		log.info("{}", code);
 		String result = null;
+		
 		if (code == false) {
 			result = "Write False : Error Check";
 		} else if (code == true) {
@@ -129,7 +128,6 @@ public class CoapController {
 
 		log.info("Opaque FileString : {}", fileString);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, fileString, contentType, timeout);
-		log.info("{}", code);
 
 		return code;
 	}

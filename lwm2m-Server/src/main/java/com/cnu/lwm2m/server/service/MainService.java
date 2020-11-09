@@ -43,7 +43,7 @@ public class MainService {
 		mainUsageVO.setDate(dateFormat.format(date));
 		mainUsageVO.setOsCpu(String.format("%.3f", osBean.getSystemCpuLoad() * 100));
 		mainUsageVO.setOsMemory(String.format("%.3f",
-				(osBean.getFreePhysicalMemorySize() / gb) / (osBean.getTotalPhysicalMemorySize() / gb) * 100));
+				((osBean.getTotalPhysicalMemorySize()-osBean.getFreePhysicalMemorySize()) / gb) / (osBean.getTotalPhysicalMemorySize() / gb) * 100));
 		mainUsageVO.setJvmUsed(String.format("%.3f", (double) heapUseSize / gb));
 		mainUsageVO.setJvmFree(String.format("%.3f", (double) heapFreeSize / gb));
 		mainUsageVO.setJvmTotal(String.format("%.3f", (double) heapSize / gb));
