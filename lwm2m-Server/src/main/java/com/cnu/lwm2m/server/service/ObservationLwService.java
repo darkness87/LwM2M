@@ -48,6 +48,38 @@ public class ObservationLwService {
 
 		return result;
 	}
+	
+	public int cancelResourceObservation(String endpoint, String uri) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		int result = 0;
+
+		for (Registration registration : allRegistrations) {
+			if (!registration.getEndpoint().equals(endpoint)) {
+				continue;
+			}
+			result = observeService.cancelObservations(registration, uri);
+
+			return result;
+		}
+
+		return result;
+	}
+
+	public int cancelRegistrationIdObservation(String id, String uri) {
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		int result = 0;
+
+		for (Registration registration : allRegistrations) {
+			if (!registration.getId().equals(id)) {
+				continue;
+			}
+			result = observeService.cancelObservations(registration, uri);
+
+			return result;
+		}
+
+		return result;
+	}
 
 	public int getObservationListCount() {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
