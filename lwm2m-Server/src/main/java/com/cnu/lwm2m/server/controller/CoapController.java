@@ -38,7 +38,7 @@ public class CoapController {
 
 		try {
 			setString = mapper.writeValueAsString(result);
-			redisService.setHistory(endpoint, "OBS", setString);
+			// redisService.setHistory(endpoint, "OBS", setString); // Redis 저장정보
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class CoapController {
 		String result = coapService.sendCoapObserveCancel(endpoint, uri);
 
 		if (result == null) {
-			result = "error";
+			result = "null";
 		}
 
 		return result;
@@ -67,7 +67,7 @@ public class CoapController {
 		String result = coapService.sendCoapTLVRead(endpoint, uri, type, contentType, timeout);
 
 		if (result == null) {
-			result = "error";
+			result = "null";
 		}
 
 		return result;
@@ -81,7 +81,7 @@ public class CoapController {
 		log.info(data);
 		boolean code = coapService.sendCoapTLVWrite(endpoint, uri, type, data, contentType, timeout);
 		String result = null;
-		
+
 		if (code == false) {
 			result = "Write False : Error Check";
 		} else if (code == true) {
@@ -146,7 +146,7 @@ public class CoapController {
 		String result = coapService.sendCoapExec(endpoint, uri);
 
 		if (result == null) {
-			result = "error";
+			result = "null";
 		}
 
 		if (uri.equals("/1/0/4")) {

@@ -15,21 +15,33 @@ function getAllRegistrationsList() {
 			var item = result[i];
 			var tmp = [];
 
-			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; onclick='javascript:getObjectModel(\"" + item.endpoint + "\");' style='cursor: pointer;'>");
-			tmp.push("	<td>" + item.endpoint + "</td>");
-			tmp.push("	<td>" + item.id + "</td>");
-			tmp.push("	<td>" + item.address + "</td>");
-			tmp.push("	<td>" + item.port + "</td>");
-			tmp.push("	<td>" + item.lwM2mVersion + "</td>");
-			tmp.push("	<td>" + item.bindingMode + "</td>");
-			tmp.push("	<td>" + item.lifeTimeInSec + "</td>");
-			tmp.push("	<td>" + item.registrationDate + "</td>");
-			tmp.push("	<td>" + item.lastUpdate + "</td>");
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; style='cursor: pointer;'>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.endpoint + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.id + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.address + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.port + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.lwM2mVersion + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.bindingMode + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.lifeTimeInSec + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.registrationDate + "</td>");
+			tmp.push("	<td onclick='javascript:getObjectModel(\"" + item.endpoint + "\");'>" + item.lastUpdate + "</td>");
+			tmp.push("	<td>" + "<button class='btn btn-secondary btn-sm' type='button' onclick='javascript:unRegistration(\"" + item.endpoint + "\",\"" + item.id + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>X</button>" + "</td>");
 			tmp.push("</tr>");
 
 			listView.append(tmp.join("\n"));
 		}
 
+	});
+}
+
+function unRegistration(endpoint,id) {
+	console.log(endpoint,"/",id)
+	var param = {};
+	param["endpoint"] = endpoint;
+	param["id"] = id;
+	// TODO 삭제가 되어야 한다.
+	LWM2M_PROXY.invokeOpenAPI("unRegistration", "json", param, function (result, _head, _params) {
+		console.log(result);
 	});
 }
 
@@ -61,7 +73,7 @@ function getObservationList() {
 		obCountView.empty();
 
 		if (result == null || result == "") {
-			listView.html("<td colspan='5' style='text-align:center'>Observe가 없습니다.</td>");
+			listView.html("<td colspan='6' style='text-align:center'>Observe가 없습니다.</td>");
 			obCountView.html("Observe가 없습니다.");
 			return;
 		}
@@ -82,6 +94,7 @@ function getObservationList() {
 			tmp.push("	<td>" + uri + "</td>");
 			tmp.push("	<td>" + item.contentFormat.mediaType + "</td>");
 			tmp.push("	<td>" + "Observe 동작" + "</td>");
+			tmp.push("	<td>" + "<button class='btn btn-secondary btn-sm' type='button' onclick='javascript:cancelRegistrationIdObservation(\"" + item.registrationId + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>" + "</td>");
 			tmp.push("</tr>");
 
 			listView.append(tmp.join("\n"));
@@ -104,6 +117,26 @@ function cancelObservations() {
 			return;
 		}
 		obCountView.html(result + "개 취소되었습니다.");
+	});
+}
+
+function cancelResourceObservation(endpoint,uri) {
+	var param = {};
+	param["endpoint"] = endpoint;
+	param["uri"] = uri;
+
+	LWM2M_PROXY.invokeOpenAPI("cancelResourceObservation", "json", param, function (result, _head, _params) {
+		console.log(result);
+	});
+}
+
+function cancelRegistrationIdObservation(id,uri) {
+	var param = {};
+	param["id"] = id;
+	param["uri"] = uri;
+
+	LWM2M_PROXY.invokeOpenAPI("cancelRegistrationIdObservation", "json", param, function (result, _head, _params) {
+		console.log(result);
 	});
 }
 
@@ -134,8 +167,8 @@ function getObjectModel(endpoint) {
 			tmp.push("<div class='card shadow mb-4'>");
 			tmp.push("	<div class='card-header py-3'>");
 			tmp.push("		<h6 class='m-0 font-weight-bold text-primary'>" + item.id + " : " + item.name + "&nbsp&nbsp&nbsp<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe (" + observeUri + ") ▶</button>"
-				+ "&nbsp&nbsp&nbsp<button class='btn btn-secondary' type='button' onclick='javascript:sendCoapObserveCancel(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>"
-				+ "<button style='float:right; outline: 0; border:0; background-color:#fff' href='#card" + item.id + "' data-toggle='collapse' role='button' aria-expanded='true' aria-controls='card" + item.id + "'>▼</button></h6>");
+				+ "&nbsp&nbsp&nbsp<button class='btn btn-secondary' type='button' onclick='javascript:cancelResourceObservation(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>"
+				+ "<button style='float:right; outline: 0; border:0; background-color:#F8F9FC' href='#card" + item.id + "' data-toggle='collapse' role='button' aria-expanded='true' aria-controls='card" + item.id + "'>▼</button></h6>");
 			tmp.push("	</div>");
 			tmp.push("<div class='card-body' id='card" + item.id + "'>");
 			tmp.push("  <div class='table-responsive'>");
@@ -266,6 +299,14 @@ function viewWrite(endpoint, uri, dataid, type) {
 				+"" +"<input type='text' id='file_path'>");
 		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWriteFile(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
 				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
+	}else if(type=="BOOLEAN"){
+		writeView.html("<div>Value (" + type + ") : <select id='valuedata'><option value='TRUE'>TRUE</option><option value='FALSE'>FALSE</option></select></div>");
+		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
+				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
+	}else if(type=="TIME"){
+		writeView.html("<div>Value (" + type + ") : <input type='date' id='dateinfo'><input type='time' id='timeinfo'></div>");
+		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
+				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
 	}else{
 		writeView.html("<div>Value (" + type + ") : <input type='text' id='valuedata'/></div>");
 		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
@@ -286,7 +327,16 @@ function sendCoapWrite(endpoint, uri, dataid, type, data) {
 	param["type"] = type;
 
 	var view = $("#page-top");
-	data = view.find("#valuedata").val();
+
+	if(type=="TIME"){
+		var date = view.find("#dateinfo").val();
+		var time = view.find("#timeinfo").val();
+		alert(date+" "+time+":00")
+		data = date+" "+time+":00";
+	}else{
+		data = view.find("#valuedata").val();
+	}
+	
 	param["data"] = data;
 	param["contentType"] = view.find("#typeData").val();
 	param["timeout"] = view.find("#timeOut").val();
@@ -317,6 +367,8 @@ function sendCoapWriteFile(endpoint, uri, dataid, type, data) {
 	param["data"] = data;
 	param["contentType"] = view.find("#typeData").val();
 	param["timeout"] = view.find("#timeOut").val();
+	
+	fileCheck();
 
 	LWM2M_PROXY.invokeOpenAPI("coapWriteFile", null, param, function (result, _head, _params) {
 		console.log(result);
@@ -430,8 +482,13 @@ function getRedisKeyData(key,keyType) {
 }
 
 // TODO
-function sseTest() {
+function sseTest(uri) {
 	console.log("SSE TEST");
+	var param = {};
+	param["uri"] = uri;
+	LWM2M_PROXY.invokeOpenAPI("sender", null, param, function (result, _head, _params) {
+		console.log(result);
+	});
 }
 
 function getUsage() {
@@ -534,6 +591,32 @@ function getProperty(fileName) {
 
 			listView.append(tmp.join("\n"));
 		}
-		
+
 	});
+}
+
+// TODO
+function fileCheck() {
+	// input file 태그.
+	var file = document.getElementById('valuedata');
+	// 파일 경로.
+	var filePath = file.value;
+	// 전체경로를 \ 나눔.
+	var filePathSplit = filePath.split('\\');
+	// 전체경로를 \로 나눈 길이.
+	var filePathLength = filePathSplit.length;
+	// 마지막 경로를 .으로 나눔.
+	var fileNameSplit = filePathSplit[filePathLength - 1].split('.');
+	// 파일명 : .으로 나눈 앞부분
+	var fileName = fileNameSplit[0];
+	// 파일 확장자 : .으로 나눈 뒷부분
+	var fileExt = fileNameSplit[1];
+	// 파일 크기
+	var fileSize = file.files[0].size;
+
+	console.log('파일 : ' + file);
+	console.log('파일 경로 : ' + filePath);
+	console.log('파일명 : ' + fileName);
+	console.log('파일 확장자 : ' + fileExt);
+	console.log('파일 크기 : ' + fileSize);
 }

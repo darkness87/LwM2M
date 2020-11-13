@@ -19,14 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class SenderService {
 
-	private static final int REPEAT = 3;
+	private static final int REPEAT = 10;
 	private final Map<ResponseBodyEmitter, AtomicInteger> emitterCountMap = new HashMap<>();
 
 	public void add(ResponseBodyEmitter emitter) {
 		emitterCountMap.put(emitter, new AtomicInteger(0));
 	}
 
-	@Scheduled(fixedRate = 10000L)
+	@Scheduled(fixedRate = 1000L)
 	public void emit() {
 
 		List<ResponseBodyEmitter> toBeRemoved = new ArrayList<>(emitterCountMap.size());
@@ -40,7 +40,7 @@ public class SenderService {
 			ResponseBodyEmitter emitter = entry.getKey();
 
 			try {
-				log.info("{}", user);
+				log.info("{}", user); // 로그 동작함
 				emitter.send(user);
 			} catch (IOException e) {
 				log.error(e.getMessage(), e);

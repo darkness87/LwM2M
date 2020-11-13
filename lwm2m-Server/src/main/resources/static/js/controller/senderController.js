@@ -1,5 +1,6 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
-  sseTest();
+	var uri = "/1/0/0"
+	sseTest(uri);
 
 });

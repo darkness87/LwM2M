@@ -7,8 +7,10 @@ import java.util.List;
 import org.eclipse.leshan.core.Link;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.server.model.LwM2mModelProvider;
+import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.registration.Registration;
 import org.eclipse.leshan.server.registration.RegistrationService;
+import org.eclipse.leshan.server.registration.RegistrationStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +24,17 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistrationLwService {
 	@Autowired
 	RegistrationService regService;
+	
+	// TODO
+	/*
+	 * @Autowired RegistrationStore registrationStore;
+	 */
 
 	@Autowired
 	LwM2mModelProvider modelProvider;
+
+	@Autowired
+	ObservationService observeService;
 
 	public List<RegistrationDataVO> getRegistrationsList() {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
@@ -101,6 +111,36 @@ public class RegistrationLwService {
 		}
 
 		return null;
+	}
+
+	// TODO 작업진행중
+	public int unRegistration(String endpoint) {
+
+		// TODO
+
+//		Iterator<Registration> reg = regService.getAllRegistrations();
+
+		while (regService.getAllRegistrations().hasNext()) {
+			if (!regService.getAllRegistrations().next().getEndpoint().equals(endpoint)) {
+				continue;
+			}
+			
+//			registrationStore.removeRegistration(regService.getAllRegistrations().next().getId());
+		}
+
+		// TODO
+		/*
+		 * List<Registration> allRegistrations =
+		 * Lists.newArrayList(regService.getAllRegistrations()); RegistrationListener
+		 * listener = null;
+		 * 
+		 * for (Registration registration : allRegistrations) { if
+		 * (!registration.getEndpoint().equals(endpoint)) { continue; }
+		 * listener.unregistered(registration,
+		 * observeService.getObservations(registration), false, null);
+		 * regService.removeListener(listener); }
+		 */
+		return 0;
 	}
 
 }

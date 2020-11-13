@@ -27,6 +27,10 @@ var LWM2M_PROXY = {
 	getExternalIP : "getExternalIP.do",
 	getLocationInfo : "getLocationInfo.do",
 	getProperty : "getProperty.do",
+	sender : "sender",
+	cancelResourceObservation : "cancelResourceObservation.do",
+	cancelRegistrationIdObservation : "cancelRegistrationIdObservation.do",
+	unRegistration : "unRegistration.do",
 
 	prefixUrl: "",
 

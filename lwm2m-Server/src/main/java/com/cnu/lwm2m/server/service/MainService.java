@@ -21,7 +21,6 @@ import com.sun.management.OperatingSystemMXBean;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SuppressWarnings("restriction")
 @Service
 public class MainService {
 

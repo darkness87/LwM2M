@@ -1,8 +1,8 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
 	getUsage();
-	setInterval(function () {
+	setInterval(function() {
 		getUsage();
-  }, 5000);
+	}, 3000);
 
 });

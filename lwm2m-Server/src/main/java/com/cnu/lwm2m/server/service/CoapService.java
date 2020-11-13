@@ -1,6 +1,9 @@
 package com.cnu.lwm2m.server.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -294,9 +297,16 @@ public class CoapService {
 					lwM2mPath.getResourceId(), Boolean.valueOf(data));
 			break;
 		case "TIME":
-			// TODO Time값 넘기는 거 구현 필요
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			try {
+				date = transFormat.parse(data);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
-					lwM2mPath.getResourceId(), data);
+					lwM2mPath.getResourceId(), date);
 			break;
 		case "OBJLNK":
 			// TODO
