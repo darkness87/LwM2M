@@ -20,6 +20,7 @@ import com.sun.management.OperatingSystemMXBean;
 
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings("restriction")
 @Slf4j
 @Service
 public class MainService {
@@ -41,8 +42,9 @@ public class MainService {
 
 		mainUsageVO.setDate(dateFormat.format(date));
 		mainUsageVO.setOsCpu(String.format("%.3f", osBean.getSystemCpuLoad() * 100));
-		mainUsageVO.setOsMemory(String.format("%.3f",
-				((osBean.getTotalPhysicalMemorySize()-osBean.getFreePhysicalMemorySize()) / gb) / (osBean.getTotalPhysicalMemorySize() / gb) * 100));
+		mainUsageVO.setOsMemory(
+				String.format("%.3f", ((osBean.getTotalPhysicalMemorySize() - osBean.getFreePhysicalMemorySize()) / gb)
+						/ (osBean.getTotalPhysicalMemorySize() / gb) * 100));
 		mainUsageVO.setJvmUsed(String.format("%.3f", (double) heapUseSize / gb));
 		mainUsageVO.setJvmFree(String.format("%.3f", (double) heapFreeSize / gb));
 		mainUsageVO.setJvmTotal(String.format("%.3f", (double) heapSize / gb));
@@ -53,7 +55,7 @@ public class MainService {
 
 	public String getExternalIP() {
 		try {
-			URL url = new URL("http://myexternalip.com/raw");
+			URL url = new URL("http://myexternalip.com/raw"); // TODO 설정값으로 바꾸기
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 			String externalIP = IOUtils.toString(in, "UTF-8");
@@ -65,13 +67,17 @@ public class MainService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String getLocationInfo(String ip) {
+	public HashMap<String, Object> getExternalIPLocation() throws Exception {
+		URL ipurl = new URL("http://myexternalip.com/raw"); // TODO 설정값으로 바꾸기
+		HttpURLConnection urlConnection = (HttpURLConnection) ipurl.openConnection();
+		InputStream ins = new BufferedInputStream(urlConnection.getInputStream());
+		String externalIP = IOUtils.toString(ins, "UTF-8");
 		float lat = 0;
 		float lng = 0;
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = null;
 		try {
-			URL url = new URL("http://ip-api.com/json/" + ip);
+			URL url = new URL("http://ip-api.com/json/" + externalIP); // TODO 설정값으로 바꾸기
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setConnectTimeout(5000);
 			con.setReadTimeout(5000);
@@ -103,6 +109,7 @@ public class MainService {
 		log.info("{}", resultMap);
 		log.info("{},{}", lat, lng);
 
-		return resultMap.toString();
+		return resultMap;
 	}
+
 }

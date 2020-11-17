@@ -25,12 +25,14 @@ var LWM2M_PROXY = {
 	coapWriteFile : "coapWriteFile.do",
 	getUsage : "getUsage.do",
 	getExternalIP : "getExternalIP.do",
-	getLocationInfo : "getLocationInfo.do",
+	getLocation : "getLocation.do",
 	getProperty : "getProperty.do",
 	sender : "sender",
 	cancelResourceObservation : "cancelResourceObservation.do",
 	cancelRegistrationIdObservation : "cancelRegistrationIdObservation.do",
 	unRegistration : "unRegistration.do",
+	getSearchData : "getSearchData.do",
+	getExternalIPLocation : "getExternalIPLocation.do",
 
 	prefixUrl: "",
 

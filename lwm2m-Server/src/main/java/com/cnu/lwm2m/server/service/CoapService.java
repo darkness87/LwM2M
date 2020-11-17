@@ -292,7 +292,6 @@ public class CoapService {
 					lwM2mPath.getResourceId(), Float.valueOf(data));
 			break;
 		case "BOOLEAN":
-			// TODO
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
 					lwM2mPath.getResourceId(), Boolean.valueOf(data));
 			break;
@@ -309,7 +308,6 @@ public class CoapService {
 					lwM2mPath.getResourceId(), date);
 			break;
 		case "OBJLNK":
-			// TODO
 			request = new WriteRequest(contentFormat, lwM2mPath.getObjectId(), lwM2mPath.getObjectInstanceId(),
 					lwM2mPath.getResourceId(), data);
 			break;

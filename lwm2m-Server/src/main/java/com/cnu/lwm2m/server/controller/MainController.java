@@ -1,5 +1,7 @@
 package com.cnu.lwm2m.server.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +17,10 @@ public class MainController {
 
 	@Autowired
 	MainService mainService;
-	
+
 	@Autowired
 	ObservationLwService observationLwService;
-	
+
 	@Autowired
 	RegistrationLwService registrationLwService;
 
@@ -30,8 +32,8 @@ public class MainController {
 	@RequestMapping("/getUsage.do")
 	public @ResponseBody MainUsageVO getUsage() {
 		MainUsageVO mainUsageVO = mainService.getUsage();
-		mainUsageVO.setObserveCount(observationLwService.getObservationListCount());//등록기기수
-		mainUsageVO.setRegistrationCount(registrationLwService.getAllRegistrationsListCount());//Observe수
+		mainUsageVO.setObserveCount(observationLwService.getObservationListCount());// 등록기기수
+		mainUsageVO.setRegistrationCount(registrationLwService.getAllRegistrationsListCount());// Observe수
 		return mainUsageVO;
 	}
 
@@ -40,9 +42,14 @@ public class MainController {
 		return mainService.getExternalIP();
 	}
 
-	@RequestMapping("/getLocationInfo.do")
-	public @ResponseBody String getLocationInfo(String ip) {
-		return mainService.getLocationInfo(ip);
+	@RequestMapping("/getExternalIPLocation.do")
+	public @ResponseBody HashMap<String, Object> getExternalIPLocation() {
+		try {
+			return mainService.getExternalIPLocation();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

@@ -63,4 +63,11 @@ public class RedisService {
 		String result = redisDao.hgetAllData(key);
 		return result;
 	}
+
+	public List<String> getSearchKey(String key) throws Exception {
+		Set<String> strKey = redisDao.getSearchKey(key);
+		List<String> targetList = new ArrayList<String>(strKey);
+
+		return targetList;
+	}
 }

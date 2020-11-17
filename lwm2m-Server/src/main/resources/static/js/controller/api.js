@@ -36,6 +36,7 @@ function getAllRegistrationsList() {
 
 function unRegistration(endpoint,id) {
 	console.log(endpoint,"/",id)
+	alert("구현중.../"+endpoint+"/"+id);
 	var param = {};
 	param["endpoint"] = endpoint;
 	param["id"] = id;
@@ -73,7 +74,7 @@ function getObservationList() {
 		obCountView.empty();
 
 		if (result == null || result == "") {
-			listView.html("<td colspan='6' style='text-align:center'>Observe가 없습니다.</td>");
+			listView.html("<td colspan='8' style='text-align:center'>Observe가 없습니다.</td>");
 			obCountView.html("Observe가 없습니다.");
 			return;
 		}
@@ -88,9 +89,11 @@ function getObservationList() {
 				uri = uri + "/" + item.path.resourceId;
 			}
 
-			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"'; style='cursor: pointer;'>");
+			tmp.push("<tr onmouseover='this.style.background=\"#f8f9fc\"'; onmouseout='this.style.background=\"#fff\"';>");
 			tmp.push("	<td>" + item.id + "</td>");
 			tmp.push("	<td>" + item.registrationId + "</td>");
+			tmp.push("	<td>" + item.endpoint + "</td>");
+			tmp.push("	<td>" + item.address + "</td>");
 			tmp.push("	<td>" + uri + "</td>");
 			tmp.push("	<td>" + item.contentFormat.mediaType + "</td>");
 			tmp.push("	<td>" + "Observe 동작" + "</td>");
@@ -206,7 +209,11 @@ function getObjectModel(endpoint) {
 					tmp.push("				<td>" + "<button class='btn btn-info btn-sm' type='button' onclick='javascript:viewWrite(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + res.type + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>" + "</td>");
 				} else if (res.operations == "E") {
 					tmp.push("				<td>" + "<button class='btn btn-success btn-sm' type='button' onclick='javascript:sendCoapExec(\"" + endpoint + "\",\"" + uri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Exec</button>"
-						/*+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' style='cursor: pointer;' data-toggle='modal' data-target='#'>※</button>"*/
+						/*
+						 * + "&nbsp&nbsp<button class='btn btn-secondary
+						 * btn-sm' type='button' style='cursor: pointer;'
+						 * data-toggle='modal' data-target='#'>※</button>"
+						 */
 						+ "</td>");
 				} else {
 					tmp.push("				<td>" + res.operations + "</td>");
@@ -293,7 +300,6 @@ function viewWrite(endpoint, uri, dataid, type) {
 	titleView.html(endpoint + " : " + uri);
 	var data = null;
 	
-	// TODO
 	if(type=="OPAQUE"&&uri=="/5/0/0"){
 		writeView.html("<div>Value (" + type + ") : <input id='valuedata' type='file' file-model='resource.fileValue' ng-disabled='resource.stringValue'></div>"+"<br>"
 				+"" +"<input type='text' id='file_path'>");
@@ -619,4 +625,99 @@ function fileCheck() {
 	console.log('파일명 : ' + fileName);
 	console.log('파일 확장자 : ' + fileExt);
 	console.log('파일 크기 : ' + fileSize);
+}
+
+function getExternalIP() {
+	var param = {};
+	LWM2M_PROXY.invokeOpenAPI("getExternalIP", null, param, function (result, _head, _params) {
+		console.log(result);
+		var view = $("#page-top");
+		var dataView = view.find("#serverInfo");
+		dataView.empty();
+		
+		var tmpl = [];
+
+		tmpl.push("<div class='row no-gutters align-items-center'>");
+		tmpl.push("  <div class='col mr-2'>");
+		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>서버 ExternalIP</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+result+"</div>");
+		tmpl.push("  </div>");
+		tmpl.push("</div>");
+
+		dataView.append(tmpl.join("\n"));
+	});
+	
+}
+
+function getExternalIPLocation() {
+	var param = {};
+	LWM2M_PROXY.invokeOpenAPI("getExternalIPLocation", "json", param, function (result, _head, _params) {
+		var data = eval(result);
+		console.log(data);
+
+		var view = $("#page-top");
+		var dataView = view.find("#locationInfo");
+		dataView.empty();
+		
+		var tmpl = [];
+
+		tmpl.push("<div class='row no-gutters align-items-center'>");
+		tmpl.push("  <div class='col mr-2'>");
+		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>위도</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+data.lon+"</div>");
+		tmpl.push("  </div>");
+		tmpl.push("  <div class='col mr-2'>");
+		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>경도</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+data.lat+"</div>");
+		tmpl.push("  </div>");
+		tmpl.push("</div>");
+
+		dataView.append(tmpl.join("\n"));
+	});
+	
+}
+
+// TODO 지도 API 연동하기
+function getLocation() {
+	var param = {};
+	LWM2M_PROXY.invokeOpenAPI("getLocation", "json", param, function (result, _head, _params) {
+		console.log(result);
+
+		var view = $("#page-top");
+		var dataView = view.find("#locationMap");
+		dataView.empty();
+		
+		for (var i = 0; i < result.length; i++) {
+			var item = result[i];
+			var tmp = [];
+
+			tmp.push("<div>");
+			tmp.push(item.endpoint+"/"+item.registrationId+"/"+item.address+"/"+item.country+"/"+item.regionName+"/"+item.city+"/위도:"+item.lat+"/경도:"+item.lon+"/ExternalIP:"+item.query);
+			tmp.push("</div>");
+		}
+
+		dataView.append(tmp.join("\n"));
+	});
+	
+}
+
+function getSearchData(){
+	var param = {};
+	var view = $("#page-top");
+	param["typeData"] = view.find("#typeData").val();
+
+	if(view.find("#dateData").val()==null||view.find("#dateData").val()==""){
+		alert("날짜를 선택해주세요.");
+		return;
+	}else{
+		param["dateData"] = view.find("#dateData").val();
+	}
+
+	LWM2M_PROXY.invokeOpenAPI("getSearchData", "json", param, function (result, _head, _params) {
+		/*result.sort(function (a, b) {
+			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+		});*/
+		console.log(result);
+		
+	});
 }

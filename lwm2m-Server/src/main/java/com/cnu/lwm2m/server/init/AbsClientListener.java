@@ -36,7 +36,7 @@ public class AbsClientListener implements EventSource {
 
 	@Override
 	public void onOpen(Emitter emitter) throws IOException {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 		log.info("onOpen : {}", emitter);
 
@@ -44,7 +44,7 @@ public class AbsClientListener implements EventSource {
 
 	@Override
 	public void onClose() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 	}
 }

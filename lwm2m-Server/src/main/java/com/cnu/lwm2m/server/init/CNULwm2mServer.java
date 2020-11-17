@@ -15,7 +15,6 @@ import org.eclipse.leshan.server.model.VersionedModelProvider;
 import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.queue.PresenceService;
 import org.eclipse.leshan.server.registration.RegistrationService;
-import org.eclipse.leshan.server.registration.RegistrationStore;
 import org.eclipse.leshan.server.security.SecurityStore;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.annotation.Bean;
@@ -121,7 +120,7 @@ public class CNULwm2mServer implements DisposableBean {
 	public LeshanServer server() {
 		return server;
 	}
-	
+
 	// TODO
 	/*
 	 * @Bean public RegistrationStore getRegistrationStore() { return server.reg();

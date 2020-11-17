@@ -10,7 +10,6 @@ import org.eclipse.leshan.server.model.LwM2mModelProvider;
 import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.registration.Registration;
 import org.eclipse.leshan.server.registration.RegistrationService;
-import org.eclipse.leshan.server.registration.RegistrationStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistrationLwService {
 	@Autowired
 	RegistrationService regService;
-	
+
 	// TODO
 	/*
 	 * @Autowired RegistrationStore registrationStore;
@@ -79,8 +78,6 @@ public class RegistrationLwService {
 	public LwM2mModel getObjectModel(String endpoint) {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
 
-		log.info("=== {}", allRegistrations);
-
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
 				continue;
@@ -96,8 +93,6 @@ public class RegistrationLwService {
 
 	public Link[] getResourceModel(String endpoint) {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
-
-		log.info("=== {}", allRegistrations);
 
 		for (Registration registration : allRegistrations) {
 			if (!registration.getEndpoint().equals(endpoint)) {
@@ -124,7 +119,7 @@ public class RegistrationLwService {
 			if (!regService.getAllRegistrations().next().getEndpoint().equals(endpoint)) {
 				continue;
 			}
-			
+
 //			registrationStore.removeRegistration(regService.getAllRegistrations().next().getId());
 		}
 
