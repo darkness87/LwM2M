@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cnu.lwm2m.server.service.RedisService;
 import com.cnu.lwm2m.server.vo.ChartVO;
+import com.cnu.lwm2m.server.vo.LpAvgVoltVo;
 import com.cnu.lwm2m.server.vo.LpDataVo;
+import com.cnu.lwm2m.server.vo.LpMaxDemandVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +36,7 @@ public class DataController {
 
 		List<ChartVO> list = new ArrayList<ChartVO>();
 		ChartVO chartVO = new ChartVO();
-		
+
 		for (int i = 0; i < val.size(); i++) {
 			log.info("{}", val.get(i));
 
@@ -43,20 +45,38 @@ public class DataController {
 			String label = array[2];
 			chartVO.setLabel(label);
 
-			List<LpDataVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpDataVo.class);
-
 			int value = 0;
-			for (int d = 0; d < data.size(); d++) {
-				value = Integer.valueOf(data.get(i).getpA0()) + value;
+
+			if (typeData.equals("LPDATA")) {
+
+				List<LpDataVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpDataVo.class);
+
+				for (int d = 0; d < data.size(); d++) {
+					value = Integer.valueOf(data.get(i).getpA0()) + value;
+				}
+			} else if (typeData.equals("MAXDEMAND")) {
+
+				List<LpMaxDemandVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpMaxDemandVo.class);
+
+				for (int d = 0; d < data.size(); d++) {
+					value = Integer.valueOf(data.get(i).getpA0()) + value;
+				}
+			} else if (typeData.equals("AVGVOLT")) {
+
+				List<LpAvgVoltVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpAvgVoltVo.class);
+
+				for (int d = 0; d < data.size(); d++) {
+					value = Integer.valueOf(data.get(i).getaAv()) + value;
+				}
 			}
 
 			chartVO.setValue(value);
-			
+
 			list.add(chartVO);
 		}
 
-		log.info("{}",list);
-		
+		log.info("{}", list);
+
 		return list;
 	}
 
