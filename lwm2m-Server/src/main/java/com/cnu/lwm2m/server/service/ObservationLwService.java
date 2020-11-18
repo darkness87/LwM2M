@@ -66,8 +66,7 @@ public class ObservationLwService {
 		int result = 0;
 
 		for (Registration registration : allRegistrations) {
-			result = observeService.cancelObservations(registration);
-			return result;
+			result = observeService.cancelObservations(registration) + result;
 		}
 
 		return result;
