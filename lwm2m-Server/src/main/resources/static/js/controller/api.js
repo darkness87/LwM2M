@@ -171,9 +171,9 @@ function getObjectModel(endpoint) {
 			tmp.push("	<div class='card-header py-3'>");
 			tmp.push("		<h6 class='m-0 font-weight-bold text-primary'>" + item.id + " : " + item.name + "&nbsp&nbsp&nbsp<button class='btn btn-primary' type='button' onclick='javascript:sendCoapObserve(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>Observe (" + observeUri + ") ▶</button>"
 				+ "&nbsp&nbsp&nbsp<button class='btn btn-secondary' type='button' onclick='javascript:cancelResourceObservation(\"" + endpoint + "\",\"" + observeUri + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>■</button>"
-				+ "<button style='float:right; outline: 0; border:0; background-color:#F8F9FC' href='#card" + item.id + "' data-toggle='collapse' role='button' aria-expanded='true' aria-controls='card" + item.id + "'>▼</button></h6>");
+				+ "<button style='float:right; outline: 0; border:0; background-color:#F8F9FC' href='#card" + item.id + "' data-toggle='collapse' role='button' aria-expanded='false' aria-controls='card" + item.id + " class='collapsed' '><h4>▼</h4></button></h6>");
 			tmp.push("	</div>");
-			tmp.push("<div class='card-body' id='card" + item.id + "'>");
+			tmp.push("<div class='card-body collapse' id='card" + item.id + "'>");
 			tmp.push("  <div class='table-responsive'>");
 			tmp.push("    <table id='dataTable" + item.id + "' width='100%' cellspacing='0'>");
 			tmp.push("      <thead>");
