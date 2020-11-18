@@ -119,4 +119,8 @@ public class RedisDao {
 		return keyType;
 	}
 
+	public <T> List<T> hgetRedisHashesAllDataList(String key, Class<T> T) throws Exception {
+		return redisObjectData.hgetRedisHashesAllDataList(key, T);
+	}
+
 }

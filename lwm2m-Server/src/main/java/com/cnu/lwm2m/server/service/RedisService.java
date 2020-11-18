@@ -70,4 +70,9 @@ public class RedisService {
 
 		return targetList;
 	}
+
+	public <T> List<T> hgetRedisHashesAllDataList(String key, Class<T> T) throws Exception {
+		return redisDao.hgetRedisHashesAllDataList(key, T);
+	}
+
 }

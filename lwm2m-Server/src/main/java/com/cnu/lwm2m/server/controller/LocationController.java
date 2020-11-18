@@ -40,7 +40,7 @@ public class LocationController {
 			locationVO = new LocationVO();
 			location = locationService.getLocation(reg.get(i).getAddress().toString());
 
-			if (location.get("message").equals("private range") && location.get("status").equals("fail")) {
+			if (location.get("message").equals("private range") && location.get("status").equals("fail") || location == null) {
 				location = locationService.getLocation(mainService.getExternalIP());
 			}
 

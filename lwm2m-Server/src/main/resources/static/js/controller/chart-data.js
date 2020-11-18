@@ -10,7 +10,7 @@ var myLineChart = new Chart(ctx,{
 			data : {
 				labels : lab,
 				datasets : [ {
-					label : "CPU",
+					label : "Data",
 					lineTension : 0.3,
 					backgroundColor : "rgba(255, 0, 0, 0.05)",
 					borderColor : "rgba(255, 0, 0, 1)",
@@ -53,7 +53,7 @@ var myLineChart = new Chart(ctx,{
 							maxTicksLimit : 5,
 							padding : 10,
 							callback : function(value, index, values) {
-								return value + '%';
+								return value + 'Wh';
 							}
 						},
 						gridLines : {
@@ -85,7 +85,7 @@ var myLineChart = new Chart(ctx,{
 					callbacks : {
 						label : function(tooltipItem, chart) {
 							var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-							return datasetLabel + ':' + tooltipItem.yLabel + '%';
+							return datasetLabel + ':' + tooltipItem.yLabel + 'Wh';
 						}
 					}
 				}

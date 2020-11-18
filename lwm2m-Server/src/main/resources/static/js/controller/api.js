@@ -664,11 +664,11 @@ function getExternalIPLocation() {
 		tmpl.push("<div class='row no-gutters align-items-center'>");
 		tmpl.push("  <div class='col mr-2'>");
 		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>위도</div>");
-		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+data.lon+"</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+data.lat+"</div>");
 		tmpl.push("  </div>");
 		tmpl.push("  <div class='col mr-2'>");
 		tmpl.push("    <div class='text-xs font-weight-bold text-secondary text-uppercase mb-1'>경도</div>");
-		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+data.lat+"</div>");
+		tmpl.push("    <div class='h5 mb-0 font-weight-bold text-gray-800'>"+data.lon+"</div>");
 		tmpl.push("  </div>");
 		tmpl.push("</div>");
 
@@ -709,21 +709,30 @@ function getSearchData(){
 
 	if(view.find("#dateData").val()==null||view.find("#dateData").val()==""){
 		alert("날짜를 선택해주세요.");
+		myLineChart.data.labels=[];
+		myLineChart.data.datasets[0].data=[];
+		myLineChart.update();
 		return;
 	}else{
 		param["dateData"] = view.find("#dateData").val();
 	}
+	myLineChart.data.labels=[];
+	myLineChart.data.datasets[0].data=[];
+	myLineChart.update();
 
 	LWM2M_PROXY.invokeOpenAPI("getSearchData", "json", param, function (result, _head, _params) {
 		/*result.sort(function (a, b) {
 			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 		});*/
 		console.log(result);
-		
-//		myLineChart.data.labels.unshift(result.date);
-//		myLineChart.data.datasets[0].data.unshift(result.value);
-//		myLineChart.update();
-		
+
+		for (var i = 0; i < result.length; i++) {
+			var item = result[i];
+			myLineChart.data.labels.push(item.label);
+			myLineChart.data.datasets[0].data.push(item.value);
+			myLineChart.update();
+		}
+
 	});
 }
 

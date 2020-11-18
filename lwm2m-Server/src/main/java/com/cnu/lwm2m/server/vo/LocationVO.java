@@ -16,7 +16,7 @@ public class LocationVO {
 	private String regionName;
 	private String city;
 	private String query;
-	private String lat;
-	private String lon;
+	private String lat; // 위도
+	private String lon; // 경도
 
 }
