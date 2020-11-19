@@ -52,21 +52,21 @@ public class DataController {
 				List<LpDataVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpDataVo.class);
 
 				for (int d = 0; d < data.size(); d++) {
-					value = Integer.valueOf(data.get(i).getpA0()) + value;
+					value = Integer.valueOf(data.get(d).getpA0()) + value;
 				}
 			} else if (typeData.equals("MAXDEMAND")) {
 
 				List<LpMaxDemandVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpMaxDemandVo.class);
 
 				for (int d = 0; d < data.size(); d++) {
-					value = Integer.valueOf(data.get(i).getpA0()) + value;
+					value = Integer.valueOf(data.get(d).getpA0()) + value;
 				}
 			} else if (typeData.equals("AVGVOLT")) {
 
 				List<LpAvgVoltVo> data = redisService.hgetRedisHashesAllDataList(val.get(i), LpAvgVoltVo.class);
 
 				for (int d = 0; d < data.size(); d++) {
-					value = Integer.valueOf(data.get(i).getaAv()) + value;
+					value = Integer.valueOf(data.get(d).getaAv()) + value;
 				}
 			}
 
