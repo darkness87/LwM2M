@@ -1,7 +1,10 @@
 package com.cnu.lwm2m.redis.api;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,7 +277,8 @@ public class RedisObjectData {
 			redisConnect.close();
 			return null;
 		}
-		String jsondata = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(fields); //.replaceAll("\\\\\"", "\"");
+		String jsondata = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(fields); // .replaceAll("\\\\\"",
+																								// "\"");
 		redisConnect.close();
 		return jsondata;
 	}
@@ -322,6 +326,38 @@ public class RedisObjectData {
 		jedis.hset(key, field, data);
 		redisConnect.close();
 		return 0;
+	}
+
+	// TODO
+	/**
+	 * Hashes 형태 hgetAll (전체값 Object)
+	 * 
+	 * @param <T>
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> List<T> hgetRedisHashesAllDataList(String key, Class<T> T) throws Exception {
+		Jedis jedis = redisConnect.connect();
+		if (jedis == null) {
+			log.info("=== Redis Connect Error");
+			redisConnect.close();
+			return null;
+		}
+
+		Map<String, String> fields = jedis.hgetAll(key);
+		Set<String> keyset = fields.keySet();
+		List<String> targetList = new ArrayList<String>(keyset);
+		Collections.sort(targetList);
+
+		List<T> listT = new ArrayList<T>();
+		for (int i = 0; i < targetList.size(); i++) {
+			T object = (T) mapper.readValue(jedis.hget(key, targetList.get(i)), T);
+			listT.add(object);
+		}
+
+		redisConnect.close();
+		return listT;
 	}
 
 }
