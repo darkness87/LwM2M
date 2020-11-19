@@ -26,7 +26,7 @@ public class DataController {
 
 	@RequestMapping("/getSearchData.do")
 	public @ResponseBody List<ChartVO> getSearchData(String typeData, String dateData) throws Exception {
-		// TODO
+		// TODO 임의로 생성된 데이터를 기반으로 전력데이터 처리
 		log.info("=== getChart  ===");
 		String key = typeData + ":" + dateData.replaceAll("-", "");
 		log.info("{}", key);

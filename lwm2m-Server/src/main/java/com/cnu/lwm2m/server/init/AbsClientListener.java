@@ -24,8 +24,6 @@ public class AbsClientListener implements EventSource {
 		if (event == EVENT.REGISTRATION) {
 			// Registration
 			log.info("Registration Data : {}", data);
-			// CoapService coapService = new CoapService();
-			// coapService.sendCoapObserve(endpoint, "/1/0");
 
 		} else if (event == EVENT.NOTIFICATION) {
 			// Notify

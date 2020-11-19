@@ -2,9 +2,13 @@ package com.cnu.lwm2m.server.init;
 
 import java.util.Collection;
 
+import org.eclipse.leshan.core.Link;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.observation.Observation;
+import org.eclipse.leshan.core.request.ContentFormat;
+import org.eclipse.leshan.core.request.ObserveRequest;
 import org.eclipse.leshan.core.request.ReadRequest;
+import org.eclipse.leshan.core.response.ObserveResponse;
 import org.eclipse.leshan.core.response.ReadResponse;
 import org.eclipse.leshan.server.californium.LeshanServer;
 import org.eclipse.leshan.server.registration.Registration;
@@ -38,6 +42,28 @@ public class ClientRegistrationListener extends AbsClientListener implements Reg
 			} else {
 				log.info("Failed to read:" + response.getCode() + " " + response.getErrorMessage());
 			}
+
+			///// Registration Observe
+			ContentFormat contentFormat = ContentFormat.fromName("TLV");
+			Link[] oblink = registration.getObjectLinks();
+
+			for (int i = 0; i < oblink.length; i++) {
+				String uri = oblink[i].getUrl();
+
+				if (uri.equals("/")) {
+					continue;
+				}
+
+				ObserveRequest request = new ObserveRequest(contentFormat, uri);
+				ObserveResponse cResponse = server.send(registration, request, 10000);
+				if (cResponse.isSuccess()) {
+					log.info("Registration Observe : {} {}", uri, "Success");
+				} else {
+					log.info("Registration Observe : {} {}", uri, "fail");
+				}
+			}
+			/////
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
