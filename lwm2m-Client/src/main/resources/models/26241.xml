@@ -110,7 +110,7 @@
 			</Item>
 			<Item ID="13">
 				<Name>RAM 사용률 Read</Name>
-				<Operations>RW</Operations>
+				<Operations>R</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
 				<Type>Integer</Type>
@@ -120,7 +120,7 @@
 			</Item>
 			<Item ID="14">
 				<Name>RAM 사용률 Observation 및 Notify 설정</Name>
-				<Operations>R</Operations>
+				<Operations>RW</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
 				<Type>String</Type>
