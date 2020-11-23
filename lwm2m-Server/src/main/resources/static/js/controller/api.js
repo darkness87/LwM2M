@@ -439,9 +439,13 @@ function sendCoapDisableRead(endpoint, uri, type) {
 }
 
 function getRedisKeyList() {
+	var view = $("#page-top");
 	var param = {};
+	param["typeData"] = view.find("#typeData").val();
+	param["dateData"] = view.find("#dateData").val();
+
 	LWM2M_PROXY.invokeOpenAPI("getRedisKeyList", "json", param, function (result, _head, _params) {
-		var view = $("#page-top");
+		
 		var listView = view.find("#keylist");
 		listView.empty();
 
@@ -573,6 +577,7 @@ function getUsage() {
 }
 
 function getProperty(fileName) {
+	console.log(fileName);
 	var param = {};
 	param["fileName"] = fileName+".properties";
 	LWM2M_PROXY.invokeOpenAPI("getProperty", "json", param, function (result, _head, _params) {

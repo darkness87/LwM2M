@@ -38,7 +38,7 @@ public class CoapController {
 
 		try {
 			setString = mapper.writeValueAsString(result);
-			// redisService.setHistory(endpoint, "OBS", setString); // Redis 저장정보
+			redisService.setHistory(endpoint, "OBS", setString); // Redis 저장정보
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

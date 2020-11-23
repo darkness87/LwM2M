@@ -79,14 +79,14 @@
 				<Description>칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자)</Description>
 			</Item>
 			<Item ID="10">
-				<Name>CPU(MCU) 칩 모델번호</Name>
+				<Name>CPU 사용률</Name>
 				<Operations>R</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
 				<Type>Integer</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>%</Units>
-				<Description>칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자)</Description>
+				<Description>CPU 사용률</Description>
 			</Item>
 			<Item ID="11">
 				<Name>CPU 사용률 Observation 및 Notify 설정</Name>

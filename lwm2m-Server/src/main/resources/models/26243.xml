@@ -69,14 +69,24 @@
 				<Description>Res_ID: 4에서 지정한 각 인터페이스의 다음 홉 라우터의 IP 주소 (사설 IP / DCU 적용)</Description>
 			</Item>
 			<Item ID="8">
-				<Name>CPU(MCU) 칩 모델번호</Name>
+				<Name>통신모듈 제조회사</Name>
 				<Operations>R</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>
 				<Type>String</Type>
 				<RangeEnumeration></RangeEnumeration>
 				<Units>Defined by “Units” resource.</Units>
-				<Description>칩 제조사의 CPU(MCU) 모델 이름 (최대 20글자)</Description>
+				<Description>통신모듈 제조회사</Description>
+			</Item>
+			<Item ID="9">
+				<Name>통신모듈 칩 제조회사</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>통신모듈 칩 제조회사</Description>
 			</Item>
 			<Item ID="10">
 				<Name>송신출력 (TX Power)</Name>
@@ -89,7 +99,7 @@
 				<Description>이 리소스는 RF 송신출력 값(설정값)을 관찰한다.</Description>
 			</Item>
 			<Item ID="15">
-				<Name>RAM 사용률 실시간 측정</Name>
+				<Name>CoAP Ping Start (상향)</Name>
 				<Operations>E</Operations>
 				<MultipleInstances>Single</MultipleInstances>
 				<Mandatory>Mandatory</Mandatory>

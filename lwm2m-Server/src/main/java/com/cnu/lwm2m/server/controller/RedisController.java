@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cnu.lwm2m.server.service.RedisService;
@@ -19,9 +20,21 @@ public class RedisController {
 	RedisService redisService;
 
 	@RequestMapping("/getRedisKeyList.do")
-	public @ResponseBody List<String> getRedisKeyList() throws Exception {
+	public @ResponseBody List<String> getRedisKeyList(@RequestParam String typeData, @RequestParam String dateData)
+			throws Exception {
 		log.info("=== getRedisKeyList ===");
-		return redisService.getKeyList();
+		log.info("{},{}", typeData, dateData);
+
+		String key = typeData;
+
+		// TODO 조건 추가
+		if (typeData.equals("HIS")) {
+			key = typeData + ":OBS:" + dateData.replaceAll("-", "");
+		}
+
+		log.info(key);
+
+		return redisService.getKeyList(key);
 	}
 
 	@RequestMapping("/getRedisKeyData.do")

@@ -113,8 +113,23 @@
         </nav>
 
         <div class="container-fluid">
-          <!-- <h1 class="h3 mb-2 text-gray-800">Registration Info</h1> -->
-          <!-- <p class="mb-4">Registration Info</p> -->
+
+			<div class="col-xl-12 col-lg-6">
+	        	<div class="card shadow mb-4">
+					<div class="card-header py-3">
+		              <h6 class="m-0 font-weight-bold text-primary">이력조회 &nbsp;&nbsp;
+		                  <select style="text-align: right;" id="typeData">
+		                    <option value="HIS">History 전체</option>
+		                    <!-- <option value="OBS">Observe</option>
+		                    <option value="REG">Registration</option>
+		                    <option value="SCH">Schedule</option> -->
+		                  </select>
+		                  <input type="date" id="dateData"/>
+		                  <button class="btn btn-primary" type="button" onclick="javascript:getRedisKeyList()" style="cursor: pointer;" data-toggle="modal" data-target="#">검색</button>
+		              </h6>
+		            </div>
+		         </div>
+			</div>
 
           <div class="row">
 

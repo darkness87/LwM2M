@@ -23,8 +23,10 @@ public class RedisService {
 	@Autowired
 	ObjectMapper mapper;
 
-	public List<String> getKeyList() throws Exception {
-		Set<String> strKey = redisDao.getAllKey();
+	public List<String> getKeyList(String key) throws Exception {
+		
+		Set<String> strKey = redisDao.getSearchKey(key);
+//		Set<String> strKey = redisDao.getAllKey(); // 전체
 
 		List<String> targetList = new ArrayList<String>(strKey);
 		log.info("{}", targetList);
@@ -48,10 +50,12 @@ public class RedisService {
 
 	public void setHistory(String keyValue, String type, String data) throws Exception {
 		Date date = new Date();
-		SimpleDateFormat baseFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		String idate = baseFormat.format(date);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
+		String idate = dateFormat.format(date);
+		String tdate = timeFormat.format(date);
 
-		String key = "HIS:" + type + ":" + keyValue + ":" + idate;
+		String key = "HIS:" + type + ":" + idate + ":" + tdate + ":" + keyValue;
 		String setString = data;
 		log.info("{},{}", key, setString);
 
