@@ -379,7 +379,7 @@ function sendCoapWrite(endpoint, uri, dataid, type, data) {
 	if(type=="TIME"){
 		var date = view.find("#dateinfo").val();
 		var time = view.find("#timeinfo").val();
-		alert(date+" "+time+":00")
+		//alert(date+" "+time+":00")
 		data = date+" "+time+":00";
 	}else{
 		data = view.find("#valuedata").val();

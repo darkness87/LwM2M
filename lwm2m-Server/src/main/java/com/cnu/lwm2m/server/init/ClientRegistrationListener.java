@@ -1,6 +1,5 @@
 package com.cnu.lwm2m.server.init;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 

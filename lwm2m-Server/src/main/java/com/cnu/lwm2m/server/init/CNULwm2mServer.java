@@ -14,7 +14,6 @@ import org.eclipse.leshan.server.model.LwM2mModelProvider;
 import org.eclipse.leshan.server.model.VersionedModelProvider;
 import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.queue.PresenceService;
-import org.eclipse.leshan.server.registration.RegistrationListener;
 import org.eclipse.leshan.server.registration.RegistrationService;
 import org.eclipse.leshan.server.security.SecurityStore;
 import org.springframework.beans.factory.DisposableBean;
