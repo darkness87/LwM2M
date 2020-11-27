@@ -9,6 +9,7 @@ import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.server.model.LwM2mModelProvider;
 import org.eclipse.leshan.server.observation.ObservationService;
 import org.eclipse.leshan.server.registration.Registration;
+import org.eclipse.leshan.server.registration.RegistrationListener;
 import org.eclipse.leshan.server.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,10 @@ public class RegistrationLwService {
 
 	@Autowired
 	ObservationService observeService;
+
+	// TODO
+	RegistrationListener listener;
+	/////
 
 	public List<RegistrationDataVO> getRegistrationsList() {
 		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
@@ -110,31 +115,36 @@ public class RegistrationLwService {
 
 	// TODO 작업진행중
 	public int unRegistration(String endpoint) {
-
+		log.info("{}",endpoint);
 		// TODO
 
 //		Iterator<Registration> reg = regService.getAllRegistrations();
 
-		while (regService.getAllRegistrations().hasNext()) {
-			if (!regService.getAllRegistrations().next().getEndpoint().equals(endpoint)) {
-				continue;
-			}
+//		while (regService.getAllRegistrations().hasNext()) {
+//			if (!regService.getAllRegistrations().next().getEndpoint().equals(endpoint)) {
+//				continue;
+//			}
 
 //			registrationStore.removeRegistration(regService.getAllRegistrations().next().getId());
-		}
+//		}
 
 		// TODO
-		/*
-		 * List<Registration> allRegistrations =
-		 * Lists.newArrayList(regService.getAllRegistrations()); RegistrationListener
-		 * listener = null;
-		 * 
-		 * for (Registration registration : allRegistrations) { if
-		 * (!registration.getEndpoint().equals(endpoint)) { continue; }
-		 * listener.unregistered(registration,
-		 * observeService.getObservations(registration), false, null);
-		 * regService.removeListener(listener); }
-		 */
+
+		List<Registration> allRegistrations = Lists.newArrayList(regService.getAllRegistrations());
+		//listener = null;
+
+		for (Registration registration : allRegistrations) {
+			if (!registration.getEndpoint().equals(endpoint)) {
+				continue;
+			}
+			log.info("{}",registration);
+			log.info("{}",observeService.getObservations(registration));
+			
+			listener.unregistered(registration, observeService.getObservations(registration), false, null);
+
+			regService.removeListener(listener);
+		}
+
 		return 0;
 	}
 

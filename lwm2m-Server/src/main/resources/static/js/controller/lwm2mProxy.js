@@ -33,6 +33,7 @@ var LWM2M_PROXY = {
 	unRegistration : "unRegistration.do",
 	getSearchData : "getSearchData.do",
 	getExternalIPLocation : "getExternalIPLocation.do",
+	setProperty : "setProperty.do",
 
 	prefixUrl: "",
 

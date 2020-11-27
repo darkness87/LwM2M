@@ -1,41 +1,28 @@
 $(document).ready(function () {
-  $('#dataTable').DataTable({
-    "pageLength": 10,
-    //    "displayLength": 10,
-    "searching": false,
-    "lengthChange": false,
-    "bInfo": false,
-    "ordering": false,
-    //    "order": [ [ 0, "asc" ], [ 1, "desc"] ],
-    "paging": true,
-    "columnDefs": [
-      {
-        'targets': [2, 3],
-        'orderable': false
-      }
-    ],
-    /*     "buttons": [
-          {
-            extend: "excel",
-            text: "Excel",
-            filename: "LwM2M_Registration_List",
-            title:"LwM2M",
-            exportOptions: { orthogonal: "export" }
-          }
-        ], */
-    "dom": "Bfrtip",
-    "select": {
-      style: 'single'
-    }
-  });
+	$('#dataTable').DataTable().destroy();
+	$('#dataTable').DataTable({
+		"searching" : false,
+		"lengthChange" : false,
+		"bInfo" : false,
+		"ordering" : false,
+		"paging" : false,
+		"columnDefs" : [ {
+			'targets' : [ 2, 3 ],
+			'orderable' : false
+		} ],
+		"dom" : "Bfrtip",
+		"select" : {
+			style : 'single'
+		}
+	});
+	
+	// 디바이스 등록리스트
+	getAllRegistrationsList();
 
-  // 디바이스 등록리스트
-  getAllRegistrationsList();
+	setInterval(function() {
+		getAllRegistrationsList();
+	}, 5000);
 
-  setInterval(function () {
-    getAllRegistrationsList();
-  }, 2000);
-  
-  $("#valuedata").change(function() { $("#file_path").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
+	//  $("#valuedata").change(function() { $("#file_path").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
 
 });

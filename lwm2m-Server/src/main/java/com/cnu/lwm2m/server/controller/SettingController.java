@@ -48,4 +48,13 @@ public class SettingController {
 		return list;
 	}
 
+	@RequestMapping("/setProperty.do")
+	public @ResponseBody int setProperty(@RequestParam String setData) {
+		log.info("{}", setData);
+
+		// json 데이터를 리스트 PropertyVO 에 담기
+
+		return 0;
+	}
+
 }

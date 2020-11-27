@@ -36,12 +36,12 @@ function getAllRegistrationsList() {
 
 function unRegistration(endpoint,id) {
 	console.log(endpoint,"/",id)
-	alert("구현중.../"+endpoint+"/"+id);
+//	alert("구현중.../"+endpoint+"/"+id);
 	var param = {};
 	param["endpoint"] = endpoint;
-	param["id"] = id;
+//	param["id"] = id;
 	// TODO 삭제가 되어야 한다.
-	LWM2M_PROXY.invokeOpenAPI("unRegistration", "json", param, function (result, _head, _params) {
+	LWM2M_PROXY.invokeOpenAPI("unRegistration", null, param, function (result, _head, _params) {
 		console.log(result);
 	});
 }
@@ -63,6 +63,7 @@ function getByEndpoint(endpoint) {
 }
 
 function getObservationList() {
+	$('#dataTable').DataTable().destroy();
 	var param = {};
 
 	LWM2M_PROXY.invokeOpenAPI("getObservationList", "json", param, function (result, _head, _params) {
@@ -104,6 +105,26 @@ function getObservationList() {
 		}
 
 		obCountView.html(result.length + " Count");
+		
+		$('#dataTable').DataTable({
+			"pageLength" : 12,
+			"bPaginate" : true,
+			"bLengthChange": false,
+			"searching" : false,
+			"bInfo" : true,
+			"ordering" : false,
+			"paging" : true,
+			"pagingType" : "simple_numbers",
+			"columnDefs" : [ {
+				'targets' : [ 2, 3 ],
+				'orderable' : false
+			} ],
+			"dom" : "Bfrtip",
+			"select" : {
+				style : 'single'
+			}
+
+		});
 
 	});
 }
@@ -117,9 +138,23 @@ function cancelObservations() {
 		obCountView.empty();
 		if (result == null || result == "") {
 			obCountView.html("0개 취소되었습니다.");
+			setTimeout(function() {
+				getObservationList();
+				var countView = view.find("#observeCancel");
+				countView.empty();
+				countView.html("전체 취소하기");
+			}, 5000);
 			return;
 		}
 		obCountView.html(result + "개 취소되었습니다.");
+
+		setTimeout(function() {
+			getObservationList();
+			var countView = view.find("#observeCancel");
+			countView.empty();
+			countView.html("전체 취소하기");
+		}, 5000);
+
 	});
 }
 
@@ -140,6 +175,13 @@ function cancelRegistrationIdObservation(id,uri) {
 
 	LWM2M_PROXY.invokeOpenAPI("cancelRegistrationIdObservation", "json", param, function (result, _head, _params) {
 		console.log(result);
+		
+		setTimeout(function() {
+			getObservationList();
+			var countView = view.find("#observeCancel");
+			countView.empty();
+			countView.html("전체 취소하기");
+		}, 5000);
 	});
 }
 
@@ -597,12 +639,53 @@ function getProperty(fileName) {
 
 			tmp.push("<tr>");
 			tmp.push("	<td>" + item.key + "</td>");
-			tmp.push("	<td>" + item.value + "</td>");
+			tmp.push("	<td><input type='text' value=\"" + item.value + "\"/></td>");
 			tmp.push("</tr>");
 
 			listView.append(tmp.join("\n"));
 		}
+		
+		var buttonView = view.find("#"+fileName+"Button");
+		buttonView.empty();
+		buttonView.append("<button class='btn btn-secondary btn-sm' type='button' onclick='javascript:setProperty(\"" + fileName + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#'>수정</button>")
 
+	});
+}
+
+function setProperty(fileName) {
+//	console.log("setProperty");
+	var param = {};
+	
+	// 화면에서 key, value 값 가져오기
+//	param["setData"] = [{key: "redis.ipAddr", value: "127.0.0.1"},{key: "redis.ipAddr", value: "127.0.0.1"}];
+	
+	var i, tr, temp;
+	tr = new Array();
+	temp = document.getElementById(fileName).getElementsByTagName('tr');
+//	console.log(temp);
+	for (i in temp) {
+		if(i=="length"||i=="item"||i=="namedItem"){
+			continue;
+		}
+		console.log("index : "+i);
+		var data = new Object();
+		
+		if(temp[i].cells[1].getElementsByTagName('input')[0].value==null || temp[i].cells[1].getElementsByTagName('input')[0].value==""){
+			data.key = temp[i].cells[0].innerText;
+			data.value = "";
+		}else{
+			data.key = temp[i].cells[0].innerText;
+			data.value = temp[i].cells[1].getElementsByTagName('input')[0].value;
+		}
+		
+	    tr.push(data);
+	}
+	console.log(tr);
+	
+	param["setData"] = JSON.stringify(tr);
+	
+	LWM2M_PROXY.invokeOpenAPI("setProperty", null, param, function (result, _head, _params) {
+		console.log(result);
 	});
 }
 

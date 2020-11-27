@@ -50,11 +50,13 @@ public class RegistrationController {
 //		log.info("=== {}", model.getResourceModel(26241, 1));
 		return model;
 	}
-	
+
 	// TODO
 	@RequestMapping("/unRegistration.do")
 	public @ResponseBody int unRegistration(@RequestParam String endpoint) {
+		log.info("{}", endpoint);
 		int result = registrationLwService.unRegistration(endpoint);
+		log.info("{}", result);
 		return result;
 	}
 
