@@ -12,6 +12,7 @@ public interface DeviceInfo {
 	public String getPowerSourceCurrent();
 	public int getMemoryFree();
 	public int getErrorCode();
+	public void setCurrentTime(Date date);
 	public Date getCurrentTime();
 	public String getTimezone();
 	public int getDeviceType();

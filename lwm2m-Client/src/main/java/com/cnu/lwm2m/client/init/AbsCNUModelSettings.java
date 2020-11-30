@@ -1,10 +1,14 @@
 package com.cnu.lwm2m.client.init;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.TimeZone;
@@ -19,10 +23,13 @@ import com.cnu.lwm2m.client.models.impl.oma.FirmwareUpdateInfo;
 import com.cnu.lwm2m.client.models.impl.oma.LocationInfo;
 import com.cnu.lwm2m.client.models.impl.oma.SecurityInfo;
 import com.cnu.lwm2m.client.models.impl.oma.ServerInfo;
+import com.cnu.lwm2m.client.util.OSValidator;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter @Setter
 public class AbsCNUModelSettings extends AbsKepcoModelSettings
 								implements SecurityInfo, ServerInfo, DeviceInfo
@@ -154,6 +161,28 @@ public class AbsCNUModelSettings extends AbsKepcoModelSettings
 	@Override public Date getCurrentTime() {
 		return new Date();
 //		return (int)(new Date().getTime() / 1000);
+	}
+	@Override public void setCurrentTime(Date date) {
+		if (OSValidator.isUnix()) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String value = format.format(date);
+			log.debug(value);
+
+			ProcessBuilder processBuilder = new ProcessBuilder();
+			processBuilder.command("bash", "-c", "sudo date -s \"" + value + "\"");
+			try {
+				log.debug("{} to Start!", processBuilder.command());
+				Process process = processBuilder.start();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				log.debug("reader = {}", reader.readLine());
+				String line;
+				while ((line = reader.readLine()) != null) {
+					log.debug(line);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 

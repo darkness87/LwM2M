@@ -1,6 +1,7 @@
 package com.cnu.lwm2m.client.models;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,17 +112,24 @@ public class CNUDevice extends BaseInstanceEnabler {
 
 	@Override
 	public WriteResponse write(ServerIdentity identity, int resourceid, LwM2mResource value) {
+		if (!identity.isSystem()) {
+			log.debug("Read on Server resource /{}/{}/{}", getModel().id, getId(), resourceid);
+		}
 
 		switch (resourceid) {
 
 		case 13: // Current Time (초)
-			WriteResponse.internalServerError("not implements");
+			log.debug("value : {}", value.getValue());
+			Date date = (Date) value.getValue();
+			device.setCurrentTime(date);
+			fireResourcesChange(resourceid);
 
+			return WriteResponse.success();
 		case 15: // timezone
 			timezone = (String) value.getValue();
 			fireResourcesChange(resourceid);
-			return WriteResponse.success();
 
+			return WriteResponse.success();
 		default:
 			return super.write(identity, resourceid, value);
 		}
