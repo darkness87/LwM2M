@@ -29,8 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CNULwm2mServer implements DisposableBean {
 	private final String[] KEPCO_MODELS = { "LWM2M_Server_1_Custom.xml", "LWM2M_Device_3_Custom.xml",
 			"LWM2M_ConnectivityMonitoring_4_Custom.xml", "LWM2M_Location_6_Custom.xml",
-			"LWM2M_ConnectivityStatistics_7_Custom.xml", "26241.xml", "26243.xml", "26245.xml", "26247.xml",
-			"26249.xml" };
+			"LWM2M_ConnectivityStatistics_7_Custom.xml", "26241.xml", "26243.xml", "26245.xml", "26247.xml", "26249.xml",
+			"LWM2M_Security_0_Custom.xml" };
 
 	private LeshanServer server;
 	private Resource resource = new ClassPathResource("lwm2mServer.properties");
@@ -124,6 +124,10 @@ public class CNULwm2mServer implements DisposableBean {
 	// TODO
 	/*
 	 * @Bean public RegistrationStore getRegistrationStore() { return server.reg();
+	 * }
+	 */
+	/*
+	 * @Bean public RegistrationListener getRegistrationListener() { return server.;
 	 * }
 	 */
 

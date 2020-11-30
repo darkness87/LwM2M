@@ -299,7 +299,11 @@ public class CoapService {
 			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			try {
-				date = transFormat.parse(data);
+				if(data==null||data.equals("")||data.equals(" :00")) {
+					date = new Date(); // 값을 선택하지 않았을 경우 적용
+				}else {
+					date = transFormat.parse(data);
+				}
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
