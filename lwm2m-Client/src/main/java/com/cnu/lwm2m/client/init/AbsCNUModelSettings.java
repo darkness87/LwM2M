@@ -169,7 +169,7 @@ public class AbsCNUModelSettings extends AbsKepcoModelSettings
 			log.debug(value);
 
 			ProcessBuilder processBuilder = new ProcessBuilder();
-			processBuilder.command("bash", "-c", "sudo date -s \"" + value + "\"");
+			processBuilder.command("bash", "-c", "date -s \"" + value + "\"");
 			try {
 				log.debug("{} to Start!", processBuilder.command());
 				Process process = processBuilder.start();
