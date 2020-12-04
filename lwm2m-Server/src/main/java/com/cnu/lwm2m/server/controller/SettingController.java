@@ -1,5 +1,6 @@
 package com.cnu.lwm2m.server.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cnu.lwm2m.server.service.SettingService;
 import com.cnu.lwm2m.server.vo.PropertyVO;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,12 +52,29 @@ public class SettingController {
 	}
 
 	@RequestMapping("/setProperty.do")
-	public @ResponseBody int setProperty(@RequestParam String setData) {
+	public @ResponseBody int setProperty(@RequestParam String fileName, @RequestParam String setData) {
+		log.info("{}", fileName);
 		log.info("{}", setData);
 
-		// json 데이터를 리스트 PropertyVO 에 담기
+		ObjectMapper mapper = new ObjectMapper();
+		List<PropertyVO> data = null;
+		try {
+			data = mapper.readValue(setData, new TypeReference<List<PropertyVO>>() {
+			});
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return 1;
+		}
 
-		return 0;
+		int result = 0;
+		try {
+			result = settingService.setProperty(fileName, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}
+
+		return result;
 	}
 
 }

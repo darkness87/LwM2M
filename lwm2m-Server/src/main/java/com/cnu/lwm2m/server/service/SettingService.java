@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import org.springframework.stereotype.Service;
@@ -30,17 +31,35 @@ public class SettingService {
 		return properties;
 	}
 
-	public int setProperty(PropertyVO propertyVO) throws Exception {
+	public int setProperty(String fileName, List<PropertyVO> propertyData) {
 
 		Properties properties = new Properties();
 
-		File profile = new File("RedisConfig.properties");
-		FileOutputStream upfile = new FileOutputStream(profile);
+		File profile = new File(fileName + ".properties");
+		FileOutputStream upfile;
+		try {
+			upfile = new FileOutputStream(profile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return 1;
+		}
 
-		properties.setProperty("redis.ipAddr", "127.0.0.1");
+		for (int i = 0; i < propertyData.size(); i++) {
+			properties.setProperty(propertyData.get(i).getKey(), propertyData.get(i).getValue());
+		}
 
-		properties.store(upfile, null);
-		upfile.close();
+		try {
+			properties.store(upfile, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 1;
+		}
+		try {
+			upfile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 1;
+		}
 
 		return 0;
 	}

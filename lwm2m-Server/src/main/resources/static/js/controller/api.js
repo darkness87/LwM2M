@@ -343,8 +343,7 @@ function viewWrite(endpoint, uri, dataid, type) {
 	var data = null;
 	
 	if(type=="OPAQUE"&&uri=="/5/0/0"){
-		writeView.html("<div>Value (" + type + ") : <input id='valuedata' type='file' file-model='resource.fileValue' ng-disabled='resource.stringValue'></div>"+"<br>"
-				+"" +"<input type='text' id='file_path'>");
+		writeView.html("<div>Value (" + type + ") : <input id='valuedata' type='file' file-model='resource.fileValue' ng-disabled='resource.stringValue'></div>");
 		footView.html("<button class='btn btn-info btn-sm' type='button' onclick='javascript:sendCoapWriteFile(\"" + endpoint + "\",\"" + uri + "\",\"" + dataid + "\",\"" + type + "\",\"" + data + "\");' style='cursor: pointer;' data-toggle='modal' data-target='#dataModal'>Write</button>"
 				+ "&nbsp&nbsp<button class='btn btn-secondary btn-sm' type='button' data-dismiss='modal'>닫기</button>");
 	}else if(type=="BOOLEAN"){
@@ -682,10 +681,16 @@ function setProperty(fileName) {
 	}
 	console.log(tr);
 	
+	param["fileName"] = fileName;
 	param["setData"] = JSON.stringify(tr);
 	
-	LWM2M_PROXY.invokeOpenAPI("setProperty", null, param, function (result, _head, _params) {
+	LWM2M_PROXY.invokeOpenAPI("setProperty", "json", param, function (result, _head, _params) {
 		console.log(result);
+		if(result==0){
+			alert("수정되었습니다.");
+		}else{
+			alert("실패하였습니다. 확인바랍니다.");
+		}
 	});
 }
 
