@@ -166,16 +166,16 @@ public class AbsCNUModelSettings extends AbsKepcoModelSettings
 		if (OSValidator.isUnix()) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			String value = format.format(date);
-			log.debug(value);
-
 			ProcessBuilder processBuilder = new ProcessBuilder();
 			processBuilder.command("bash", "-c", "date -s \"" + value + "\"");
+
 			try {
-				log.debug("{} to Start!", processBuilder.command());
 				Process process = processBuilder.start();
+				log.debug("Started {}!", processBuilder.command());
 				BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 				log.debug("reader = {}", reader.readLine());
 				String line;
+
 				while ((line = reader.readLine()) != null) {
 					log.debug(line);
 				}
