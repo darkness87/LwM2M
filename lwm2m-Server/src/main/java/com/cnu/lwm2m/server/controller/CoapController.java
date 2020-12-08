@@ -103,11 +103,13 @@ public class CoapController {
 		ByteArrayOutputStream byteOutStream = null;
 
 		try {
-			inputStream = new FileInputStream("C:\\Users\\sookwon\\Desktop\\LwM2M 개발.txt"); // TODO 주소 가져오는거 체크 필요
+//			inputStream = new FileInputStream("./firmware/lwm2m-Client-1.0.0-firmware.jar"); // TODO 주소 가져오는거 체크 필요
+			inputStream = new FileInputStream("C:\\Users\\sookwon\\Desktop\\test file.txt");
+			// TODO 파일용량 8192 byte 를 넘길 수 없음 // 해결방법? // 클라이언트 Californium.properties 에서 MAX_RESOURCE_BODY_SIZE 수정 및 timeout 시간 늘리기
 			// inputStream = new FileInputStream(data);
 			byteOutStream = new ByteArrayOutputStream();
 			int len = 0;
-			byte[] buf = new byte[1024];
+			byte[] buf = new byte[5120000];
 			while ((len = inputStream.read(buf)) != -1) {
 				byteOutStream.write(buf, 0, len);
 			}

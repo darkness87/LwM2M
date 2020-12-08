@@ -361,12 +361,6 @@ function viewWrite(endpoint, uri, dataid, type) {
 	}
 }
 
-// TODO
-function fileinfo(){
-	var input = document.getElementById('file_path').value;
-	var data = document.selection.createRange().text.toString()
-}
-
 function sendCoapWrite(endpoint, uri, dataid, type, data) {
 	var param = {};
 	param["endpoint"] = endpoint;
@@ -479,6 +473,22 @@ function sendCoapDisableRead(endpoint, uri, type) {
 	});
 }
 
+//TODO
+function fileinfo(){
+	var input = document.getElementById('file_path').value;
+	var data = document.selection.createRange().text.toString()
+}
+
+//TODO
+function sseTest(uri) {
+	console.log("SSE TEST");
+	var param = {};
+	param["uri"] = uri;
+	LWM2M_PROXY.invokeOpenAPI("sender", null, param, function (result, _head, _params) {
+		console.log(result);
+	});
+}
+
 function getRedisKeyList() {
 	var view = $("#page-top");
 	var param = {};
@@ -529,16 +539,6 @@ function getRedisKeyData(key,keyType) {
 		}
 
 		dataView.html("KEY = " + key + "<br><br> DATA = <br>" + JSON.stringify(result, null, 2));
-	});
-}
-
-// TODO
-function sseTest(uri) {
-	console.log("SSE TEST");
-	var param = {};
-	param["uri"] = uri;
-	LWM2M_PROXY.invokeOpenAPI("sender", null, param, function (result, _head, _params) {
-		console.log(result);
 	});
 }
 
@@ -652,16 +652,11 @@ function getProperty(fileName) {
 }
 
 function setProperty(fileName) {
-//	console.log("setProperty");
+	console.log(fileName);
 	var param = {};
-	
-	// 화면에서 key, value 값 가져오기
-//	param["setData"] = [{key: "redis.ipAddr", value: "127.0.0.1"},{key: "redis.ipAddr", value: "127.0.0.1"}];
-	
 	var i, tr, temp;
 	tr = new Array();
 	temp = document.getElementById(fileName).getElementsByTagName('tr');
-//	console.log(temp);
 	for (i in temp) {
 		if(i=="length"||i=="item"||i=="namedItem"){
 			continue;
@@ -829,6 +824,7 @@ function getSearchData(){
 	});
 }
 
+/////
 function getFormatDate(date) {
 	var year = date.getFullYear();
 	var month = (1 + date.getMonth());

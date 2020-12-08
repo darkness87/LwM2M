@@ -8,6 +8,7 @@ var LWM2M_PROXY = {
 	confirmCode: { "0000x": true, "00001x": true },	//confirmCode -> boolean형은 사용할지 여부
 
 	// 메인&로그인
+	login : "login.do",
 	getAllRegistrations: "/getAllRegistrations.do",
 	getById: "/getById.do",
 	getByEndpoint: "/getByEndpoint.do",

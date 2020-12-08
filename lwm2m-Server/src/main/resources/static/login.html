@@ -37,14 +37,14 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back! CNU! <br>LwM2M Server!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Welcome !! <br>CNU LwM2M Server</h1>
                   </div>
                   <form class="user">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="text" onkeyup="javascript:enterkey();" class="form-control form-control-user" id="inputId" placeholder="Enter Your ID...">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="inputPassword" placeholder="Password">
+                      <input type="password" onkeyup="javascript:enterkey();" class="form-control form-control-user" id="inputPassword" placeholder="Password">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -52,7 +52,7 @@
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
                     </div>
-                    <a href="index.html" onclick="javascript:login();" class="btn btn-primary btn-user btn-block">
+                    <a onclick="javascript:login();" class="btn btn-primary btn-user btn-block" style="color: #fff">
                       Login
                     </a>
                   </form>
@@ -80,7 +80,10 @@
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="js/sb-admin-2.min.js"></script>
   
-    <script src="js/controller/loginController.js"></script>
+  <script src="js/controller/lwm2mConst.js"></script>
+  <script src="js/controller/lwm2mProxy.js"></script>
+  <script src="js/controller/api.js"></script>
+  <script src="js/controller/loginController.js"></script>
 
 </body>
 
