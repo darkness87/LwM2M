@@ -16,8 +16,8 @@
 ##### ServerInfo ####################################################################################
 
 S/W Profile : LwM2M Server
-S/W Version : 1.0
-Release Date : 2020-10-28
+S/W Version : 2.0
+Release Date : 2021-07-08
 ${Ansi.RED}Spring-boot Version : ${spring-boot.version}${Ansi.WHITE}
 
 ################################################################### Copyright © CNU GLOBAL 2020 #####

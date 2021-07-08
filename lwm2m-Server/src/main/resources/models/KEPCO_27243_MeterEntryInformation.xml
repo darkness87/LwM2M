@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Meter3</Name>
+		<Description1>Meter Entry Information</Description1>
+		<ObjectID>27243</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:27243</ObjectURN>
+		<MultipleInstances>Multiple</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>Meter ID</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>계기 ID (Size : 11)</Description>
+			</Item>
+			<Item ID="1">
+				<Name>Modem ID</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀 번호 뒤 8+사업차수 1+Modem Type1</Description>
+			</Item>
+			<Item ID="2">
+				<Name>Meter Type</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>계기 유형</Description>
+			</Item>
+			<Item ID="3">
+				<Name>Device Name</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>COSEM 계기 식별자 (Size : 16)</Description>
+			</Item>
+			<Item ID="4">
+				<Name>ACON</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Float</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>전력량계 유효전력량 계기 정수</Description>
+			</Item>
+			<Item ID="5">
+				<Name>RCON</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Float</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>전력량계 무효전력량 계기 정수</Description>
+			</Item>
+			<Item ID="6">
+				<Name>PCON</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Float</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>전력량계 피상전력량 계기정수(G-type, AE-type)</Description>
+			</Item>
+			<Item ID="7">
+				<Name>정기검침일</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>일</Units>
+				<Description>정기검침일</Description>
+			</Item>
+			<Item ID="8">
+				<Name>모뎀 시간</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초</Units>
+				<Description>전력량계 시간 수집 시점의 모뎀 시간</Description>
+			</Item>
+			<Item ID="9">
+				<Name>전력량계 시간</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초</Units>
+				<Description>전력량계 시간</Description>
+			</Item>
+			<Item ID="10">
+				<Name>현재 검침 주기</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>분</Units>
+				<Description>표준형 계기</Description>
+			</Item>
+			<Item ID="11">
+				<Name>LP 수집 주기</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>분</Units>
+				<Description>표준형 계기 제외</Description>
+			</Item>
+			<Item ID="12">
+				<Name>평균 전압/전류 수집 주기</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>G-type, AE-type 대상</Description>
+			</Item>
+			<Item ID="13">
+				<Name>순시 전압/전류 수집 주기</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>G-type, AE-type 대상</Description>
+			</Item>
+			<Item ID="14">
+				<Name>Net Metering</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>G-type, AE-type 대상 / 단방향, 양방향</Description>
+			</Item>
+			<Item ID="15">
+				<Name>TOU Status</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>TOU 상태</Description>
+			</Item>
+			<Item ID="16">
+				<Name>Report Status</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>서버 요청에 대한 처리 결과 상태</Description>
+			</Item>
+			<Item ID="17">
+				<Name>자율 검침 Status</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>자율 검침 상태</Description>
+			</Item>
+			<Item ID="18">
+				<Name>Update Trigger</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>계기 설정 변경 후 변경된 Meter Entry Information을 Send Operation 수행</Description>
+			</Item>
+			<Item ID="19">
+				<Name>자율 검침 Trigger</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Fixed Metering Data의 해당 Resource ID를 이용하여 Send Operation 수행</Description>
+			</Item>
+			<Item ID="20">
+				<Name>TOU Status Trigger</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>TOU Status값을 업데이트 후 TOU Status 값을 Send Operation으로 전송</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Man3</Name>
+		<Description1>네트워크 제원관리</Description1>
+		<ObjectID>26243</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:26243</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>간선망 구분 (Wan Code)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~4</RangeEnumeration>
+				<Units></Units>
+				<Description>0: No Wan, 1: HFC, 2: Optical, 3: LTE, 4: Ethernet</Description>
+			</Item>
+			<Item ID="1">
+				<Name>통신방식 구분 (Communication Type Code)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~200</RangeEnumeration>
+				<Units></Units>
+				<Description>11: LTE-M1, 12: NB-IoT, 31: Wi-SUN (CSMA), 32: Wi-SUN (TSCH), 33: B-CDMA, 45: HS-PLC, 46: IoT-PLC, 47: HPGP, 48: HPAV1, 49: HPAV2</Description>
+			</Item>
+			<Item ID="4">
+				<Name>IP Addresses (사설 IP)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀의 사설 IP 주소 (IPv6), Ob_ID 4/4의 공인 IP 또는 26243/4의 사설 IP 둘 중 하나는 필수 항목임</Description>
+			</Item>
+			<Item ID="5">
+				<Name>Buffer IP Addresses (사설 IP)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Res_ID: 4에서 지정한 각 인터페이스의 다음 홉 라우터의 IP 주소 (사설 IP / DCU 적용)</Description>
+			</Item>
+			<Item ID="8">
+				<Name>통신모듈 제조회사</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>통신모듈 제조회사</Description>
+			</Item>
+			<Item ID="9">
+				<Name>통신모듈 칩 제조회사</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>통신모듈 칩 제조회사</Description>
+			</Item>
+			<Item ID="15">
+				<Name>CoAP Ping Start (상향)</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type/>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>하향 CoAP Ping Test는 서버에서 모뎀으로 Ping Test를 별도 수행하고 결과를 표시</Description>
+			</Item>
+			<Item ID="17">
+				<Name>CoAP Ping Result (모뎀에서 서버로 핑 테스트 결과 전송)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀은 상향 테스트 결과를 서버로 평균 응답시간(ms)과 성공률(%) 측정결과를 전송한다. 예) 응답시간 1,230ms, 99% 성공 → ”1230ms, 99%“ (성공률은 소수점 3자리에서 절사)</Description>
+			</Item>
+			<Item ID="20">
+				<Name>Pay Load 상향 속도테스트 (Throughput Test Start)</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type/>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>하향 속도 Test는 서버에서 모뎀으로 Test를 수행하고 결과를 표시한다. 상향 속도 Test는 서버에서 모뎀으로 상향 실행 명령을 전송한다.</Description>
+			</Item>
+			<Item ID="21">
+				<Name>Pay Load 상향 속도테스트 결과 (Throughput Test Result)</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[전송된 DATA 총량을 전송된 시간(초)으로 나눈 초당 평균 전송량을 측정하여 전송한다.
+				 예) 초당 평균 전송된 DATA (send: 528 kbytes / 52.8 kbytes/sec)]]></Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

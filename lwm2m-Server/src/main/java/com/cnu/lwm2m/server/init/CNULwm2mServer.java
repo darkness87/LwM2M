@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.californium.core.network.config.NetworkConfig;
+import org.eclipse.leshan.core.model.InvalidDDFFileException;
+import org.eclipse.leshan.core.model.InvalidModelException;
 import org.eclipse.leshan.core.model.ObjectLoader;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.server.californium.LeshanServer;
@@ -27,10 +29,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class CNULwm2mServer implements DisposableBean {
-	private final String[] KEPCO_MODELS = { "LWM2M_Server_1_Custom.xml", "LWM2M_Device_3_Custom.xml",
-			"LWM2M_ConnectivityMonitoring_4_Custom.xml", "LWM2M_Location_6_Custom.xml",
-			"LWM2M_ConnectivityStatistics_7_Custom.xml", "26241.xml", "26243.xml", "26245.xml", "26247.xml", "26249.xml",
-			"LWM2M_Security_0_Custom.xml" };
+
+	private final String[] KEPCO_MODELS = { "LWM2M_1_Server_Custom.xml", "LWM2M_2_AccessControl_Custom.xml", "LWM2M_3_Device_Custom.xml", "LWM2M_4_ConnectivityMonitoring_Custom.xml",
+			"LWM2M_5_Firmware_Custom.xml", "LWM2M_6_Location_Custom.xml", "LWM2M_7_ConnectivityStatistics_Custom.xml", "LWM2M_9_SoftwareManagement_Custom.xml",
+			"KEPCO_26241_AMICommonControl.xml", "KEPCO_26243_AMINetwork.xml", "KEPCO_26245_AMISecurity.xml", "KEPCO_26247_AMIServer.xml", "KEPCO_26249_AMISoftware.xml",
+			"KEPCO_27241_MeterControl.xml", "KEPCO_27242_FixedMeteringInformation.xml", "KEPCO_27243_MeterEntryInformation.xml", "KEPCO_27244_FixedMeteringData.xml", "KEPCO_27245_OBISMeteringData.xml",
+			"KEPCO_27246_TOUInformation.xml", "KEPCO_27247_TOUSpecialDay.xml", "KEPCO_27248_ModemControl.xml", "KEPCO_27249_FixedModemInformation.xml", "KEPCO_27250_ModemEntryInformation.xml"};
 
 	private LeshanServer server;
 	private Resource resource = new ClassPathResource("lwm2mServer.properties");
@@ -62,6 +66,8 @@ public class CNULwm2mServer implements DisposableBean {
 			coapConfig = new NetworkConfig();
 			coapConfig.load(resource.getInputStream());
 
+			log.info("COAP_PORT : {}",coapConfig.getInt("COAP_PORT"));
+
 			return coapConfig;
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
@@ -70,7 +76,7 @@ public class CNULwm2mServer implements DisposableBean {
 		}
 	}
 
-	private LwM2mModelProvider initModelProviders() {
+	private LwM2mModelProvider initModelProviders() throws IOException, InvalidModelException, InvalidDDFFileException {
 		List<ObjectModel> models = ObjectLoader.loadDefault();
 
 		models = ObjectLoader.loadDefault();

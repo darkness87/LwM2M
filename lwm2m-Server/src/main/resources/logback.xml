@@ -8,7 +8,14 @@
 
 	<appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>C:\logs\lwm2m-log-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            <if condition='System.getProperty("os.name").toLowerCase().contains("windows")'>
+        		<then>
+            		<fileNamePattern>C:\logs\lwm2m-log-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            	</then>
+            	<else>
+            		<fileNamePattern>/app/lwm2m/logs/lwm2m-log-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            	</else>
+            </if>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -19,9 +26,16 @@
         </encoder>
     </appender>
     
-    <appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+<!--     <appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>C:\logs\sys-log-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            <if condition='System.getProperty("os.name").toLowerCase().contains("windows")'>
+        		<then>
+            		<fileNamePattern>C:\logs\lwm2m-syslog-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            	</then>
+            	<else>
+            		<fileNamePattern>/app/lwm2m/logs/lwm2m-syslog-%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+            	</else>
+            </if>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -30,16 +44,16 @@
         <encoder>
             <pattern>%d{yy-MM-dd HH:mm:ss.SSS} %-5level %-4relative - [ %thread{10} ] %logger{20}.%M:%L : %msg%n</pattern>
         </encoder>
-    </appender>
+    </appender> -->
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ROLLING" />
 	</root>
 	
-	<logger name="com.cnu.lwm2m.server.scheduler" additivity="false">
+<!-- 	<logger name="com.cnu.lwm2m.server.scheduler" additivity="false">
         <appender-ref ref="SYSTEMLOG"/>
-    </logger>
+    </logger> -->
 
 	<logger name="com.cnu" level="DEBUG"/>
 	<logger name="org.eclipse.californium" level="INFO"/>

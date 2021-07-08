@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Connectivity Statistics</Name>
+		<Description1>메시지 전송 관련 통계 정보를 수집하고 검색하는 기능</Description1>
+		<ObjectID>7</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:oma:7</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Optional</Mandatory>
+		<Resources>
+			<Item ID="2">
+				<Name>Tx Data</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Byte</Units>
+				<Description>수집 기간 전송된 데이터의 총량</Description>
+			</Item>
+			<Item ID="3">
+				<Name>Rx Data</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Byte</Units>
+				<Description>수집 기간 수신된 데이터의 총량</Description>
+			</Item>
+			<Item ID="4">
+				<Name>Max Message Size</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Byte</Units>
+				<Description>수집 기간 최대 메시지 크기</Description>
+			</Item>
+			<Item ID="5">
+				<Name>Average Message Size</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Byte</Units>
+				<Description>수집 기간 평균 메시지 크기</Description>
+			</Item>
+			<Item ID="6">
+				<Name>Start</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Start</Description>
+			</Item>
+			<Item ID="7">
+				<Name>Stop</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Stop</Description>
+			</Item>
+			<Item ID="8">
+				<Name>Collection Period</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Collection Period</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

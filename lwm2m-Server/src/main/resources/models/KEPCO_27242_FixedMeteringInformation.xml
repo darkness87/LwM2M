@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Meter2</Name>
+		<Description1>Fixed Metering Information</Description1>
+		<ObjectID>27242</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:27242</ObjectURN>
+		<MultipleInstances>Multiple</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>계기유형</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~5</RangeEnumeration>
+				<Units></Units>
+				<Description>LwM2M 서버에 의해 설정</Description>
+			</Item>
+			<Item ID="1">
+				<Name>현재검침 수집 주기</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>1~255</RangeEnumeration>
+				<Units>분</Units>
+				<Description>표준형 계기 검침 및 Push 주기(초기값 : 15분)</Description>
+			</Item>
+			<Item ID="2">
+				<Name>LP 수집 주기</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>1~255</RangeEnumeration>
+				<Units>분</Units>
+				<Description>계기 검침 및 Push 주기 , 초기값(E-type : 60분, 기타 ; 15분)</Description>
+			</Item>
+			<Item ID="3">
+				<Name>평균 전압/전류 수집 주기</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>1~255</RangeEnumeration>
+				<Units>분</Units>
+				<Description>G-type, AE-type 검침 및 Push 주기 , 초기값(60분)</Description>
+			</Item>
+			<Item ID="4">
+				<Name>순시 전압/전류 수집 주기</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>1~255</RangeEnumeration>
+				<Units>분</Units>
+				<Description>G-type, AE-type 검침 및 Push 주기 , 초기값(60분)</Description>
+			</Item>
+			<Item ID="5">
+				<Name>시간한계 오차</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>1~255</RangeEnumeration>
+				<Units>분</Units>
+				<Description>표준형을 제외한 모든 계기 시간 한계 오차 , 초기값(E-type : 2분, 기타 : 1분)</Description>
+			</Item>
+			<Item ID="6">
+				<Name>시간 확인 오차</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>1~255</RangeEnumeration>
+				<Units>분</Units>
+				<Description>표준형을 제외한 모든 계기 시간 한계 오차 , 초기값(E-type : 60분, 기타 : 15분)</Description>
+			</Item>
+			<Item ID="7">
+				<Name>Update Trigger</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Meter Entry Object에 정보를 즉시 반영</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

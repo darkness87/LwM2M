@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Device</Name>
+		<Description1>다양한 장치정보와 재부팅 등의 기능 관리</Description1>
+		<ObjectID>3</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:oma:3</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>Manufacturer</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀 제조사 코드표 참조</Description>
+			</Item>
+			<Item ID="1">
+				<Name>Model Number</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>제조업체별 제품모델 이름</Description>
+			</Item>
+			<Item ID="2">
+				<Name>Serial Number</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>모뎀 제조 일련번호</Description>
+			</Item>
+			<Item ID="3">
+				<Name>Firmware Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>디바이스의 현재 펌웨어 버전 / sysFwVers</Description>
+			</Item>
+			<Item ID="4">
+				<Name>Reboot</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>오류 발생 시 장치를 복원하기 위한 장치 Rebooting 명령</Description>
+			</Item>
+			<Item ID="5">
+				<Name>Factory Reset</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>공장 초기화 설정</Description>
+			</Item>
+			<Item ID="6">
+				<Name>Available Power Sources</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Available Power Sources</Description>
+			</Item>
+			<Item ID="7">
+				<Name>Power Source Voltage</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>mV</Units>
+				<Description>장치가 동작하는 정격전압</Description>
+			</Item>
+			<Item ID="8">
+				<Name>Power Source Current</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>제조사가 계기 30대 연결 환경에서 24시간 측정한 최소값,최대값,평균값 기록한다.</Description>
+			</Item>
+			<Item ID="10">
+				<Name>Memory Free</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>KB</Units>
+				<Description>가용 저장공간</Description>
+			</Item>
+			<Item ID="11">
+				<Name>Error Code</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Error Code</Description>
+			</Item>
+			<Item ID="12">
+				<Name>Reset Error Code</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Error Code를 Reset 하여 오류가 없음을 의미하는 "0" 값으로 설정</Description>
+			</Item>
+			<Item ID="13">
+				<Name>Current Time</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초</Units>
+				<Description>모뎀의 시간 설정 및 시간 확인</Description>
+			</Item>
+			<Item ID="14">
+				<Name>UTC Offset</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>초</Units>
+				<Description></Description>
+			</Item>
+			<Item ID="15">
+				<Name>Timezone</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>LwM2M 장치가 위치한 표준 시간대를 나타낸다.</Description>
+			</Item>
+			<Item ID="16">
+				<Name>Supported Binding and Modes</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>클라이언트에서 지원하는 바인딩과 모드</Description>
+			</Item>
+			<Item ID="17">
+				<Name>Device Type</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>설비의 종류를 구분한다.</Description>
+			</Item>
+			<Item ID="18">
+				<Name>Hardware Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description></Description>
+			</Item>
+			<Item ID="19">
+				<Name>Software Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>디바이스의 현재 소프트웨어 버전 (제조사 정의)</Description>
+			</Item>
+			<Item ID="20">
+				<Name>Software Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description></Description>
+			</Item>
+			<Item ID="21">
+				<Name>Memory Total</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Kbyte</Units>
+				<Description>데이터 및 소프트웨어를 저장할 수 있는 메모리(ROM) 총 저장공간</Description>
+			</Item>
+			<Item ID="22">
+				<Name>ExtDevInfo</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Objlnk</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Kbyte</Units>
+				<Description>데이터 및 소프트웨어를 저장할 수 있는 메모리(ROM) 총 저장공간</Description>
+			</Item>
+			<Item ID="100">
+				<Name>LMN type</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>0  : None
+1  : RS-485
+2  : RS-485 CSMA-CD
+3  : CAN
+4  : PLC
+11 : Wi-SUN
+21 : wM-BUS</Description>
+			</Item>
+			<Item ID="101">
+				<Name>WAN type</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Multiple</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>0 : None
+1 : Ethernet
+2 : LTE
+3 : Wi-SUN
+4 : Wi-Fi</Description>
+			</Item>
+			<Item ID="26241">
+				<Name>Run Time</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysUptime(x,29408.11.6.10.1.1.4)</Description>
+			</Item>
+			<Item ID="26242">
+				<Name>Sys state</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysState(x,29408.11.6.10.1.2.1)
+0x0000 정상
+0x0001 온도 측정 불가
+0x0002 습도 측정 불가
+0x0004 GPS 측정 불가
+0x0008 Door 측정 불가</Description>
+			</Item>
+			<Item ID="26243">
+				<Name>CPU usage</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysCpuUsage(x,29408.11.6.10.1.2.2)</Description>
+			</Item>
+			<Item ID="26244">
+				<Name>RAM usage</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysMemUsage(x,29408.11.6.10.1.2.3)</Description>
+			</Item>
+			<Item ID="26245">
+				<Name>NAND(etc) usage</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysNandFlashUsage(x,29408.11.6.10.1.2.4)
+sysNorFlashUsage(x,29408.11.6.10.1.2.5)
+sysSDFlashUsage(x,29408.11.6.10.1.2.6)</Description>
+			</Item>
+			<Item ID="26246">
+				<Name>MCU TempValue</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysMcuTempValue(x,29408.11.6.10.1.2.7)</Description>
+			</Item>
+			<Item ID="26247">
+				<Name>Dcu Cover State</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysDcuCoverStatus(x,29408.11.6.10.1.2.8)
+0 : open
+1 : close</Description>
+			</Item>
+			<Item ID="26248">
+				<Name>Sd card mount state</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysDcuCoverStatus(x,29408.11.6.10.1.2.10)
+0 : 정상
+1 : 비정상
+2 : 미삽입</Description>
+			</Item>
+			<Item ID="26249">
+				<Name>system Humidity</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysHumidityValue(x,29408.11.6.10.1.2.18)</Description>
+			</Item>
+			<Item ID="26250">
+				<Name>Case Tempvalue</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysCaseTempValue(x,29408.11.6.10.1.2.19)</Description>
+			</Item>
+			<Item ID="26251">
+				<Name>Surge Ingress</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Boolean</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysSurgeIngress(x,29408.11.6.10.1.2.1.20)</Description>
+			</Item>
+			<Item ID="26252">
+				<Name>PSU bit status</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysPsuBitStatus(x,29408.11.6.10.1.2.1.21)
+0 : AC
+1 : DC</Description>
+			</Item>
+			<Item ID="26253">
+				<Name>BMU Tempvalue</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysBmuTempvalue(x,29408.11.6.10.1.2.1.22)</Description>
+			</Item>
+			<Item ID="26254">
+				<Name>BMU Capacity</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysBmuRemainCapacity(x,29408.11.6.10.1.2.1.23)</Description>
+			</Item>
+			<Item ID="26255">
+				<Name>Console status</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysConsoleStatus(x,29408.11.6.10.1.2.1.24)</Description>
+			</Item>
+			<Item ID="26256">
+				<Name>Reset Result</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysSwReset(x,29408.11.6.10.1.3.1)</Description>
+			</Item>
+			<Item ID="26257">
+				<Name>Unit Reset</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysPowerReset(x.29408.11.6.10.1.3.2)</Description>
+			</Item>
+			<Item ID="26258">
+				<Name>Unit Reset Result</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysPowerReset(x.29408.11.6.10.1.3.2)</Description>
+			</Item>
+			<Item ID="26259">
+				<Name>Dcu Diagnostic</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>sysDcuDiagStart(x.29408.11.6.10.1.3.5)</Description>
+			</Item>
+			<Item ID="26260">
+				<Name>Dcu Diagnostic Result</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>DcuDiag(x.29408.11.6.13.1.1)
+type : 
+0 Cpu, 1: MCU 2: LSU, 3: BMU 4. Unit
+result : 
+0 : 정상
+1 : 비정상</Description>
+			</Item>
+			<Item ID="26261">
+				<Name>log file locate</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>dcLogDir(x.29408.11.6.10.2.32)</Description>
+			</Item>
+			<Item ID="26262">
+				<Name>confing file locate</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Optional</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>dcConfDir(x.29408.11.6.10.2.33)</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

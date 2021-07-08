@@ -20,15 +20,16 @@ public class AbsClientListener implements EventSource {
 	public synchronized void sendEvent(EVENT event, String data, String endpoint) {
 		log.debug("Dispatching {} event from endpoint {}", event, endpoint);
 
-		// TODO 여기서 이벤트를 던져야함
-		if (event == EVENT.REGISTRATION) {
-			// Registration
-			log.info("Registration Data : {}", data);
-
-		} else if (event == EVENT.NOTIFICATION) {
-			// Notify
-			log.info("Notify Data : {}", data);
-		}
+		log.info("{} Data : {}",event,data);
+		// TODO 여기서 이벤트를 던져야함 DEREGISTRATION, UPDATED, REGISTRATION, AWAKE, SLEEPING, NOTIFICATION
+//		if (event == EVENT.REGISTRATION) {
+//			// Registration
+//			log.info("Registration Data : {}", data);
+//
+//		} else if (event == EVENT.NOTIFICATION) {
+//			// Notify
+//			log.info("Notify Data : {}", data);
+//		}
 
 	}
 

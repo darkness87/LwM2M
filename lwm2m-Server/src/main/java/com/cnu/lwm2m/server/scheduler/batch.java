@@ -13,10 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("restriction")
 @Slf4j
-@Component
+//@Component // TODO 미운영
 public class batch {
 
-	@Scheduled(fixedDelay = 1000 * 60)
+//	@Scheduled(fixedDelay = 1000 * 60) // TODO 미운영
 	public void task() {
 		log.info("===================================================================================");
 		// JVM memory

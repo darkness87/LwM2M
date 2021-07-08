@@ -1,6 +1,9 @@
 package com.cnu.lwm2m.server.vo;
 
 import java.net.InetAddress;
+import java.util.EnumSet;
+
+import org.eclipse.leshan.core.LwM2m.Version;
 import org.eclipse.leshan.core.request.BindingMode;
 
 import lombok.Getter;
@@ -14,8 +17,8 @@ public class RegistrationDataVO {
 	private String id;
 	private InetAddress address;
 	private int port;
-	private String lwM2mVersion;
-	private BindingMode bindingMode;
+	private Version lwM2mVersion;
+	private EnumSet<BindingMode> bindingMode;
 	private long lifeTimeInSec;
 	private String registrationDate;
 	private String lastUpdate;

@@ -45,7 +45,7 @@ public class LwM2mNodeSerializer implements JsonSerializer<LwM2mNode> {
 			LwM2mResource rsc = (LwM2mResource) src;
 			if (rsc.isMultiInstances()) {
 				JsonObject values = new JsonObject();
-				for (Entry<Integer, ?> entry : rsc.getValues().entrySet()) {
+				for (Entry<Integer, ?> entry : rsc.getInstances().entrySet()) {
 					if (rsc.getType() == org.eclipse.leshan.core.model.ResourceModel.Type.OPAQUE) {
 						values.add(entry.getKey().toString(),
 								context.serialize(Hex.encodeHex((byte[]) entry.getValue())));

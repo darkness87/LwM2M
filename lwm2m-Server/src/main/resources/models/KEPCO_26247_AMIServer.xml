@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Man7</Name>
+		<Description1>보안 관리</Description1>
+		<ObjectID>26247</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:26247</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>LwM2M Bootstrap Server IP Address</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>LwM2M Bootstrap Server IP 주소 : 미사용</Description>
+			</Item>
+			<Item ID="1">
+				<Name>LwM2M Bootstrap Server Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>LwM2M Bootstrap Server Port Number : 미사용</Description>
+			</Item>
+			<Item ID="10">
+				<Name>보안 Server IP Address</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description><![CDATA[보안 Server IP 주소]]></Description>
+			</Item>
+			<Item ID="11">
+				<Name>보안 Server Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>보안 Server Port Number</Description>
+			</Item>
+			<Item ID="15">
+				<Name>보안 Proxy IP Address</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>보안 Proxy Server IP 주소 (G/W 또는 DCU 에서 하위 장치로 자동 적용되어야 한다.)</Description>
+			</Item>
+			<Item ID="16">
+				<Name>보안 Proxy Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>보안 Proxy Server Port Number (G/W 또는 DCU 적용)</Description>
+			</Item>
+			<Item ID="20">
+				<Name>LwM2M Server IP Address</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>LwM2M Server IP 주소</Description>
+			</Item>
+			<Item ID="21">
+				<Name>LwM2M Server Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>LwM2M Server Port Number</Description>
+			</Item>
+			<Item ID="25">
+				<Name>LwM2M Proxy IP Address</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>LwM2M Proxy Server IP 주소 (G/W 또는 DCU 에서 하위 장치로 자동 적용되어야 한다.)</Description>
+			</Item>
+			<Item ID="26">
+				<Name>LwM2M Proxy Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>LwM2M Proxy Server Port Number (G/W 또는 DCU 적용)</Description>
+			</Item>
+			<Item ID="30">
+				<Name>DLMS Master IP</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>DLMS Master IP Address</Description>
+			</Item>
+			<Item ID="31">
+				<Name>DLMS Master Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>DLMS Master Port Number</Description>
+			</Item>
+			<Item ID="35">
+				<Name>DLMS Manager IP</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>Defined by “Units” resource.</Units>
+				<Description>DLMS Manager IP Address (G/W 또는 DCU 에서 하위 장치로 자동 적용되어야 한다.)</Description>
+			</Item>
+			<Item ID="36">
+				<Name>DLMS Manager Port Number</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>DLMS Manager Port Number (G/W 또는 DCU 적용)</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Meter1</Name>
+		<Description1>Meter Control</Description1>
+		<ObjectID>27241</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:27241</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>Meter Scan Trigger</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Operation 수신 후 계기 스캔을 수행하고 신규 및 변경 계기 정보를 LwM2M 서버로 전송</Description>
+			</Item>
+			<Item ID="1">
+				<Name>Push/Polling Mode</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Push/Polling Mode 설정</Description>
+			</Item>
+			<Item ID="2">
+				<Name>Retry Delay</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>분</Units>
+				<Description>LwM2M Client가 재시도할 때 대기 시간을 의미 (초기값 : 5)</Description>
+			</Item>
+			<Item ID="3">
+				<Name>Retry Count</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units>횟수</Units>
+				<Description>서버 전송 실패시 LwM2M Client의 시간당 재시도 횟수를 의미 (초기값 : 3)</Description>
+			</Item>
+			<Item ID="4">
+				<Name>1일 검침 시작 시간</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>1일 검침 수집 시작 시간 (초기값 : 00시 15분)</Description>
+			</Item>
+			<Item ID="5">
+				<Name>Fixed Metering Information Update Trigger</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>Fixed Metering Information(27242) 정보를 Meter Entry Object(27243)에 적용</Description>
+			</Item>
+			<Item ID="100">
+				<Name>검침 Protocol 버전</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description>초기값 : LM50</Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>

@@ -111,7 +111,7 @@ public class CoapService {
 					if (entry.getValue().isMultiInstances() == true) {
 						LwM2mMultipleResource val = (LwM2mMultipleResource) entry.getValue();
 						log.debug("=== val : {}", val);
-						observeDataVO.setValue(String.valueOf(val.getValues()));
+						observeDataVO.setValue(String.valueOf(val.getInstances()));
 					} else {
 
 						if (String.valueOf(entry.getValue().getType()).equals("OPAQUE")) {
@@ -247,7 +247,7 @@ public class CoapService {
 				if (content.isMultiInstances() == true) {
 					LwM2mMultipleResource val = (LwM2mMultipleResource) content;
 					log.debug("=== val : {}", val);
-					return String.valueOf(val.getValues());
+					return String.valueOf(val.getInstances());
 				}
 
 				if (String.valueOf(content.getType()).equals("OPAQUE")) {

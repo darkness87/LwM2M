@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+//@Component // TODO 사용안함
 @Slf4j
 public class CNUCoapServer extends CoapServer implements DisposableBean {
 
@@ -28,7 +28,7 @@ public class CNUCoapServer extends CoapServer implements DisposableBean {
 		// provide an instance of a Hello-World resource
 		log.debug("init Construct CNUCoapServer()");
 		add(new HelloWorldResource("cmd"));
-		run();
+		//run(); // TODO -> meterCoap 주석
 	}
 
 	public void run() {

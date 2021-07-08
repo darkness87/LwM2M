@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LWM2M  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd">
+	<Object ObjectType="MODefinition">
+		<Name>Kepco_Man9</Name>
+		<Description1>소프트웨어 관리</Description1>
+		<ObjectID>26249</ObjectID>
+		<ObjectURN>urn:oma:lwm2m:x:26249</ObjectURN>
+		<MultipleInstances>Single</MultipleInstances>
+		<Mandatory>Mandatory</Mandatory>
+		<Resources>
+			<Item ID="0">
+				<Name>S/W 다운로드 및 업데이트 상태</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[Download 및 Update 상태 값
+									0: 초기상태 (업데이트 프로세스가 시작되면 다운로드 단계로 전환)
+									1: 다운로드 중
+									2: 다운로드 실패 (전송실패)
+									3: 다운로드 실패 (파일명세 불일치 : 일과 또는 개별 다운로드 시)
+									4: 다운로드 실패 (무결성 검사 실패)
+									5: 다운로드 성공
+									6: 업데이트 대기 (일정 업데이트 또는 업데이트 명령 대기 시)
+									7: 업데이트 취소
+									8: 업데이트 실패
+									9: 업데이트 성공 (업데이트 성공 시 값 전송 성공 후 초기 상태로 전환) ]]></Description>
+			</Item>
+			<Item ID="1">
+				<Name>S/W 개별 다운로드</Name>
+				<Operations>W</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[서버가 단말장치로 개별 다운로드를 수행하여 파일을 전송하면 장치는 이를 저장한다. 장치는 개별 다운로드 실패한 경우 확인 다운로드 절차를 진행한다.]]></Description>
+			</Item>
+			<Item ID="2">
+				<Name>S/W 일괄 다운로드</Name>
+				<Operations>W</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Opaque</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[서버가 모뎀으로 일괄 다운로드를 수행하여 파일을 전송하면 장치는 이를 저장하여야 한다. 서버는 일괄 다운로드 실패한 장치에 대하여 개별 다운로드 단계를 진행하여야 한다. ]]></Description>
+			</Item>
+			<Item ID="3">
+				<Name>S/W 확인 다운로드 주기설정</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Integer</Type>
+				<RangeEnumeration>0~365</RangeEnumeration>
+				<Units>day</Units>
+				<Description><![CDATA[다운로드 파일 확인주기 설정 (“0”은 확인 다운로드 기능 미사용) / 초기설정값: “1”]]></Description>
+			</Item>
+			<Item ID="5">
+				<Name>다운로드 시작일시</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[파일 다운로드 시작한 일시를 기록하고 Notify 하여야 한다. ]]></Description>
+			</Item>
+			<Item ID="6">
+				<Name>다운로드 완료일시</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[파일이 다운로드 완료되고 무결성 검사를 통과한 일시를 기록하고 Notify 하여야 한다. 다운로드 결과(Res_0) 전송 및 다운로드 실패 시 다운로드 재실행]]></Description>
+			</Item>
+			<Item ID="10">
+				<Name>업데이트 명령</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[S/W 업데이트 방법이 명령 업데이트 즉 일정이 “FF, FF, FF, FF, FF”일 경우 명령 수행]]></Description>
+			</Item>
+			<Item ID="11">
+				<Name>업데이트 취소</Name>
+				<Operations>E</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type></Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[다운로드 완료 후 일정/명령 업데이트 대기 시 “취소” 명령 수신 시 다운로드 파일 삭제
+					다운로드 및 업데이트 결과(Res_0) 전송 및 상태 초기화하고 Notify 하여야 한다.]]></Description>
+			</Item>
+			<Item ID="12">
+				<Name>업데이트 완료 일시</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[S/W 업데이트 완료 일시를 기록하고 Notify 하여야 한다.]]></Description>
+			</Item>
+			<Item ID="13">
+				<Name>업데이트 예약 일시</Name>
+				<Operations>RW</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>Time</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[S/W 업데이트 예약 일시를 기록하고 Notify 하여야 한다. 패키지 명에 포함된 일정 분리 표시]]></Description>
+			</Item>
+			<Item ID="15">
+				<Name>Firmware FACTORY Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[펌웨어 공장 출하 버전
+					 소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+			<Item ID="20">
+				<Name>공통제어부 운영체제 OS 명</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[모뎀 공통제어부에 탑재되어 운영되는 OS 명]]></Description>
+			</Item>
+			<Item ID="21">
+				<Name>공통제어부 운영체제 OS Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[모뎀에서 현재 운영 중인 O/S의 KERNEL 버전 / 예) 4.19.1]]></Description>
+			</Item>
+			<Item ID="25">
+				<Name>M/W 구분</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[현재 운영 중인 M/W(예:JVM): 공급사, 구분(명칭)
+					예) 오라클 제공 JVM: “Oracle, SE” / Open Source일 경우: “open, SE”]]></Description>
+			</Item>
+			<Item ID="26">
+				<Name>M/W Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[현재 운영 중인 JVM 버전 : 각 사에서 제공하는 버전 형식을 따른다.]]></Description>
+			</Item>
+			<Item ID="30">
+				<Name>Security Agent Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[상호인증 및 키 관리 등을 수행하고 관리하는 보안관리 프로그램 버전 (단말장치 적용)
+					소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+			<Item ID="31">
+				<Name>Security Proxy 버전</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[상호인증 및 키 관리 등을 중계하는 Proxy Server S/W 버전 (G/W 또는 DCU 적용)
+					소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+			<Item ID="35">
+				<Name>LwM2M Agent Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[현재 운영 중인 LwM2M Agent S/W 버전 (단말장치 적용)
+					소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+			<Item ID="36">
+				<Name>LwM2M Proxy Version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[현재 운영 중인 LwM2M Proxy S/W 버전 (G/W 또는 DCU 적용)
+					소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+			<Item ID="40">
+				<Name>DLMS Agent version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[현재 운영 중인 DLMS Agent S/W 버전 (단말장치 적용)
+					소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+			<Item ID="41">
+				<Name>DLMS Manager version</Name>
+				<Operations>R</Operations>
+				<MultipleInstances>Single</MultipleInstances>
+				<Mandatory>Mandatory</Mandatory>
+				<Type>String</Type>
+				<RangeEnumeration></RangeEnumeration>
+				<Units></Units>
+				<Description><![CDATA[현재 운영 중인 DLMS Manager S/W 버전 (G/W 또는 DCU 적용)
+					소수점 두 자리로 표현 (Major Number. Minor Number, Revision Number) 예) “1.0.1”]]></Description>
+			</Item>
+		</Resources>
+		<Description2></Description2>
+	</Object>
+</LWM2M>
